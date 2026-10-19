@@ -49,7 +49,7 @@ export default function FlattenPdfPage() {
 
       setProgress(80);
       setStatusMessage("Rendering preview...");
-      const canvas = await renderPdfPageToCanvas(flattenedBytes, 1, 1.2);
+      const canvas = await renderPdfPageToCanvas(flattenedBytes, 1, 2.2);
       setPreviewUrl(canvas.toDataURL("image/png"));
 
       setProgress(100);

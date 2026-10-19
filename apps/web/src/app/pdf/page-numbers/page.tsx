@@ -38,7 +38,7 @@ export default function PageNumbersPdfPage() {
     const info = await getPdfInfo(bytes);
     setPageCount(info.pageCount);
 
-    const thumb = await renderPageThumbnail(bytes, 1, 300);
+    const thumb = await renderPageThumbnail(bytes, 1, 600);
     setPreviewThumb(thumb);
   };
 

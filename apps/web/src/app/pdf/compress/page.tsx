@@ -61,7 +61,7 @@ export default function CompressPdfPage() {
     try {
       const info = await getPdfInfo(pdfBytes);
       setPageCount(info.pageCount);
-      const thumb = await renderPageThumbnail(pdfBytes, 1, 300);
+      const thumb = await renderPageThumbnail(pdfBytes, 1, 600);
       setOriginalThumb(thumb);
     } catch {
       // fallback
@@ -85,7 +85,7 @@ export default function CompressPdfPage() {
       setResult(res);
 
       // Render thumbnail of compressed result
-      const afterThumb = await renderPageThumbnail(res.compressedBytes, 1, 300);
+      const afterThumb = await renderPageThumbnail(res.compressedBytes, 1, 600);
       setCompressedThumb(afterThumb);
     } catch (err) {
       console.error(err);

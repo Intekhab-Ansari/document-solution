@@ -55,7 +55,7 @@ export default function GrayscalePdfPage() {
 
       setProgress(95);
       setStatusMessage("Rendering preview...");
-      const canvas = await renderPdfPageToCanvas(grayscaleBytes, 1, 1.2);
+      const canvas = await renderPdfPageToCanvas(grayscaleBytes, 1, 2.2);
       setPreviewUrl(canvas.toDataURL("image/png"));
 
       setProgress(100);

@@ -43,7 +43,7 @@ export default function RotatePdfPage() {
     setItems(initialItems);
 
     for (let i = 1; i <= info.pageCount; i++) {
-      renderPageThumbnail(bytes, i, 240).then((thumb) => {
+      renderPageThumbnail(bytes, i, 480).then((thumb) => {
         setItems((prev) =>
           prev.map((it) => (it.originalPageNumber === i ? { ...it, dataUrl: thumb } : it))
         );

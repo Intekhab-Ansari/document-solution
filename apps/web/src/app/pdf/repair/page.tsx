@@ -49,7 +49,7 @@ export default function RepairPdfPage() {
 
       setProgress(85);
       setStatusMessage("Validating page rendering...");
-      const canvas = await renderPdfPageToCanvas(repairedBytes, 1, 1.2);
+      const canvas = await renderPdfPageToCanvas(repairedBytes, 1, 2.2);
       setPreviewUrl(canvas.toDataURL("image/png"));
 
       setProgress(100);

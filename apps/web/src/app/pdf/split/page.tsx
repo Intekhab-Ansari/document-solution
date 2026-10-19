@@ -49,7 +49,7 @@ export default function SplitPdfPage() {
 
     // Load thumbnails lazily
     for (let i = 1; i <= info.pageCount; i++) {
-      renderPageThumbnail(bytes, i, 220).then((thumb) => {
+      renderPageThumbnail(bytes, i, 480).then((thumb) => {
         setPageItems((prev) =>
           prev.map((item) => (item.originalPageNumber === i ? { ...item, dataUrl: thumb } : item))
         );

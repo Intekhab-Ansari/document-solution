@@ -20,10 +20,13 @@ export async function loadPdfDoc(pdfData: ArrayBuffer | Uint8Array) {
     ? pdfData.slice()
     : new Uint8Array(pdfData).slice();
 
+  const isBrowser = typeof window !== "undefined";
+
   const loadingTask = pdfjsLib.getDocument({
     data: dataCopy,
-    cMapUrl: undefined,
-    standardFontDataUrl: undefined,
+    cMapUrl: isBrowser ? "/cmaps/" : undefined,
+    cMapPacked: true,
+    standardFontDataUrl: isBrowser ? "/standard_fonts/" : undefined,
   });
   return await loadingTask.promise;
 }
@@ -31,7 +34,7 @@ export async function loadPdfDoc(pdfData: ArrayBuffer | Uint8Array) {
 export async function renderPdfPageToCanvas(
   pdfData: ArrayBuffer | Uint8Array,
   pageNumber: number,
-  scale = 1.0
+  scale = 2.5
 ): Promise<HTMLCanvasElement> {
   const doc = await loadPdfDoc(pdfData);
   const page = await doc.getPage(pageNumber);
@@ -42,6 +45,9 @@ export async function renderPdfPageToCanvas(
   canvas.height = Math.floor(viewport.height);
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) throw new Error("Could not get 2D canvas context");
+
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
 
   const renderContext = {
     canvasContext: ctx,
@@ -56,7 +62,7 @@ export async function renderPdfPageToCanvas(
 export async function renderPageThumbnail(
   pdfData: ArrayBuffer | Uint8Array,
   pageNumber: number,
-  targetWidth = 240
+  targetWidth = 480
 ): Promise<string> {
   const doc = await loadPdfDoc(pdfData);
   const page = await doc.getPage(pageNumber);
@@ -71,6 +77,9 @@ export async function renderPageThumbnail(
 
   if (!ctx) throw new Error("Could not get 2D canvas context");
 
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = "high";
+
   const renderContext = {
     canvasContext: ctx,
     viewport: scaledViewport,
@@ -78,7 +87,7 @@ export async function renderPageThumbnail(
 
   // @ts-expect-error pdfjs typing nuance
   await page.render(renderContext).promise;
-  const dataUrl = canvas.toDataURL("image/jpeg", 0.85);
+  const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
 
   // Clean up canvas
   canvas.width = 0;
@@ -97,7 +106,7 @@ export async function renderAllPageThumbnails(
   for (let i = 1; i <= total; i++) {
     const page = await doc.getPage(i);
     const viewport = page.getViewport({ scale: 1 });
-    const scale = 260 / viewport.width;
+    const scale = 520 / viewport.width;
     const scaledViewport = page.getViewport({ scale });
 
     const canvas = document.createElement("canvas");
@@ -106,9 +115,11 @@ export async function renderAllPageThumbnails(
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
     if (ctx) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       // @ts-expect-error pdfjs typing nuance
       await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
-      thumbnails.push(canvas.toDataURL("image/jpeg", 0.85));
+      thumbnails.push(canvas.toDataURL("image/jpeg", 0.9));
       canvas.width = 0;
       canvas.height = 0;
     }

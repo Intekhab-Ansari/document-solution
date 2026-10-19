@@ -69,7 +69,7 @@ export default function SignPdfPage() {
 
   const loadPagePreview = async (bytes: Uint8Array, pageNum: number) => {
     try {
-      const canvas = await renderPdfPageToCanvas(bytes, pageNum, 1.2);
+      const canvas = await renderPdfPageToCanvas(bytes, pageNum, 2.5);
       setPageCanvasUrl(canvas.toDataURL("image/png"));
     } catch (e) {
       console.error(e);

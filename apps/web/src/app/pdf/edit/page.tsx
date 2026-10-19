@@ -137,24 +137,28 @@ export default function EditPdfPage() {
     }
   };
 
-  // Render current page to canvas background & extract existing text blocks
-  const renderCurrentPage = async (bytes: Uint8Array, pageNum: number) => {
+  // Render current page to canvas background & extract existing text blocks with high-DPI clarity
+  const renderCurrentPage = async (bytes: Uint8Array, pageNum: number, currentZoom = zoomScale) => {
     try {
-      const canvas = await renderPdfPageToCanvas(bytes, pageNum, 1.3);
+      // Minimum 2.5x scale (180 DPI) or higher if zoomed in to guarantee razor-sharp clarity
+      const renderScale = Math.max(2.5, currentZoom * 2.2);
+      const canvas = await renderPdfPageToCanvas(bytes, pageNum, renderScale);
       setCanvasUrl(canvas.toDataURL("image/png"));
 
       // Extract existing text blocks if not cached yet for this page
-      setIsLoadingTextBlocks(true);
-      try {
-        const blocks = await extractAllExistingTextBlocks(bytes, pageNum);
-        setExistingBlocksMap((prev) => {
-          if (prev[pageNum]) return prev; // Preserve any in-progress edits
-          return { ...prev, [pageNum]: blocks };
-        });
-      } catch (extractErr) {
-        console.warn("Could not extract existing text blocks:", extractErr);
-      } finally {
-        setIsLoadingTextBlocks(false);
+      if (!existingBlocksMap[pageNum]) {
+        setIsLoadingTextBlocks(true);
+        try {
+          const blocks = await extractAllExistingTextBlocks(bytes, pageNum);
+          setExistingBlocksMap((prev) => {
+            if (prev[pageNum]) return prev; // Preserve any in-progress edits
+            return { ...prev, [pageNum]: blocks };
+          });
+        } catch (extractErr) {
+          console.warn("Could not extract existing text blocks:", extractErr);
+        } finally {
+          setIsLoadingTextBlocks(false);
+        }
       }
     } catch (err) {
       console.error("Failed to render page:", err);
@@ -166,9 +170,19 @@ export default function EditPdfPage() {
     if (fileBytes && currentPage) {
       setSelectedExistingBlockId(null);
       setSelectedElementId(null);
-      renderCurrentPage(fileBytes, currentPage);
+      renderCurrentPage(fileBytes, currentPage, zoomScale);
     }
   }, [currentPage, fileBytes]);
+
+  // Re-render high-res page background if zoom level changes significantly
+  useEffect(() => {
+    if (fileBytes && currentPage) {
+      const timer = setTimeout(() => {
+        renderCurrentPage(fileBytes, currentPage, zoomScale);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [zoomScale]);
 
   // Sync toolbar controls when selecting an existing text block
   useEffect(() => {
@@ -705,7 +719,7 @@ export default function EditPdfPage() {
                     type="button"
                     disabled={currentPage <= 1}
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30"
+                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30 cursor-pointer"
                     title="Previous Page"
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -717,10 +731,40 @@ export default function EditPdfPage() {
                     type="button"
                     disabled={currentPage >= pageCount}
                     onClick={() => setCurrentPage((p) => Math.min(pageCount, p + 1))}
-                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30"
+                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30 cursor-pointer"
                     title="Next Page"
                   >
                     <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                {/* Zoom Controls */}
+                <div className="flex items-center gap-1 px-2 py-1 rounded-xl bg-zinc-950 border border-zinc-800">
+                  <button
+                    type="button"
+                    disabled={zoomScale <= 0.6}
+                    onClick={() => setZoomScale((z) => Math.max(0.6, Number((z - 0.15).toFixed(2))))}
+                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30 transition-colors cursor-pointer"
+                    title="Zoom Out"
+                  >
+                    <ZoomOut className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setZoomScale(1.0)}
+                    className="font-mono text-xs text-zinc-300 px-1 hover:text-emerald-400 transition-colors cursor-pointer"
+                    title="Reset Zoom to 100%"
+                  >
+                    {Math.round(zoomScale * 100)}%
+                  </button>
+                  <button
+                    type="button"
+                    disabled={zoomScale >= 2.5}
+                    onClick={() => setZoomScale((z) => Math.min(2.5, Number((z + 0.15).toFixed(2))))}
+                    className="p-1 rounded text-zinc-400 hover:text-white disabled:opacity-30 transition-colors cursor-pointer"
+                    title="Zoom In"
+                  >
+                    <ZoomIn className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
@@ -771,34 +815,41 @@ export default function EditPdfPage() {
             {/* Canvas Stage Viewport */}
             <div className="flex-1 overflow-auto p-6 flex items-center justify-center bg-zinc-950/80">
               <div
-                ref={pageContainerRef}
-                onClick={handlePageClick}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
                 style={{
                   width: `${pageDimensions.width * zoomScale}px`,
                   height: `${pageDimensions.height * zoomScale}px`,
-                  transform: `scale(${zoomScale})`,
-                  transformOrigin: "center top",
                 }}
-                className={`relative shadow-2xl rounded-lg border border-zinc-700 bg-white select-none ${
-                  toolMode === "draw"
-                    ? "cursor-crosshair"
-                    : toolMode === "whiteout"
-                    ? "cursor-cell"
-                    : "cursor-text"
-                }`}
+                className="relative flex items-center justify-center shrink-0 transition-[width,height] duration-150"
               >
-                {/* PDF Page Background Image */}
-                {canvasUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={canvasUrl}
-                    alt={`Page ${currentPage}`}
-                    className="absolute inset-0 w-full h-full object-contain pointer-events-none"
-                  />
-                )}
+                <div
+                  ref={pageContainerRef}
+                  onClick={handlePageClick}
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  style={{
+                    width: `${pageDimensions.width}px`,
+                    height: `${pageDimensions.height}px`,
+                    transform: `scale(${zoomScale})`,
+                    transformOrigin: "top left",
+                  }}
+                  className={`relative shadow-2xl rounded-lg border border-zinc-700 bg-white select-none ${
+                    toolMode === "draw"
+                      ? "cursor-crosshair"
+                      : toolMode === "whiteout"
+                      ? "cursor-cell"
+                      : "cursor-text"
+                  }`}
+                >
+                  {/* PDF Page Background Image */}
+                  {canvasUrl && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={canvasUrl}
+                      alt={`Page ${currentPage}`}
+                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                    />
+                  )}
 
                 {/* 1. Existing PDF Text Blocks (In-Place Interactive Editor) */}
                 {(existingBlocksMap[currentPage] || []).map((block) => {
@@ -1086,6 +1137,7 @@ export default function EditPdfPage() {
                       </div>
                     );
                   })}
+                </div>
               </div>
             </div>
           </div>
