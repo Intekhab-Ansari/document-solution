@@ -101,5 +101,46 @@ describe("PDF Editing Engine (Client-Side Vector)", () => {
     const loaded = await PDFDocument.load(editedBytes);
     expect(loaded.getPageCount()).toBe(1);
   });
+
+  it("safely handles Unicode and Devanagari text without WinAnsi errors", async () => {
+    const testDoc = await PDFDocument.create();
+    testDoc.addPage([600, 800]);
+    const originalBytes = await testDoc.save();
+
+    // Editing with Hindi/Marathi Aadhaar text (Devanagari characters)
+    const editedBytes = await editPdfDocument(originalBytes, {
+      existingBlocks: [
+        {
+          id: "block-devanagari",
+          pageNumber: 1,
+          originalText: "जन्म तारीख / DOB: 01/01/1970",
+          text: "जन्म तारीख / DOB: 12/01/1975",
+          x: 50,
+          y: 700,
+          width: 250,
+          height: 20,
+          fontSize: 14,
+          fontFamily: "Helvetica",
+          color: "#111827",
+          isModified: true,
+        },
+      ],
+      texts: [
+        {
+          id: "t-unicode",
+          pageNumber: 1,
+          text: "नाव: शकील मो.अंसारी",
+          x: 50,
+          y: 650,
+          fontSize: 14,
+          color: "#111827",
+        },
+      ],
+    });
+
+    expect(editedBytes).toBeInstanceOf(Uint8Array);
+    const loaded = await PDFDocument.load(editedBytes);
+    expect(loaded.getPageCount()).toBe(1);
+  });
 });
 

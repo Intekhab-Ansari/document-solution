@@ -60,6 +60,139 @@ export function hexToRgb(hex: string): { r: number; g: number; b: number } {
   };
 }
 
+export function isPureWinAnsi(text: string): boolean {
+  for (let i = 0; i < text.length; i++) {
+    const code = text.charCodeAt(i);
+    if (code > 255 || (code >= 127 && code <= 159)) return false;
+  }
+  return true;
+}
+
+export function measureTextWidth(
+  text: string,
+  fontSize: number,
+  font?: any,
+  isBold?: boolean
+): number {
+  if (font && isPureWinAnsi(text)) {
+    try {
+      return font.widthOfTextAtSize(text, fontSize);
+    } catch {
+      // Fallback
+    }
+  }
+  if (typeof document !== "undefined") {
+    try {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.font = `${isBold ? "bold " : ""}${fontSize}px "Noto Sans Devanagari", "Nirmala UI", "Segoe UI", Arial, sans-serif`;
+        return ctx.measureText(text).width;
+      }
+    } catch {
+      // Fallback
+    }
+  }
+  return text.length * fontSize * 0.65;
+}
+
+async function drawUnicodeTextWithCanvas(
+  pdfDoc: PDFDocument,
+  page: any,
+  text: string,
+  x: number,
+  y: number,
+  fontSize: number,
+  colorHex: string,
+  isBold?: boolean
+): Promise<void> {
+  if (typeof document === "undefined") return;
+
+  const scale = 4; // High DPI (288 DPI print resolution)
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const fontStyle = `${isBold ? "bold " : ""}${Math.round(fontSize * scale)}px "Noto Sans Devanagari", "Nirmala UI", "Segoe UI", Arial, sans-serif`;
+  ctx.font = fontStyle;
+
+  const metrics = ctx.measureText(text);
+  const textWidth = Math.ceil(metrics.width);
+  const actualAscent = Math.ceil(metrics.actualBoundingBoxAscent || fontSize * scale * 0.82);
+  const actualDescent = Math.ceil(metrics.actualBoundingBoxDescent || fontSize * scale * 0.28);
+  const pad = Math.round(4 * scale);
+
+  canvas.width = textWidth + pad * 2;
+  canvas.height = actualAscent + actualDescent + pad * 2;
+
+  ctx.font = fontStyle;
+  ctx.fillStyle = colorHex || "#000000";
+  ctx.textBaseline = "alphabetic";
+
+  const baselineY = pad + actualAscent;
+  ctx.fillText(text, pad, baselineY);
+
+  const dataUrl = canvas.toDataURL("image/png");
+  const base64Data = dataUrl.split(",")[1];
+  const binaryString = atob(base64Data);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+
+  const pngImage = await pdfDoc.embedPng(bytes);
+  const renderWidth = canvas.width / scale;
+  const renderHeight = canvas.height / scale;
+  const renderY = y - (actualDescent / scale) - (pad / scale);
+  const renderX = x - (pad / scale);
+
+  page.drawImage(pngImage, {
+    x: renderX,
+    y: renderY,
+    width: renderWidth,
+    height: renderHeight,
+  });
+}
+
+async function drawTextSafely(
+  pdfDoc: PDFDocument,
+  page: any,
+  text: string,
+  x: number,
+  y: number,
+  fontSize: number,
+  font: any,
+  colorRgb: { r: number; g: number; b: number },
+  colorHex: string,
+  isBold?: boolean
+): Promise<void> {
+  if (isPureWinAnsi(text)) {
+    try {
+      page.drawText(text, {
+        x,
+        y,
+        size: fontSize,
+        font,
+        color: rgb(colorRgb.r, colorRgb.g, colorRgb.b),
+      });
+      return;
+    } catch {
+      // Fall through to canvas
+    }
+  }
+
+  await drawUnicodeTextWithCanvas(
+    pdfDoc,
+    page,
+    text,
+    x,
+    y,
+    fontSize,
+    colorHex,
+    isBold
+  );
+}
+
 /**
  * Applies text, whiteout boxes, highlights, and drawings onto PDF pages locally in-browser
  */
@@ -92,28 +225,17 @@ export async function editPdfDocument(
       const textRgb = hexToRgb(block.color || "#000000");
       const fontSize = block.fontSize || 12;
 
-      // Calculate width of original and new text to ensure complete whiteout coverage
-      let originalWidth = block.width;
-      try {
-        originalWidth = Math.max(originalWidth, font.widthOfTextAtSize(block.originalText, fontSize));
-      } catch {
-        // Fallback
-      }
+      // Calculate width of original and new text with Unicode support
+      const origWidth = block.width || measureTextWidth(block.originalText, fontSize, font, block.isBold);
+      const newWidth = measureTextWidth(block.text, fontSize, font, block.isBold);
 
-      let newWidth = 0;
-      try {
-        newWidth = font.widthOfTextAtSize(block.text, fontSize);
-      } catch {
-        // Fallback
-      }
+      const coverWidth = Math.max(origWidth, newWidth) + 2;
+      const coverHeight = Math.max(block.height, fontSize * 1.15);
+      const coverY = block.y - Math.round(fontSize * 0.2);
 
-      const coverWidth = Math.max(originalWidth, newWidth) + 8;
-      const coverHeight = Math.max(block.height, fontSize * 1.35) + 4;
-      const coverY = block.y - Math.round(fontSize * 0.28);
-
-      // Whiteout original text from PDF stream
+      // Whiteout original text from PDF stream with exact bounding box
       page.drawRectangle({
-        x: Math.max(0, block.x - 3),
+        x: Math.max(0, block.x - 1),
         y: Math.max(0, coverY),
         width: coverWidth,
         height: coverHeight,
@@ -129,13 +251,18 @@ export async function editPdfDocument(
         for (let li = 0; li < lines.length; li++) {
           const line = lines[li];
           if (!line.length) continue;
-          page.drawText(line, {
-            x: block.x,
-            y: block.y - li * lineHeight,
-            size: fontSize,
+          await drawTextSafely(
+            pdfDoc,
+            page,
+            line,
+            block.x,
+            block.y - li * lineHeight,
+            fontSize,
             font,
-            color: rgb(textRgb.r, textRgb.g, textRgb.b),
-          });
+            textRgb,
+            block.color || "#000000",
+            block.isBold
+          );
         }
       }
     }
@@ -201,24 +328,29 @@ export async function editPdfDocument(
         const lineY = t.y - li * lineHeight;
 
         if (t.hasWhiteoutBackground) {
-          const textWidth = font.widthOfTextAtSize(line, fontSize);
+          const textWidth = measureTextWidth(line, fontSize, font, t.isBold);
           page.drawRectangle({
-            x: t.x - 3,
-            y: lineY - 3,
-            width: textWidth + 6,
-            height: fontSize + 6,
+            x: Math.max(0, t.x - 2),
+            y: Math.max(0, lineY - 2),
+            width: textWidth + 4,
+            height: fontSize + 4,
             color: rgb(1, 1, 1),
             opacity: 1,
           });
         }
 
-        page.drawText(line, {
-          x: t.x,
-          y: lineY,
-          size: fontSize,
+        await drawTextSafely(
+          pdfDoc,
+          page,
+          line,
+          t.x,
+          lineY,
+          fontSize,
           font,
-          color: rgb(textRgb.r, textRgb.g, textRgb.b),
-        });
+          textRgb,
+          t.color || "#000000",
+          t.isBold
+        );
       }
     }
   }

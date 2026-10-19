@@ -69,8 +69,8 @@ export default function EditPdfPage() {
   const [toolMode, setToolMode] = useState<EditorToolMode>("edit-existing");
 
   // Styling controls
-  const [activeColor, setActiveColor] = useState<string>("#dc2626"); // Default vibrant red for edits
-  const [fontSize, setFontSize] = useState<number>(16);
+  const [activeColor, setActiveColor] = useState<string>("#111827"); // Default dark text color matching original document
+  const [fontSize, setFontSize] = useState<number>(14);
   const [fontFamily, setFontFamily] = useState<"Helvetica" | "HelveticaBold" | "TimesRoman" | "Courier">("HelveticaBold");
   const [hasWhiteoutBackground, setHasWhiteoutBackground] = useState<boolean>(true); // Whiteout backing for new text
   const [penWidth, setPenWidth] = useState<number>(3);
@@ -818,12 +818,12 @@ export default function EditPdfPage() {
                         key={block.id}
                         className="annotation-box absolute z-30 flex flex-col items-start"
                         style={{
-                          left: `${screenLeft - 6}px`,
-                          top: `${screenTop - 5}px`,
+                          left: `${screenLeft}px`,
+                          top: `${screenTop}px`,
                         }}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <div className="relative flex items-center bg-white p-1 rounded-md shadow-2xl border-2 border-emerald-500 ring-4 ring-emerald-500/20">
+                        <div className="relative flex items-center bg-white p-0.5 rounded shadow-lg border border-emerald-500 ring-2 ring-emerald-500/20">
                           <input
                             type="text"
                             autoFocus
@@ -836,28 +836,24 @@ export default function EditPdfPage() {
                             }}
                             style={{
                               fontSize: `${block.fontSize}px`,
-                              color: block.color,
+                              color: block.color || "#111827",
                               fontWeight: block.isBold ? "bold" : "normal",
-                              fontFamily: block.fontFamily?.includes("Courier")
-                                ? "Courier, monospace"
-                                : block.fontFamily?.includes("Times")
-                                ? "Times New Roman, serif"
-                                : "Helvetica, Arial, sans-serif",
-                              minWidth: `${Math.max(block.width + 16, block.text.length * (block.fontSize * 0.65) + 24)}px`,
+                              fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
+                              minWidth: `${Math.max(block.width + 10, (block.text || "").length * (block.fontSize * 0.65) + 15)}px`,
                             }}
-                            className="bg-white outline-none px-2 py-0.5 rounded text-zinc-950 font-medium"
+                            className="bg-white outline-none px-1 py-0.5 rounded text-zinc-950 font-medium"
                           />
 
-                          <div className="flex items-center gap-1 ml-1.5 pl-1.5 border-l border-zinc-200">
+                          <div className="flex items-center gap-1 ml-1 pl-1 border-l border-zinc-200">
                             {isModified && (
                               <button
                                 type="button"
                                 onClick={() => revertExistingBlock(block.id)}
-                                className="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center gap-1 transition-colors"
-                                title="Revert to original PDF text"
+                                className="px-1.5 py-0.5 rounded text-[11px] font-semibold bg-zinc-100 text-zinc-700 hover:bg-zinc-200 flex items-center gap-0.5 transition-colors"
+                                title="Revert to original text"
                               >
                                 <Undo2 className="w-3 h-3" />
-                                <span>Undo</span>
+                                <span>Revert</span>
                               </button>
                             )}
                             <button
@@ -871,7 +867,7 @@ export default function EditPdfPage() {
                             <button
                               type="button"
                               onClick={() => setSelectedExistingBlockId(null)}
-                              className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-1 transition-colors"
+                              className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-1 transition-colors cursor-pointer"
                               title="Apply & Close"
                             >
                               <CheckCircle2 className="w-3 h-3" />
@@ -883,7 +879,7 @@ export default function EditPdfPage() {
                     );
                   }
 
-                  // Modified block: Render with solid white background to cover original printed letters
+                  // Modified block: Render with seamless white background matching original document text without harsh badges
                   if (isModified) {
                     return (
                       <div
@@ -893,26 +889,22 @@ export default function EditPdfPage() {
                           setSelectedExistingBlockId(block.id);
                           setSelectedElementId(null);
                         }}
-                        className="annotation-box absolute z-20 group cursor-pointer transition-all"
+                        className="annotation-box absolute z-20 group cursor-pointer"
                         style={{
-                          left: `${screenLeft - 4}px`,
-                          top: `${screenTop - 4}px`,
+                          left: `${screenLeft}px`,
+                          top: `${screenTop}px`,
                         }}
-                        title="Click to edit modified text"
+                        title="Click to edit text"
                       >
                         <div
-                          className="relative inline-flex items-center px-2 py-1 rounded shadow-sm border border-emerald-500/80 bg-white ring-1 ring-emerald-500/30 group-hover:ring-2"
+                          className="relative inline-flex items-center bg-white px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
                           style={{
                             fontSize: `${block.fontSize}px`,
-                            color: block.color,
+                            color: block.color || "#111827",
                             fontWeight: block.isBold ? "bold" : "normal",
-                            fontFamily: block.fontFamily?.includes("Courier")
-                              ? "Courier, monospace"
-                              : block.fontFamily?.includes("Times")
-                              ? "Times New Roman, serif"
-                              : "Helvetica, Arial, sans-serif",
-                            minWidth: `${Math.max(block.width + 12, block.text.length * (block.fontSize * 0.65) + 20)}px`,
-                            lineHeight: 1.15,
+                            fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
+                            minWidth: `${Math.max(block.width, (block.text || "").length * (block.fontSize * 0.6))}px`,
+                            lineHeight: 1.2,
                           }}
                         >
                           {block.text ? (
@@ -920,8 +912,8 @@ export default function EditPdfPage() {
                           ) : (
                             <span className="text-zinc-400 italic text-xs">[Erased]</span>
                           )}
-                          <span className="ml-1.5 text-[9px] font-extrabold uppercase px-1 py-0.2 bg-emerald-100 text-emerald-800 rounded pointer-events-none">
-                            EDITED
+                          <span className="opacity-0 group-hover:opacity-100 text-[9px] font-bold bg-emerald-500 text-zinc-950 px-1 py-0.2 rounded -top-3.5 right-0 absolute shadow pointer-events-none transition-opacity whitespace-nowrap">
+                            Edit
                           </span>
                         </div>
                       </div>
