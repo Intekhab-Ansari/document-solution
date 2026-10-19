@@ -12,6 +12,7 @@ export interface ExistingPdfTextBlock {
   fontSize: number;
   color: string;   // hex string e.g. "#111827" or custom
   fontFamily: "Helvetica" | "HelveticaBold" | "TimesRoman" | "Courier";
+  backgroundColor?: string; // sampled document background color e.g. "#fbfbfb" or "#ffffff"
   isBold?: boolean;
   isModified: boolean;
 }
@@ -31,47 +32,62 @@ export async function extractAllExistingTextBlocks(
     (it) => "str" in it && it.str && it.str.trim().length > 0
   );
 
-  const blocks: ExistingPdfTextBlock[] = [];
-
-  for (let i = 0; i < rawItems.length; i++) {
-    const it = rawItems[i];
+  // Map items with normalized numeric coordinates
+  const mapped = rawItems.map((it, idx) => {
     const x = Math.round(it.transform[4]);
     const y = Math.round(it.transform[5]);
     const fontSize = Math.max(
-      8,
+      7,
       Math.round(Math.sqrt(it.transform[0] * it.transform[0] + it.transform[1] * it.transform[1]))
     );
-    const w = Math.max(12, Math.round(it.width));
+    const w = Math.max(8, Math.round(it.width));
     const h = Math.max(fontSize, Math.round(it.height || fontSize));
+    return { it, x, y, fontSize, w, h, idx };
+  });
 
-    // Merge with previous block if on the exact same baseline
+  // Sort items into natural reading order:
+  // Top-to-bottom (higher y first), and within the same baseline line, left-to-right (x ascending)
+  mapped.sort((a, b) => {
+    if (Math.abs(a.y - b.y) <= 3.5) {
+      return a.x - b.x;
+    }
+    return b.y - a.y;
+  });
+
+  const blocks: ExistingPdfTextBlock[] = [];
+
+  for (let i = 0; i < mapped.length; i++) {
+    const item = mapped[i];
     const last = blocks[blocks.length - 1];
+
+    // Merge with previous block if on the exact same baseline line
     if (
       last &&
-      Math.abs(last.y - y) <= 3 &&
-      Math.abs(last.fontSize - fontSize) <= 3 &&
-      x >= last.x &&
-      x <= last.x + last.width + fontSize * 1.5
+      Math.abs(last.y - item.y) <= 3.5 &&
+      Math.abs(last.fontSize - item.fontSize) <= 3.5 &&
+      item.x >= last.x &&
+      item.x <= last.x + last.width + item.fontSize * 1.8
     ) {
-      const spacing = x - (last.x + last.width) > fontSize * 0.25 ? " " : "";
-      last.text += spacing + it.str;
+      const spacing = item.x - (last.x + last.width) > item.fontSize * 0.2 ? " " : "";
+      last.text += spacing + item.it.str;
       last.originalText = last.text;
-      last.width = x + w - last.x;
-      last.height = Math.max(last.height, h);
+      last.width = item.x + item.w - last.x;
+      last.height = Math.max(last.height, item.h);
     } else {
       blocks.push({
         id: `pdf-text-${pageNumber}-${i}-${Math.random().toString(36).substring(2, 7)}`,
         pageNumber,
-        originalText: it.str,
-        text: it.str,
-        x,
-        y,
-        width: w,
-        height: h,
-        fontSize,
+        originalText: item.it.str,
+        text: item.it.str,
+        x: item.x,
+        y: item.y,
+        width: item.w,
+        height: item.h,
+        fontSize: item.fontSize,
         color: "#111827",
-        fontFamily: fontSize >= 16 ? "HelveticaBold" : "Helvetica",
-        isBold: fontSize >= 16,
+        backgroundColor: "#ffffff",
+        fontFamily: item.fontSize >= 16 ? "HelveticaBold" : "Helvetica",
+        isBold: item.fontSize >= 16,
         isModified: false,
       });
     }

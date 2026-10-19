@@ -51,6 +51,47 @@ const COLOR_SWATCHES = [
   { label: "Purple", hex: "#7c3aed" },
 ];
 
+// Sample surrounding canvas pixels to extract exact document paper background color
+function sampleDocumentBackgroundColor(
+  ctx: CanvasRenderingContext2D,
+  block: ExistingPdfTextBlock,
+  pageHeight: number,
+  scale: number
+): string {
+  try {
+    const samplePoints = [
+      { x: block.x + 2, y: block.y + block.fontSize + 2 }, // above
+      { x: Math.max(0, block.x - 3), y: block.y + Math.round(block.fontSize * 0.5) }, // left
+      { x: block.x + 8, y: block.y + block.fontSize + 3 }, // above-mid
+    ];
+
+    const colors: { r: number; g: number; b: number }[] = [];
+
+    for (const pt of samplePoints) {
+      const cx = Math.round(pt.x * scale);
+      const cy = Math.round((pageHeight - pt.y) * scale);
+      if (cx >= 0 && cx < ctx.canvas.width && cy >= 0 && cy < ctx.canvas.height) {
+        const pixel = ctx.getImageData(cx, cy, 1, 1).data;
+        // Accept only light background pixels (skip dark borders/letters)
+        if (pixel[0] > 160 && pixel[1] > 160 && pixel[2] > 160) {
+          colors.push({ r: pixel[0], g: pixel[1], b: pixel[2] });
+        }
+      }
+    }
+
+    if (colors.length > 0) {
+      const avgR = Math.round(colors.reduce((s, c) => s + c.r, 0) / colors.length);
+      const avgG = Math.round(colors.reduce((s, c) => s + c.g, 0) / colors.length);
+      const avgB = Math.round(colors.reduce((s, c) => s + c.b, 0) / colors.length);
+      const toHex = (n: number) => n.toString(16).padStart(2, "0");
+      return `#${toHex(avgR)}${toHex(avgG)}${toHex(avgB)}`;
+    }
+  } catch {
+    // Fallback to white if canvas context reading is restricted
+  }
+  return "#ffffff";
+}
+
 export default function EditPdfPage() {
   const [file, setFile] = useState<File | null>(null);
   const [fileBytes, setFileBytes] = useState<Uint8Array | null>(null);
@@ -150,6 +191,17 @@ export default function EditPdfPage() {
         setIsLoadingTextBlocks(true);
         try {
           const blocks = await extractAllExistingTextBlocks(bytes, pageNum);
+          const ctx = canvas.getContext("2d");
+          if (ctx) {
+            for (const b of blocks) {
+              b.backgroundColor = sampleDocumentBackgroundColor(
+                ctx,
+                b,
+                pageDimensions.height,
+                renderScale
+              );
+            }
+          }
           setExistingBlocksMap((prev) => {
             if (prev[pageNum]) return prev; // Preserve any in-progress edits
             return { ...prev, [pageNum]: blocks };
@@ -308,6 +360,22 @@ export default function EditPdfPage() {
     const rect = pageContainerRef.current.getBoundingClientRect();
     const clickX = (e.clientX - rect.left) / zoomScale;
     const clickY = (e.clientY - rect.top) / zoomScale;
+
+    // Auto-detect if user clicked on or near an existing printed text block on this page
+    const pageBlocks = existingBlocksMap[currentPage] || [];
+    const matchedBlock = pageBlocks.find((b) => {
+      const top = pageDimensions.height - b.y - Math.round(b.fontSize * 0.88);
+      const bottom = top + Math.round(b.fontSize * 1.35);
+      const left = b.x - 4;
+      const right = b.x + b.width + 8;
+      return clickX >= left && clickX <= right && clickY >= top - 3 && clickY <= bottom + 3;
+    });
+
+    if (matchedBlock) {
+      setSelectedExistingBlockId(matchedBlock.id);
+      setSelectedElementId(null);
+      return;
+    }
 
     // Convert screen coordinates to PDF points (origin at bottom-left)
     const pdfX = Math.round(clickX);
@@ -874,7 +942,10 @@ export default function EditPdfPage() {
                         }}
                         onClick={(e) => e.stopPropagation()}
                       >
-                        <div className="relative flex items-center bg-white p-0.5 rounded shadow-lg border border-emerald-500 ring-2 ring-emerald-500/20">
+                        <div
+                          className="relative flex items-center p-0.5 rounded shadow-lg border border-emerald-500 ring-2 ring-emerald-500/20"
+                          style={{ backgroundColor: block.backgroundColor || "#ffffff" }}
+                        >
                           <input
                             type="text"
                             autoFocus
@@ -891,8 +962,9 @@ export default function EditPdfPage() {
                               fontWeight: block.isBold ? "bold" : "normal",
                               fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
                               minWidth: `${Math.max(block.width + 10, (block.text || "").length * (block.fontSize * 0.65) + 15)}px`,
+                              backgroundColor: block.backgroundColor || "#ffffff",
                             }}
-                            className="bg-white outline-none px-1 py-0.5 rounded text-zinc-950 font-medium"
+                            className="outline-none px-1 py-0.5 rounded text-zinc-950 font-medium"
                           />
 
                           <div className="flex items-center gap-1 ml-1 pl-1 border-l border-zinc-200">
@@ -930,7 +1002,7 @@ export default function EditPdfPage() {
                     );
                   }
 
-                  // Modified block: Render with seamless white background matching original document text without harsh badges
+                  // Modified block: Render with seamless matching background matching original document paper
                   if (isModified) {
                     return (
                       <div
@@ -948,7 +1020,7 @@ export default function EditPdfPage() {
                         title="Click to edit text"
                       >
                         <div
-                          className="relative inline-flex items-center bg-white px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
+                          className="relative inline-flex items-center px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
                           style={{
                             fontSize: `${block.fontSize}px`,
                             color: block.color || "#111827",
@@ -956,6 +1028,7 @@ export default function EditPdfPage() {
                             fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
                             minWidth: `${Math.max(block.width, (block.text || "").length * (block.fontSize * 0.6))}px`,
                             lineHeight: 1.2,
+                            backgroundColor: block.backgroundColor || "#ffffff",
                           }}
                         >
                           {block.text ? (

@@ -230,16 +230,17 @@ export async function editPdfDocument(
       const newWidth = measureTextWidth(block.text, fontSize, font, block.isBold);
 
       const coverWidth = Math.max(origWidth, newWidth) + 2;
-      const coverHeight = Math.max(block.height, fontSize * 1.15);
-      const coverY = block.y - Math.round(fontSize * 0.2);
+      const coverHeight = Math.round(fontSize * 1.15);
+      const coverY = block.y - Math.round(fontSize * 0.22);
+      const bgRgb = hexToRgb(block.backgroundColor || "#ffffff");
 
-      // Whiteout original text from PDF stream with exact bounding box
+      // Whiteout original text from PDF stream with exact matching document background color
       page.drawRectangle({
         x: Math.max(0, block.x - 1),
         y: Math.max(0, coverY),
         width: coverWidth,
         height: coverHeight,
-        color: rgb(1, 1, 1),
+        color: rgb(bgRgb.r, bgRgb.g, bgRgb.b),
         opacity: 1.0,
       });
 
