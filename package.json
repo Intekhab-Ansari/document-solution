@@ -11,5 +11,12 @@
     "build": "npm --prefix apps/web run build",
     "lint": "npm --prefix apps/web run lint",
     "test": "npm --prefix apps/web run test"
+  },
+  "dependencies": {
+    "@neslinesli93/qpdf-wasm": "^0.3.0"
+  },
+  "optionalDependencies": {
+    "lightningcss-linux-x64-gnu": "^1.32.0",
+    "lightningcss-win32-x64-msvc": "^1.32.0"
   }
 }

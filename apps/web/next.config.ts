@@ -14,10 +14,10 @@ const nextConfig: NextConfig = {
     return config;
   },
   turbopack: {
-    root: path.resolve(__dirname),
+    root: path.resolve(__dirname, "../.."),
     resolveAlias: {
-      fs: "./src/lib/empty.js",
-      path: "./src/lib/empty.js",
+      fs: path.resolve(__dirname, "src/lib/empty.js"),
+      path: path.resolve(__dirname, "src/lib/empty.js"),
     },
     rules: {
       "*.css": {
