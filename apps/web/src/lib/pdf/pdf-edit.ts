@@ -229,9 +229,9 @@ export async function editPdfDocument(
       const origWidth = block.width || measureTextWidth(block.originalText, fontSize, font, block.isBold);
       const newWidth = measureTextWidth(block.text, fontSize, font, block.isBold);
 
-      const coverWidth = Math.max(origWidth, newWidth) + 2;
-      const coverHeight = Math.round(fontSize * 1.15);
-      const coverY = block.y - Math.round(fontSize * 0.22);
+      const coverWidth = Math.max(origWidth, newWidth) + 3;
+      const coverHeight = Math.round(fontSize * 1.25);
+      const coverY = block.y - Math.round(fontSize * 0.28);
       const bgRgb = hexToRgb(block.backgroundColor || "#ffffff");
 
       // Whiteout original text from PDF stream with exact matching document background color

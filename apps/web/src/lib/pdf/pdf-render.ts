@@ -39,10 +39,15 @@ export async function renderPdfPageToCanvas(
   const doc = await loadPdfDoc(pdfData);
   const page = await doc.getPage(pageNumber);
   const viewport = page.getViewport({ scale });
+  const baseViewport = page.getViewport({ scale: 1.0 });
 
   const canvas = document.createElement("canvas");
   canvas.width = Math.floor(viewport.width);
   canvas.height = Math.floor(viewport.height);
+  // Store exact unscaled base page dimensions in points on the canvas element
+  (canvas as any).pageWidth = Math.round(baseViewport.width);
+  (canvas as any).pageHeight = Math.round(baseViewport.height);
+
   const ctx = canvas.getContext("2d", { willReadFrequently: true });
   if (!ctx) throw new Error("Could not get 2D canvas context");
 
@@ -57,6 +62,19 @@ export async function renderPdfPageToCanvas(
   // @ts-expect-error pdfjs typing nuance
   await page.render(renderContext).promise;
   return canvas;
+}
+
+export async function getPdfPageDimensions(
+  pdfData: ArrayBuffer | Uint8Array,
+  pageNumber: number
+): Promise<{ width: number; height: number }> {
+  const doc = await loadPdfDoc(pdfData);
+  const page = await doc.getPage(pageNumber);
+  const viewport = page.getViewport({ scale: 1.0 });
+  return {
+    width: Math.round(viewport.width),
+    height: Math.round(viewport.height),
+  };
 }
 
 export async function renderPageThumbnail(

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { PDFDocument } from "pdf-lib";
 import { editPdfDocument, hexToRgb } from "../../src/lib/pdf/pdf-edit";
+import { extractAllExistingTextBlocks } from "../../src/lib/pdf/pdf-text-extract";
 
 describe("PDF Editing Engine (Client-Side Vector)", () => {
   it("converts hex colors to RGB floats correctly", () => {
@@ -141,6 +142,26 @@ describe("PDF Editing Engine (Client-Side Vector)", () => {
     expect(editedBytes).toBeInstanceOf(Uint8Array);
     const loaded = await PDFDocument.load(editedBytes);
     expect(loaded.getPageCount()).toBe(1);
+  });
+
+  it("extracts text blocks with exact viewport screen coordinates aligned with text baseline", async () => {
+    const testDoc = await PDFDocument.create();
+    const page = testDoc.addPage([600, 800]);
+    page.drawText("Shaukat Idris Ansari", { x: 100, y: 700, size: 14 });
+    const pdfBytes = await testDoc.save();
+
+    const blocks = await extractAllExistingTextBlocks(pdfBytes, 1);
+    expect(blocks.length).toBeGreaterThan(0);
+    const ansariBlock = blocks.find((b) => b.text.includes("Shaukat"));
+    expect(ansariBlock).toBeDefined();
+    expect(ansariBlock!.x).toBe(100);
+    expect(ansariBlock!.y).toBe(700);
+    expect(ansariBlock!.screenX).toBe(100);
+    // Baseline from top: 800 - 700 = 100
+    expect(ansariBlock!.baselineY).toBe(100);
+    // screenY is top of bounding box: baselineY - 0.82 * fontSize
+    expect(ansariBlock!.screenY!).toBeLessThan(ansariBlock!.baselineY!);
+    expect(ansariBlock!.screenY!).toBeCloseTo(89, -1);
   });
 });
 

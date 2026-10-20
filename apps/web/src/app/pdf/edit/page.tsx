@@ -55,21 +55,22 @@ const COLOR_SWATCHES = [
 function sampleDocumentBackgroundColor(
   ctx: CanvasRenderingContext2D,
   block: ExistingPdfTextBlock,
-  pageHeight: number,
-  scale: number
+  renderScale: number
 ): string {
   try {
+    const screenX = block.screenX ?? block.x;
+    const screenY = block.screenY ?? 0;
     const samplePoints = [
-      { x: block.x + 2, y: block.y + block.fontSize + 2 }, // above
-      { x: Math.max(0, block.x - 3), y: block.y + Math.round(block.fontSize * 0.5) }, // left
-      { x: block.x + 8, y: block.y + block.fontSize + 3 }, // above-mid
+      { x: screenX + 4, y: Math.max(1, screenY - 3) }, // slightly above text
+      { x: Math.max(1, screenX - 3), y: screenY + Math.round((block.height || block.fontSize) * 0.5) }, // left of text
+      { x: screenX + Math.min(25, (block.width || 50) * 0.5), y: Math.max(1, screenY - 3) }, // above-mid
     ];
 
     const colors: { r: number; g: number; b: number }[] = [];
 
     for (const pt of samplePoints) {
-      const cx = Math.round(pt.x * scale);
-      const cy = Math.round((pageHeight - pt.y) * scale);
+      const cx = Math.round(pt.x * renderScale);
+      const cy = Math.round(pt.y * renderScale);
       if (cx >= 0 && cx < ctx.canvas.width && cy >= 0 && cy < ctx.canvas.height) {
         const pixel = ctx.getImageData(cx, cy, 1, 1).data;
         // Accept only light background pixels (skip dark borders/letters)
@@ -186,6 +187,11 @@ export default function EditPdfPage() {
       const canvas = await renderPdfPageToCanvas(bytes, pageNum, renderScale);
       setCanvasUrl(canvas.toDataURL("image/png"));
 
+      // Synchronize exact unscaled page dimensions from PDF.js viewport
+      const exactWidth = (canvas as any).pageWidth || pageDimensions.width;
+      const exactHeight = (canvas as any).pageHeight || pageDimensions.height;
+      setPageDimensions({ width: exactWidth, height: exactHeight });
+
       // Extract existing text blocks if not cached yet for this page
       if (!existingBlocksMap[pageNum]) {
         setIsLoadingTextBlocks(true);
@@ -197,7 +203,6 @@ export default function EditPdfPage() {
               b.backgroundColor = sampleDocumentBackgroundColor(
                 ctx,
                 b,
-                pageDimensions.height,
                 renderScale
               );
             }
@@ -364,11 +369,11 @@ export default function EditPdfPage() {
     // Auto-detect if user clicked on or near an existing printed text block on this page
     const pageBlocks = existingBlocksMap[currentPage] || [];
     const matchedBlock = pageBlocks.find((b) => {
-      const top = pageDimensions.height - b.y - Math.round(b.fontSize * 0.88);
-      const bottom = top + Math.round(b.fontSize * 1.35);
-      const left = b.x - 4;
-      const right = b.x + b.width + 8;
-      return clickX >= left && clickX <= right && clickY >= top - 3 && clickY <= bottom + 3;
+      const top = b.screenY ?? (pageDimensions.height - b.y - Math.round(b.fontSize * 0.82));
+      const bottom = top + (b.height || Math.round(b.fontSize * 1.2));
+      const left = (b.screenX ?? b.x) - 4;
+      const right = (b.screenX ?? b.x) + b.width + 8;
+      return clickX >= left && clickX <= right && clickY >= top - 4 && clickY <= bottom + 4;
     });
 
     if (matchedBlock) {
@@ -915,7 +920,7 @@ export default function EditPdfPage() {
                     <img
                       src={canvasUrl}
                       alt={`Page ${currentPage}`}
-                      className="absolute inset-0 w-full h-full object-contain pointer-events-none"
+                      className="absolute inset-0 w-full h-full object-fill pointer-events-none"
                     />
                   )}
 
@@ -925,11 +930,10 @@ export default function EditPdfPage() {
                   const isModified = block.isModified || block.text !== block.originalText || block.color !== "#111827";
 
                   // PDF baseline to screen coordinates:
-                  // block.y is baseline from bottom in points.
-                  // Baseline in screen coordinates is (pageDimensions.height - block.y).
-                  // Top of the text box is baseline - fontSize * 0.88.
-                  const screenTop = pageDimensions.height - block.y - Math.round(block.fontSize * 0.88);
-                  const screenLeft = block.x;
+                  // block.screenX and block.screenY are computed via PDF.js viewport.convertToViewportPoint
+                  // guaranteeing exact pixel alignment with the rendered background canvas.
+                  const screenTop = block.screenY ?? (pageDimensions.height - block.y - Math.round(block.fontSize * 0.82));
+                  const screenLeft = block.screenX ?? block.x;
 
                   if (isSelected) {
                     return (
@@ -1020,14 +1024,15 @@ export default function EditPdfPage() {
                         title="Click to edit text"
                       >
                         <div
-                          className="relative inline-flex items-center px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
+                          className="relative inline-flex items-baseline px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
                           style={{
                             fontSize: `${block.fontSize}px`,
                             color: block.color || "#111827",
                             fontWeight: block.isBold ? "bold" : "normal",
                             fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
                             minWidth: `${Math.max(block.width, (block.text || "").length * (block.fontSize * 0.6))}px`,
-                            lineHeight: 1.2,
+                            height: `${Math.round(block.fontSize * 1.18)}px`,
+                            lineHeight: 1.15,
                             backgroundColor: block.backgroundColor || "#ffffff",
                           }}
                         >
@@ -1058,7 +1063,7 @@ export default function EditPdfPage() {
                         left: `${screenLeft - 2}px`,
                         top: `${screenTop - 1}px`,
                         width: `${block.width + 4}px`,
-                        height: `${Math.round(block.fontSize * 1.25)}px`,
+                        height: `${Math.round(block.fontSize * 1.2)}px`,
                       }}
                       title={`Click to edit: "${block.originalText}"`}
                     >
