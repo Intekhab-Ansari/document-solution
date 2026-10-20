@@ -8,6 +8,18 @@ import { Download, FileText, Image as ImageIcon, Sparkles, ArrowRight, ShieldChe
 export default function TestFilesHubPage() {
   const SAMPLES = [
     {
+      name: "sample_id_card.pdf",
+      title: "Government Identity & Aadhaar Card (Vector)",
+      desc: "Single-page vector ID card with names, dates of birth, ID numbers, photo box, and address fields (~1.5 KB). Ideal for testing the Edit PDF Studio with direct in-place text replacement, font sizing, and color palette.",
+      type: "Vector PDF",
+      size: "1.5 KB",
+      href: "/test-files/sample_id_card.pdf",
+      testToolHref: "/pdf/edit",
+      testToolName: "Test in Edit PDF Studio",
+      badge: "In-Place Text Editor",
+      badgeColor: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+    },
+    {
       name: "sample_scanned_contract_large.pdf",
       title: "Scanned Multi-Page Contract PDF",
       desc: "Heavy multi-page scanned document with high-resolution page imagery and embedded text operators (~875 KB). Ideal for testing target-size compression (e.g. shrinking to 200 KB or 100 KB).",

@@ -98,6 +98,19 @@ export default function HomePage() {
     setDetectedFile({ file, kind });
   };
 
+  const handleLoadSample = async (url: string, name: string, kind: string) => {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const file = new File([blob], name, {
+        type: blob.type || (kind === "pdf" ? "application/pdf" : "image/jpeg"),
+      });
+      setDetectedFile({ file, kind });
+    } catch {
+      // fallback
+    }
+  };
+
   // Filter tools based on search and category
   const filteredTools = useMemo(() => {
     let tools = ALL_TOOLS;
@@ -194,14 +207,59 @@ export default function HomePage() {
           </div>
 
           {/* Smart File Dropzone */}
-          <div className="max-w-2xl mx-auto pt-4">
+          <div className="max-w-2xl mx-auto pt-4 space-y-3">
             {!detectedFile ? (
-              <FileDropzone
-                accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
-                onFilesSelected={handleFileDropped}
-                title="Drop any document or photo to begin"
-                description="Our local engine inspects your file magic bytes in-memory and unlocks the perfect tools."
-              />
+              <>
+                <FileDropzone
+                  accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
+                  onFilesSelected={handleFileDropped}
+                  title="Drop any document or photo to begin"
+                  description="Our local engine inspects your file magic bytes in-memory and unlocks the perfect tools."
+                />
+
+                {/* Instant Demos / Benchmark Samples */}
+                <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
+                  <span className="text-zinc-500 font-medium flex items-center gap-1 text-[11px] mr-1">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Instant Demos:</span>
+                  </span>
+                  {[
+                    {
+                      name: "sample_id_card.pdf",
+                      url: "/test-files/sample_id_card.pdf",
+                      label: "💳 ID / Aadhaar Card",
+                      kind: "pdf",
+                    },
+                    {
+                      name: "sample_scanned_contract_large.pdf",
+                      url: "/test-files/sample_scanned_contract_large.pdf",
+                      label: "📄 Scanned Contract (875 KB)",
+                      kind: "pdf",
+                    },
+                    {
+                      name: "portrait_curly_hair.jpg",
+                      url: "/test-files/portrait_curly_hair.jpg",
+                      label: "📸 Portrait Photo (Hair Matting)",
+                      kind: "image",
+                    },
+                    {
+                      name: "portrait_with_exif_gps.jpg",
+                      url: "/test-files/portrait_with_exif_gps.jpg",
+                      label: "📍 Photo with EXIF GPS",
+                      kind: "image",
+                    },
+                  ].map((s) => (
+                    <button
+                      key={s.name}
+                      type="button"
+                      onClick={() => handleLoadSample(s.url, s.name, s.kind)}
+                      className="px-3 py-1.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-emerald-500/40 text-zinc-300 hover:text-white transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5 font-medium"
+                    >
+                      <span>{s.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </>
             ) : (
               /* Contextual Smart Action Card */
               <div className="p-6 rounded-3xl bg-zinc-900/90 border border-emerald-500/40 shadow-2xl flex flex-col gap-4 text-left animate-in fade-in zoom-in-95 ring-1 ring-emerald-500/20 backdrop-blur-xl">

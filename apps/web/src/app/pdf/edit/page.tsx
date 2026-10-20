@@ -616,6 +616,12 @@ export default function EditPdfPage() {
             description="Directly click and edit any existing text, change font colors, whiteout old figures, and annotate."
             sampleFiles={[
               {
+                name: "sample_id_card.pdf",
+                url: "/test-files/sample_id_card.pdf",
+                label: "💳 Sample ID Card - Edit name, DOB, ID number & address",
+                kind: "pdf",
+              },
+              {
                 name: "sample_invoice_small.pdf",
                 url: "/test-files/sample_invoice_small.pdf",
                 label: "📄 Sample Invoice - Edit company, amounts, dates",

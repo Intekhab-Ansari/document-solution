@@ -262,3 +262,53 @@ export async function stripImageMetadata(
     savingsBytes: Math.max(0, origSize - cleanBlob.size),
   };
 }
+
+/**
+ * Lossless binary-level EXIF stripper for JPEG Uint8Array bytes
+ * Removes APP1 (0xFFE1) EXIF segment directly without canvas re-encoding
+ */
+export function stripExifFromJpegBytes(bytes: Uint8Array): Uint8Array {
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) {
+    return bytes;
+  }
+  const chunks: Uint8Array[] = [bytes.slice(0, 2)]; // Keep SOI (0xFFD8)
+  let offset = 2;
+
+  while (offset < bytes.length - 1) {
+    if (bytes[offset] !== 0xff) {
+      chunks.push(bytes.slice(offset));
+      break;
+    }
+    const marker = (bytes[offset] << 8) | bytes[offset + 1];
+    offset += 2;
+
+    // Stop at SOS (Start of Scan 0xFFDA) or EOI (0xFFD9)
+    if (marker === 0xffda || marker === 0xffd9) {
+      chunks.push(bytes.slice(offset - 2));
+      break;
+    }
+
+    if (offset + 2 > bytes.length) break;
+    const length = (bytes[offset] << 8) | bytes[offset + 1];
+
+    // If marker is APP1 (0xFFE1) containing Exif, skip it!
+    if (marker === 0xffe1) {
+      offset += length;
+      continue;
+    }
+
+    // Keep other segments
+    chunks.push(bytes.slice(offset - 2, offset + length));
+    offset += length;
+  }
+
+  const totalLen = chunks.reduce((acc, c) => acc + c.length, 0);
+  const result = new Uint8Array(totalLen);
+  let pos = 0;
+  for (const c of chunks) {
+    result.set(c, pos);
+    pos += c.length;
+  }
+  return result;
+}
+
