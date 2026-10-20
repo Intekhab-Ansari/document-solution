@@ -111,7 +111,7 @@ export default function EditPdfPage() {
   const [toolMode, setToolMode] = useState<EditorToolMode>("edit-existing");
 
   // Styling controls
-  const [activeColor, setActiveColor] = useState<string>("#111827"); // Default dark text color matching original document
+  const [activeColor, setActiveColor] = useState<string>("#000000"); // Pure vector black matching document print
   const [fontSize, setFontSize] = useState<number>(14);
   const [fontFamily, setFontFamily] = useState<"Helvetica" | "HelveticaBold" | "TimesRoman" | "Courier">("HelveticaBold");
   const [hasWhiteoutBackground, setHasWhiteoutBackground] = useState<boolean>(true); // Whiteout backing for new text
@@ -283,7 +283,7 @@ export default function EditPdfPage() {
         return {
           ...b,
           text: b.originalText,
-          color: "#111827",
+          color: "#000000",
           fontSize: b.height || 14,
           isModified: false,
         };
@@ -299,7 +299,7 @@ export default function EditPdfPage() {
       const reverted = pageBlocks.map((b) => ({
         ...b,
         text: b.originalText,
-        color: "#111827",
+        color: "#000000",
         isModified: false,
       }));
       return { ...prev, [currentPage]: reverted };
@@ -723,6 +723,11 @@ export default function EditPdfPage() {
                     onChange={(e) => handleFontSizeChange(Number(e.target.value))}
                     className="px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-700 text-white font-medium focus:outline-none"
                   >
+                    <option value="6">6 pt</option>
+                    <option value="6.3">6.3 pt (Aadhaar / ID)</option>
+                    <option value="7">7 pt</option>
+                    <option value="8">8 pt</option>
+                    <option value="9">9 pt</option>
                     <option value="10">10 pt</option>
                     <option value="12">12 pt</option>
                     <option value="14">14 pt</option>
@@ -927,13 +932,16 @@ export default function EditPdfPage() {
                 {/* 1. Existing PDF Text Blocks (In-Place Interactive Editor) */}
                 {(existingBlocksMap[currentPage] || []).map((block) => {
                   const isSelected = selectedExistingBlockId === block.id;
-                  const isModified = block.isModified || block.text !== block.originalText || block.color !== "#111827";
+                  const isModified = block.isModified || block.text !== block.originalText || (block.color && block.color !== "#000000" && block.color !== "#111827");
 
                   // PDF baseline to screen coordinates:
                   // block.screenX and block.screenY are computed via PDF.js viewport.convertToViewportPoint
                   // guaranteeing exact pixel alignment with the rendered background canvas.
                   const screenTop = block.screenY ?? (pageDimensions.height - block.y - Math.round(block.fontSize * 0.82));
                   const screenLeft = block.screenX ?? block.x;
+                  const blockFontFamily = block.fontFamily === "TimesRoman"
+                    ? '"Times New Roman", "Liberation Serif", Times, "Noto Sans Devanagari", "Nirmala UI", serif'
+                    : 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Nirmala UI", Arial, sans-serif';
 
                   if (isSelected) {
                     return (
@@ -962,9 +970,9 @@ export default function EditPdfPage() {
                             }}
                             style={{
                               fontSize: `${block.fontSize}px`,
-                              color: block.color || "#111827",
+                              color: block.color || "#000000",
                               fontWeight: block.isBold ? "bold" : "normal",
-                              fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
+                              fontFamily: blockFontFamily,
                               minWidth: `${Math.max(block.width + 10, (block.text || "").length * (block.fontSize * 0.65) + 15)}px`,
                               backgroundColor: block.backgroundColor || "#ffffff",
                             }}
@@ -1027,9 +1035,9 @@ export default function EditPdfPage() {
                           className="relative inline-flex items-baseline px-0.5 rounded-[2px] transition-all group-hover:outline group-hover:outline-1 group-hover:outline-dashed group-hover:outline-emerald-500"
                           style={{
                             fontSize: `${block.fontSize}px`,
-                            color: block.color || "#111827",
+                            color: block.color || "#000000",
                             fontWeight: block.isBold ? "bold" : "normal",
-                            fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Devanagari', 'Nirmala UI', Arial, sans-serif",
+                            fontFamily: blockFontFamily,
                             minWidth: `${Math.max(block.width, (block.text || "").length * (block.fontSize * 0.6))}px`,
                             height: `${Math.round(block.fontSize * 1.18)}px`,
                             lineHeight: 1.15,

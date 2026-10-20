@@ -72,7 +72,8 @@ export function measureTextWidth(
   text: string,
   fontSize: number,
   font?: any,
-  isBold?: boolean
+  isBold?: boolean,
+  fontFamily?: string
 ): number {
   if (font && isPureWinAnsi(text)) {
     try {
@@ -86,7 +87,11 @@ export function measureTextWidth(
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
       if (ctx) {
-        ctx.font = `${isBold ? "bold " : ""}${fontSize}px "Noto Sans Devanagari", "Nirmala UI", "Segoe UI", Arial, sans-serif`;
+        const isSerif = fontFamily === "TimesRoman";
+        const fontStack = isSerif
+          ? '"Times New Roman", "Liberation Serif", Times, "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", serif'
+          : '"Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Liberation Sans", "Helvetica Neue", Arial, sans-serif';
+        ctx.font = `${isBold ? "bold " : ""}${fontSize}px ${fontStack}`;
         return ctx.measureText(text).width;
       }
     } catch {
@@ -104,32 +109,40 @@ async function drawUnicodeTextWithCanvas(
   y: number,
   fontSize: number,
   colorHex: string,
-  isBold?: boolean
+  isBold?: boolean,
+  fontFamily?: string
 ): Promise<void> {
   if (typeof document === "undefined") return;
 
-  const scale = 4; // High DPI (288 DPI print resolution)
+  // Ultra-high DPI print resolution (576 DPI) for vector-sharp text matching surrounding document lines
+  const scale = 8;
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
-  const fontStyle = `${isBold ? "bold " : ""}${Math.round(fontSize * scale)}px "Noto Sans Devanagari", "Nirmala UI", "Segoe UI", Arial, sans-serif`;
+  const isSerif = fontFamily === "TimesRoman";
+  const fontStack = isSerif
+    ? '"Times New Roman", "Liberation Serif", Times, "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", serif'
+    : '"Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Liberation Sans", "Helvetica Neue", Arial, sans-serif';
+
+  const fontStyle = `${isBold ? "bold " : ""}${Math.round(fontSize * scale * 10) / 10}px ${fontStack}`;
   ctx.font = fontStyle;
 
   const metrics = ctx.measureText(text);
   const textWidth = Math.ceil(metrics.width);
-  const actualAscent = Math.ceil(metrics.actualBoundingBoxAscent || fontSize * scale * 0.82);
-  const actualDescent = Math.ceil(metrics.actualBoundingBoxDescent || fontSize * scale * 0.28);
-  const pad = Math.round(4 * scale);
+  // Standard typographic font bounds (ascent: 0.88 * font size, descent: 0.32 * font size)
+  const ascent = Math.ceil(fontSize * scale * 0.88);
+  const descent = Math.ceil(fontSize * scale * 0.32);
+  const pad = Math.round(1 * scale); // 1 pt subpixel antialiasing margin
 
   canvas.width = textWidth + pad * 2;
-  canvas.height = actualAscent + actualDescent + pad * 2;
+  canvas.height = ascent + descent + pad * 2;
 
   ctx.font = fontStyle;
   ctx.fillStyle = colorHex || "#000000";
   ctx.textBaseline = "alphabetic";
 
-  const baselineY = pad + actualAscent;
+  const baselineY = pad + ascent;
   ctx.fillText(text, pad, baselineY);
 
   const dataUrl = canvas.toDataURL("image/png");
@@ -143,8 +156,8 @@ async function drawUnicodeTextWithCanvas(
   const pngImage = await pdfDoc.embedPng(bytes);
   const renderWidth = canvas.width / scale;
   const renderHeight = canvas.height / scale;
-  const renderY = y - (actualDescent / scale) - (pad / scale);
   const renderX = x - (pad / scale);
+  const renderY = y - (descent / scale) - (pad / scale);
 
   page.drawImage(pngImage, {
     x: renderX,
@@ -164,7 +177,8 @@ async function drawTextSafely(
   font: any,
   colorRgb: { r: number; g: number; b: number },
   colorHex: string,
-  isBold?: boolean
+  isBold?: boolean,
+  fontFamily?: string
 ): Promise<void> {
   if (isPureWinAnsi(text)) {
     try {
@@ -189,7 +203,8 @@ async function drawTextSafely(
     y,
     fontSize,
     colorHex,
-    isBold
+    isBold,
+    fontFamily
   );
 }
 
@@ -226,17 +241,19 @@ export async function editPdfDocument(
       const fontSize = block.fontSize || 12;
 
       // Calculate width of original and new text with Unicode support
-      const origWidth = block.width || measureTextWidth(block.originalText, fontSize, font, block.isBold);
-      const newWidth = measureTextWidth(block.text, fontSize, font, block.isBold);
+      const origWidth = block.width || measureTextWidth(block.originalText, fontSize, font, block.isBold, block.fontFamily);
+      const newWidth = measureTextWidth(block.text, fontSize, font, block.isBold, block.fontFamily);
 
-      const coverWidth = Math.max(origWidth, newWidth) + 3;
-      const coverHeight = Math.round(fontSize * 1.25);
-      const coverY = block.y - Math.round(fontSize * 0.28);
+      // Whiteout box: covers 2 pt left & right, and covers full descent & ascent cleanly
+      const coverWidth = Math.max(origWidth, newWidth) + 4;
+      const coverHeight = fontSize * 1.45;
+      const coverY = block.y - fontSize * 0.38;
+      const coverX = Math.max(0, block.x - 2);
       const bgRgb = hexToRgb(block.backgroundColor || "#ffffff");
 
       // Whiteout original text from PDF stream with exact matching document background color
       page.drawRectangle({
-        x: Math.max(0, block.x - 1),
+        x: coverX,
         y: Math.max(0, coverY),
         width: coverWidth,
         height: coverHeight,
@@ -262,7 +279,8 @@ export async function editPdfDocument(
             font,
             textRgb,
             block.color || "#000000",
-            block.isBold
+            block.isBold,
+            block.fontFamily
           );
         }
       }
@@ -329,7 +347,7 @@ export async function editPdfDocument(
         const lineY = t.y - li * lineHeight;
 
         if (t.hasWhiteoutBackground) {
-          const textWidth = measureTextWidth(line, fontSize, font, t.isBold);
+          const textWidth = measureTextWidth(line, fontSize, font, t.isBold, t.fontFamily);
           page.drawRectangle({
             x: Math.max(0, t.x - 2),
             y: Math.max(0, lineY - 2),
@@ -350,7 +368,8 @@ export async function editPdfDocument(
           font,
           textRgb,
           t.color || "#000000",
-          t.isBold
+          t.isBold,
+          t.fontFamily
         );
       }
     }

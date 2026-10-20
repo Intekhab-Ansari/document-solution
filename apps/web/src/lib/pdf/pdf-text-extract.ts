@@ -49,12 +49,17 @@ export async function extractAllExistingTextBlocks(
       it.transform[5]
     );
 
-    const fontSize = Math.max(
-      7,
-      Math.round(Math.sqrt(it.transform[0] * it.transform[0] + it.transform[1] * it.transform[1]))
-    );
-    const w = Math.max(8, Math.round(it.width));
-    const h = Math.max(fontSize, Math.round(it.height || fontSize));
+    // Exact font size to 1 decimal place (e.g. 6.3 pt for Aadhaar document lines)
+    const rawFontSize = Math.hypot(it.transform[0], it.transform[1]);
+    const fontSize = Math.round(rawFontSize * 10) / 10;
+    const w = Math.max(6, Math.round(it.width * 10) / 10);
+    const h = Math.max(fontSize, Math.round((it.height || fontSize) * 10) / 10);
+
+    // Detect serif vs sans-serif and boldness from font styles dictionary
+    const styleObj = content.styles ? content.styles[it.fontName] : undefined;
+    const isSerif = styleObj?.fontFamily === "serif";
+    const fontNameLower = (it.fontName || "").toLowerCase();
+    const isBoldFont = fontNameLower.includes("bold") || (styleObj as any)?.weight > 500;
 
     // Top of the text bounding box calculated from baseline
     const screenTop = Math.round(baselineScreenY - fontSize * 0.82);
@@ -69,6 +74,8 @@ export async function extractAllExistingTextBlocks(
       fontSize,
       w,
       h,
+      isSerif,
+      isBoldFont,
       idx,
     };
   });
@@ -101,9 +108,17 @@ export async function extractAllExistingTextBlocks(
       const spacing = item.screenLeft - (last.screenX + last.width) > item.fontSize * 0.2 ? " " : "";
       last.text += spacing + item.it.str;
       last.originalText = last.text;
-      last.width = item.screenLeft + item.w - last.screenX;
+      last.width = Math.round((item.screenLeft + item.w - last.screenX) * 10) / 10;
       last.height = Math.max(last.height, item.h);
+      if (item.isSerif) last.fontFamily = "TimesRoman";
+      if (item.isBoldFont) last.isBold = true;
     } else {
+      const resolvedFontFamily = item.isSerif
+        ? "TimesRoman"
+        : item.isBoldFont
+        ? "HelveticaBold"
+        : "Helvetica";
+
       blocks.push({
         id: `pdf-text-${pageNumber}-${i}-${Math.random().toString(36).substring(2, 7)}`,
         pageNumber,
@@ -117,10 +132,10 @@ export async function extractAllExistingTextBlocks(
         width: item.w,
         height: item.h,
         fontSize: item.fontSize,
-        color: "#111827",
+        color: "#000000", // Exact deep vector black matching original print
         backgroundColor: "#ffffff",
-        fontFamily: item.fontSize >= 16 ? "HelveticaBold" : "Helvetica",
-        isBold: item.fontSize >= 16,
+        fontFamily: resolvedFontFamily,
+        isBold: item.isBoldFont,
         isModified: false,
       });
     }
