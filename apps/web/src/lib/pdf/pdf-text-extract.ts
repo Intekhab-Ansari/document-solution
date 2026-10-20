@@ -17,6 +17,7 @@ export interface ExistingPdfTextBlock {
   fontFamily: "Helvetica" | "HelveticaBold" | "TimesRoman" | "Courier";
   backgroundColor?: string; // sampled document background color e.g. "#fbfbfb" or "#ffffff"
   isBold?: boolean;
+  isItalic?: boolean;
   isModified: boolean;
 }
 
@@ -55,11 +56,12 @@ export async function extractAllExistingTextBlocks(
     const w = Math.max(6, Math.round(it.width * 10) / 10);
     const h = Math.max(fontSize, Math.round((it.height || fontSize) * 10) / 10);
 
-    // Detect serif vs sans-serif and boldness from font styles dictionary
+    // Detect serif vs sans-serif, boldness, and italics from font styles dictionary
     const styleObj = content.styles ? content.styles[it.fontName] : undefined;
     const isSerif = styleObj?.fontFamily === "serif";
     const fontNameLower = (it.fontName || "").toLowerCase();
     const isBoldFont = fontNameLower.includes("bold") || (styleObj as any)?.weight > 500;
+    const isItalicFont = fontNameLower.includes("italic") || fontNameLower.includes("oblique");
 
     // Top of the text bounding box calculated from baseline
     const screenTop = Math.round(baselineScreenY - fontSize * 0.82);
@@ -76,6 +78,7 @@ export async function extractAllExistingTextBlocks(
       h,
       isSerif,
       isBoldFont,
+      isItalicFont,
       idx,
     };
   });
@@ -112,6 +115,7 @@ export async function extractAllExistingTextBlocks(
       last.height = Math.max(last.height, item.h);
       if (item.isSerif) last.fontFamily = "TimesRoman";
       if (item.isBoldFont) last.isBold = true;
+      if (item.isItalicFont) last.isItalic = true;
     } else {
       const resolvedFontFamily = item.isSerif
         ? "TimesRoman"
@@ -136,6 +140,7 @@ export async function extractAllExistingTextBlocks(
         backgroundColor: "#ffffff",
         fontFamily: resolvedFontFamily,
         isBold: item.isBoldFont,
+        isItalic: item.isItalicFont,
         isModified: false,
       });
     }

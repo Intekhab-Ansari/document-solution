@@ -11,6 +11,7 @@ export interface TextAnnotation {
   color: string; // hex string, e.g. "#000000", "#ef4444"
   hasWhiteoutBackground?: boolean;
   isBold?: boolean;
+  isItalic?: boolean;
 }
 
 export interface RectangleAnnotation {
@@ -110,7 +111,8 @@ async function drawUnicodeTextWithCanvas(
   fontSize: number,
   colorHex: string,
   isBold?: boolean,
-  fontFamily?: string
+  fontFamily?: string,
+  isItalic?: boolean
 ): Promise<void> {
   if (typeof document === "undefined") return;
 
@@ -125,7 +127,7 @@ async function drawUnicodeTextWithCanvas(
     ? '"Times New Roman", "Liberation Serif", Times, "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", serif'
     : '"Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Liberation Sans", "Helvetica Neue", Arial, sans-serif';
 
-  const fontStyle = `${isBold ? "bold " : ""}${Math.round(fontSize * scale * 10) / 10}px ${fontStack}`;
+  const fontStyle = `${isBold ? "bold " : ""}${isItalic ? "italic " : ""}${Math.round(fontSize * scale * 10) / 10}px ${fontStack}`;
   ctx.font = fontStyle;
 
   const metrics = ctx.measureText(text);
@@ -167,6 +169,23 @@ async function drawUnicodeTextWithCanvas(
   });
 }
 
+function resolveFontKey(family = "Helvetica", bold = false, italic = false): string {
+  if (family === "TimesRoman") {
+    if (bold && italic) return "TimesRomanBoldItalic";
+    if (bold) return "TimesRomanBold";
+    if (italic) return "TimesRomanItalic";
+    return "TimesRoman";
+  }
+  if (family === "Courier") {
+    if (bold) return "CourierBold";
+    return "Courier";
+  }
+  if (bold && italic) return "HelveticaBoldOblique";
+  if (bold) return "HelveticaBold";
+  if (italic) return "HelveticaOblique";
+  return "Helvetica";
+}
+
 async function drawTextSafely(
   pdfDoc: PDFDocument,
   page: any,
@@ -178,7 +197,8 @@ async function drawTextSafely(
   colorRgb: { r: number; g: number; b: number },
   colorHex: string,
   isBold?: boolean,
-  fontFamily?: string
+  fontFamily?: string,
+  isItalic?: boolean
 ): Promise<void> {
   if (isPureWinAnsi(text)) {
     try {
@@ -204,7 +224,8 @@ async function drawTextSafely(
     fontSize,
     colorHex,
     isBold,
-    fontFamily
+    fontFamily,
+    isItalic
   );
 }
 
@@ -221,8 +242,14 @@ export async function editPdfDocument(
   const fonts: Record<string, any> = {
     Helvetica: await pdfDoc.embedFont(StandardFonts.Helvetica),
     HelveticaBold: await pdfDoc.embedFont(StandardFonts.HelveticaBold),
+    HelveticaOblique: await pdfDoc.embedFont(StandardFonts.HelveticaOblique),
+    HelveticaBoldOblique: await pdfDoc.embedFont(StandardFonts.HelveticaBoldOblique),
     TimesRoman: await pdfDoc.embedFont(StandardFonts.TimesRoman),
+    TimesRomanBold: await pdfDoc.embedFont(StandardFonts.TimesRomanBold),
+    TimesRomanItalic: await pdfDoc.embedFont(StandardFonts.TimesRomanItalic),
+    TimesRomanBoldItalic: await pdfDoc.embedFont(StandardFonts.TimesRomanBoldItalic),
     Courier: await pdfDoc.embedFont(StandardFonts.Courier),
+    CourierBold: await pdfDoc.embedFont(StandardFonts.CourierBold),
   };
 
   const totalPages = pdfDoc.getPageCount();
@@ -235,7 +262,7 @@ export async function editPdfDocument(
       if (!block.isModified && block.text === block.originalText) continue;
 
       const page = pdfDoc.getPage(block.pageNumber - 1);
-      const fontKey = block.isBold ? "HelveticaBold" : block.fontFamily || "Helvetica";
+      const fontKey = resolveFontKey(block.fontFamily, block.isBold, block.isItalic);
       const font = fonts[fontKey] || fonts.Helvetica;
       const textRgb = hexToRgb(block.color || "#000000");
       const fontSize = block.fontSize || 12;
@@ -249,17 +276,19 @@ export async function editPdfDocument(
       const coverHeight = fontSize * 1.45;
       const coverY = block.y - fontSize * 0.38;
       const coverX = Math.max(0, block.x - 2);
-      const bgRgb = hexToRgb(block.backgroundColor || "#ffffff");
 
-      // Whiteout original text from PDF stream with exact matching document background color
-      page.drawRectangle({
-        x: coverX,
-        y: Math.max(0, coverY),
-        width: coverWidth,
-        height: coverHeight,
-        color: rgb(bgRgb.r, bgRgb.g, bgRgb.b),
-        opacity: 1.0,
-      });
+      // Only draw whiteout if background is not set to transparent
+      if (block.backgroundColor !== "transparent") {
+        const bgRgb = hexToRgb(block.backgroundColor || "#ffffff");
+        page.drawRectangle({
+          x: coverX,
+          y: Math.max(0, coverY),
+          width: coverWidth,
+          height: coverHeight,
+          color: rgb(bgRgb.r, bgRgb.g, bgRgb.b),
+          opacity: 1.0,
+        });
+      }
 
       // Draw replacement text if not empty
       if (block.text && block.text.trim().length > 0) {
@@ -280,7 +309,8 @@ export async function editPdfDocument(
             textRgb,
             block.color || "#000000",
             block.isBold,
-            block.fontFamily
+            block.fontFamily,
+            block.isItalic
           );
         }
       }
@@ -333,7 +363,7 @@ export async function editPdfDocument(
     for (const t of options.texts) {
       if (t.pageNumber < 1 || t.pageNumber > totalPages || !t.text.trim()) continue;
       const page = pdfDoc.getPage(t.pageNumber - 1);
-      const fontKey = t.isBold ? "HelveticaBold" : t.fontFamily || "Helvetica";
+      const fontKey = resolveFontKey(t.fontFamily, t.isBold, t.isItalic);
       const font = fonts[fontKey] || fonts.Helvetica;
       const textRgb = hexToRgb(t.color);
       const fontSize = t.fontSize || 14;
@@ -369,7 +399,8 @@ export async function editPdfDocument(
           textRgb,
           t.color || "#000000",
           t.isBold,
-          t.fontFamily
+          t.fontFamily,
+          t.isItalic
         );
       }
     }

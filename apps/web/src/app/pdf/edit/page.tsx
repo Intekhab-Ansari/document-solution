@@ -35,6 +35,10 @@ import {
   Eraser,
   RotateCcw,
   Check,
+  Bold,
+  Italic,
+  Minus,
+  Plus,
 } from "lucide-react";
 
 type EditorToolMode = "edit-existing" | "text" | "whiteout" | "highlight" | "draw";
@@ -114,6 +118,8 @@ export default function EditPdfPage() {
   const [activeColor, setActiveColor] = useState<string>("#000000"); // Pure vector black matching document print
   const [fontSize, setFontSize] = useState<number>(14);
   const [fontFamily, setFontFamily] = useState<"Helvetica" | "HelveticaBold" | "TimesRoman" | "Courier">("HelveticaBold");
+  const [isBold, setIsBold] = useState<boolean>(false);
+  const [isItalic, setIsItalic] = useState<boolean>(false);
   const [hasWhiteoutBackground, setHasWhiteoutBackground] = useState<boolean>(true); // Whiteout backing for new text
   const [penWidth, setPenWidth] = useState<number>(3);
 
@@ -241,7 +247,7 @@ export default function EditPdfPage() {
     }
   }, [zoomScale]);
 
-  // Sync toolbar controls when selecting an existing text block
+  // Sync toolbar controls when selecting an existing text block or user text annotation
   useEffect(() => {
     if (selectedExistingBlockId) {
       const pageBlocks = existingBlocksMap[currentPage] || [];
@@ -250,10 +256,25 @@ export default function EditPdfPage() {
         if (blk.color) setActiveColor(blk.color);
         if (blk.fontSize) setFontSize(blk.fontSize);
         if (blk.fontFamily) setFontFamily(blk.fontFamily);
+        setIsBold(!!blk.isBold);
+        setIsItalic(!!blk.isItalic);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedExistingBlockId, currentPage]);
+
+  useEffect(() => {
+    if (selectedElementId) {
+      const t = texts.find((item) => item.id === selectedElementId);
+      if (t) {
+        if (t.color) setActiveColor(t.color);
+        if (t.fontSize) setFontSize(t.fontSize);
+        if (t.fontFamily) setFontFamily(t.fontFamily);
+        setIsBold(!!t.isBold);
+        setIsItalic(!!t.isItalic);
+      }
+    }
+  }, [selectedElementId]);
 
   // Update existing text block field
   const updateExistingBlock = (
@@ -285,6 +306,8 @@ export default function EditPdfPage() {
           text: b.originalText,
           color: "#000000",
           fontSize: b.height || 14,
+          isBold: false,
+          isItalic: false,
           isModified: false,
         };
       });
@@ -300,6 +323,8 @@ export default function EditPdfPage() {
         ...b,
         text: b.originalText,
         color: "#000000",
+        isBold: false,
+        isItalic: false,
         isModified: false,
       }));
       return { ...prev, [currentPage]: reverted };
@@ -333,11 +358,42 @@ export default function EditPdfPage() {
     if (selectedExistingBlockId) {
       updateExistingBlock(selectedExistingBlockId, {
         fontFamily: fam,
-        isBold: fam === "HelveticaBold",
+        isBold: fam === "HelveticaBold" || isBold,
       });
     } else if (selectedElementId) {
       updateTextProp(selectedElementId, "fontFamily", fam);
-      updateTextProp(selectedElementId, "isBold", fam === "HelveticaBold");
+      if (fam === "HelveticaBold") updateTextProp(selectedElementId, "isBold", true);
+    }
+  };
+
+  // Bold toggle handler
+  const handleBoldToggle = () => {
+    const next = !isBold;
+    setIsBold(next);
+    if (selectedExistingBlockId) {
+      updateExistingBlock(selectedExistingBlockId, { isBold: next });
+    } else if (selectedElementId) {
+      updateTextProp(selectedElementId, "isBold", next);
+    }
+  };
+
+  // Italic toggle handler
+  const handleItalicToggle = () => {
+    const next = !isItalic;
+    setIsItalic(next);
+    if (selectedExistingBlockId) {
+      updateExistingBlock(selectedExistingBlockId, { isItalic: next });
+    } else if (selectedElementId) {
+      updateTextProp(selectedElementId, "isItalic", next);
+    }
+  };
+
+  // Background / Whiteout fill change handler
+  const handleBackgroundColorChange = (bg: string) => {
+    if (selectedExistingBlockId) {
+      updateExistingBlock(selectedExistingBlockId, { backgroundColor: bg });
+    } else if (selectedElementId) {
+      updateTextProp(selectedElementId, "hasWhiteoutBackground", bg !== "transparent");
     }
   };
 
@@ -536,12 +592,12 @@ export default function EditPdfPage() {
   );
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)] bg-zinc-950">
-      {/* Top Workspace Header */}
-      <div className="px-4 py-4 sm:px-8 border-b border-zinc-800/80 bg-zinc-900/40">
+    <div className={`flex flex-col ${file ? "h-[calc(100vh-4rem)] max-h-[calc(100vh-4rem)] overflow-hidden" : "min-h-[calc(100vh-4rem)]"} bg-zinc-950`}>
+      {/* Top Workspace Header - compact when actively editing */}
+      <div className={`px-4 ${file ? "py-2 sm:px-6" : "py-4 sm:px-8"} border-b border-zinc-800/80 bg-zinc-900/40 shrink-0`}>
         <ToolWorkspaceHeader
           title="Edit PDF (Text, Colors & Annotations)"
-          description="Directly click and edit any existing text in your PDF, change font colors, whiteout old numbers, highlight, and draw shapes. 100% processed locally in your browser memory."
+          description={file ? "Directly edit text, font sizes, colors, background whiteouts & annotations. Processed locally in memory." : "Directly click and edit any existing text in your PDF, change font colors, whiteout old numbers, highlight, and draw shapes. 100% processed locally in your browser memory."}
           category="pdf"
           categoryLabel="PDF Tools"
           icon={<PenTool className="w-5 h-5 text-emerald-400" />}
@@ -575,7 +631,7 @@ export default function EditPdfPage() {
           />
         </div>
       ) : (
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-1 overflow-hidden min-h-0">
           {/* 1. All-in-One PDF Tool Sidebar */}
           <PdfEditingSidebar
             activeToolId="edit"
@@ -586,9 +642,9 @@ export default function EditPdfPage() {
           />
 
           {/* 2. Editor Canvas & Toolbar Workspace */}
-          <div className="flex-1 flex flex-col overflow-hidden bg-zinc-950">
-            {/* Top Interactive Editing Toolbar */}
-            <div className="p-3 bg-zinc-900/90 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-3 text-xs z-10 backdrop-blur-md">
+          <div className="flex-1 flex flex-col overflow-hidden min-h-0 bg-zinc-950">
+            {/* Top Interactive Editing Toolbar (Sticky & Always Visible) */}
+            <div className="p-2.5 bg-zinc-900/95 border-b border-zinc-800 flex flex-wrap items-center justify-between gap-2.5 text-xs z-30 backdrop-blur-md shrink-0 sticky top-0">
               {/* Tool Mode Buttons */}
               <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-950 border border-zinc-800">
                 <button
@@ -715,44 +771,134 @@ export default function EditPdfPage() {
               </div>
 
               {/* Font Sizing & Typography Controls */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-zinc-400">Size:</span>
+              <div className="flex items-center gap-2">
+                {/* Font Size with Stepper - / + and Numeric input */}
+                <div className="flex items-center gap-1 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
+                  <span className="text-zinc-400 text-xs font-medium mr-0.5">Size:</span>
+                  <button
+                    type="button"
+                    onClick={() => handleFontSizeChange(Math.max(4, Math.round((fontSize - 1) * 10) / 10))}
+                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-850 text-zinc-300 hover:text-white transition-colors"
+                    title="Decrease font size"
+                  >
+                    <Minus className="w-3 h-3" />
+                  </button>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="4"
+                    max="96"
+                    value={fontSize}
+                    onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (!isNaN(val) && val > 0) handleFontSizeChange(val);
+                    }}
+                    className="w-12 text-center text-xs font-mono font-bold bg-transparent text-white focus:outline-none border-b border-zinc-700"
+                  />
+                  <span className="text-[10px] text-zinc-500 font-mono">pt</span>
+                  <button
+                    type="button"
+                    onClick={() => handleFontSizeChange(Math.min(96, Math.round((fontSize + 1) * 10) / 10))}
+                    className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-850 text-zinc-300 hover:text-white transition-colors"
+                    title="Increase font size"
+                  >
+                    <Plus className="w-3 h-3" />
+                  </button>
+
+                  {/* Preset Dropdown */}
                   <select
                     value={fontSize}
                     onChange={(e) => handleFontSizeChange(Number(e.target.value))}
-                    className="px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-700 text-white font-medium focus:outline-none"
+                    className="ml-1 text-xs bg-zinc-900 border border-zinc-700 rounded px-1.5 py-0.5 text-zinc-300 focus:outline-none cursor-pointer"
+                    title="Quick font size presets"
                   >
                     <option value="6">6 pt</option>
-                    <option value="6.3">6.3 pt (Aadhaar / ID)</option>
+                    <option value="6.3">6.3 pt (ID)</option>
                     <option value="7">7 pt</option>
                     <option value="8">8 pt</option>
                     <option value="9">9 pt</option>
                     <option value="10">10 pt</option>
+                    <option value="11">11 pt</option>
                     <option value="12">12 pt</option>
                     <option value="14">14 pt</option>
                     <option value="16">16 pt</option>
                     <option value="18">18 pt</option>
                     <option value="20">20 pt</option>
-                    <option value="22">22 pt</option>
                     <option value="24">24 pt</option>
                     <option value="32">32 pt</option>
-                    <option value="48">48 pt</option>
                   </select>
                 </div>
 
-                <div className="flex items-center gap-1.5">
-                  <span className="text-zinc-400">Font:</span>
+                {/* Bold & Italic Toggles */}
+                <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800">
+                  <button
+                    type="button"
+                    onClick={handleBoldToggle}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg font-bold text-xs transition-colors ${
+                      isBold
+                        ? "bg-emerald-500 text-zinc-950 font-black shadow"
+                        : "text-zinc-300 hover:text-white hover:bg-zinc-850"
+                    }`}
+                    title="Toggle Bold"
+                  >
+                    <Bold className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleItalicToggle}
+                    className={`w-7 h-7 flex items-center justify-center rounded-lg italic text-xs transition-colors ${
+                      isItalic
+                        ? "bg-emerald-500 text-zinc-950 font-bold shadow"
+                        : "text-zinc-300 hover:text-white hover:bg-zinc-850"
+                    }`}
+                    title="Toggle Italic"
+                  >
+                    <Italic className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                {/* Font Family Selector */}
+                <div className="flex items-center gap-1 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
+                  <span className="text-zinc-400 text-xs font-medium">Font:</span>
                   <select
                     value={fontFamily}
                     onChange={(e) => handleFontFamilyChange(e.target.value as any)}
-                    className="px-2 py-1 rounded-lg bg-zinc-950 border border-zinc-700 text-white font-medium focus:outline-none"
+                    className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-700 text-xs text-white font-medium focus:outline-none cursor-pointer"
                   >
                     <option value="Helvetica">Standard (Sans)</option>
                     <option value="HelveticaBold">Bold Sans</option>
-                    <option value="TimesRoman">Times (Serif)</option>
+                    <option value="TimesRoman">Times (Serif / Aadhaar)</option>
                     <option value="Courier">Courier (Mono)</option>
                   </select>
+                </div>
+
+                {/* Background / Whiteout fill toggle */}
+                <div className="flex items-center gap-1 bg-zinc-950 px-2 py-1 rounded-xl border border-zinc-800">
+                  <span className="text-zinc-400 text-xs font-medium">Fill:</span>
+                  <button
+                    type="button"
+                    onClick={() => handleBackgroundColorChange("#ffffff")}
+                    className={`px-2 py-0.5 rounded text-[11px] font-medium border transition-colors ${
+                      (activeExistingBlock?.backgroundColor || (hasWhiteoutBackground ? "#ffffff" : "transparent")) !== "transparent"
+                        ? "bg-white text-zinc-950 border-white font-bold shadow-sm"
+                        : "text-zinc-400 border-zinc-700 hover:text-white"
+                    }`}
+                    title="Whiteout background to cover original text cleanly"
+                  >
+                    Whiteout
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleBackgroundColorChange("transparent")}
+                    className={`px-2 py-0.5 rounded text-[11px] font-medium border transition-colors ${
+                      (activeExistingBlock?.backgroundColor || (hasWhiteoutBackground ? "#ffffff" : "transparent")) === "transparent"
+                        ? "bg-zinc-800 text-emerald-400 border-emerald-500 font-bold shadow-sm"
+                        : "text-zinc-400 border-zinc-700 hover:text-white"
+                    }`}
+                    title="Transparent background (no whiteout box)"
+                  >
+                    None
+                  </button>
                 </div>
               </div>
 
@@ -944,6 +1090,7 @@ export default function EditPdfPage() {
                     : 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Devanagari", "Nirmala UI", Arial, sans-serif';
 
                   if (isSelected) {
+                    const isNearTop = screenTop < 48;
                     return (
                       <div
                         key={block.id}
@@ -954,6 +1101,183 @@ export default function EditPdfPage() {
                         }}
                         onClick={(e) => e.stopPropagation()}
                       >
+                        {/* Floating Quick-Formatting Toolbar attached directly to the active text */}
+                        <div
+                          className={`absolute left-0 z-40 flex items-center gap-1.5 p-1 rounded-xl bg-zinc-900/95 backdrop-blur-md border border-zinc-700 shadow-2xl text-xs text-white select-none whitespace-nowrap animate-in fade-in zoom-in-95 duration-100 ${
+                            isNearTop ? "top-full mt-1.5" : "bottom-full mb-1.5"
+                          }`}
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {/* Font Size Stepper */}
+                          <div className="flex items-center gap-0.5 bg-zinc-950/80 px-1.5 py-0.5 rounded-lg border border-zinc-800">
+                            <span className="text-[10px] text-zinc-400 mr-0.5 font-medium">Size</span>
+                            <button
+                              type="button"
+                              onClick={() => handleFontSizeChange(Math.max(4, Math.round(((block.fontSize || fontSize) - 1) * 10) / 10))}
+                              className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors"
+                              title="Decrease font size"
+                            >
+                              <Minus className="w-3 h-3" />
+                            </button>
+                            <input
+                              type="number"
+                              step="0.1"
+                              min="4"
+                              max="96"
+                              value={block.fontSize || fontSize}
+                              onChange={(e) => {
+                                const val = parseFloat(e.target.value);
+                                if (!isNaN(val) && val > 0) handleFontSizeChange(val);
+                              }}
+                              className="w-11 text-center text-[11px] font-mono font-bold bg-transparent text-white focus:outline-none border-b border-zinc-700"
+                            />
+                            <span className="text-[9px] text-zinc-500 font-mono">pt</span>
+                            <button
+                              type="button"
+                              onClick={() => handleFontSizeChange(Math.min(96, Math.round(((block.fontSize || fontSize) + 1) * 10) / 10))}
+                              className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors"
+                              title="Increase font size"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </button>
+
+                            {/* Presets dropdown */}
+                            <select
+                              value={block.fontSize || fontSize}
+                              onChange={(e) => handleFontSizeChange(Number(e.target.value))}
+                              className="ml-1 text-[10px] bg-zinc-900 border border-zinc-700 rounded px-1 py-0.5 text-zinc-300 focus:outline-none cursor-pointer"
+                              title="Font size preset"
+                            >
+                              <option value="6">6 pt</option>
+                              <option value="6.3">6.3 pt (ID)</option>
+                              <option value="7">7 pt</option>
+                              <option value="8">8 pt</option>
+                              <option value="9">9 pt</option>
+                              <option value="10">10 pt</option>
+                              <option value="11">11 pt</option>
+                              <option value="12">12 pt</option>
+                              <option value="14">14 pt</option>
+                              <option value="16">16 pt</option>
+                              <option value="20">20 pt</option>
+                            </select>
+                          </div>
+
+                          <div className="w-[1px] h-4 bg-zinc-700" />
+
+                          {/* Bold and Italic */}
+                          <div className="flex items-center gap-0.5 bg-zinc-950/80 p-0.5 rounded-lg border border-zinc-800">
+                            <button
+                              type="button"
+                              onClick={handleBoldToggle}
+                              className={`w-6 h-6 flex items-center justify-center rounded font-bold text-xs transition-colors ${
+                                (block.isBold ?? isBold)
+                                  ? "bg-emerald-500 text-zinc-950 font-black shadow"
+                                  : "text-zinc-300 hover:text-white hover:bg-zinc-800"
+                              }`}
+                              title="Toggle Bold"
+                            >
+                              <Bold className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleItalicToggle}
+                              className={`w-6 h-6 flex items-center justify-center rounded italic text-xs transition-colors ${
+                                (block.isItalic ?? isItalic)
+                                  ? "bg-emerald-500 text-zinc-950 font-bold shadow"
+                                  : "text-zinc-300 hover:text-white hover:bg-zinc-800"
+                              }`}
+                              title="Toggle Italic"
+                            >
+                              <Italic className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="w-[1px] h-4 bg-zinc-700" />
+
+                          {/* Font Family selector */}
+                          <select
+                            value={block.fontFamily || fontFamily}
+                            onChange={(e) => handleFontFamilyChange(e.target.value as any)}
+                            className="bg-zinc-950/80 border border-zinc-800 rounded-lg px-2 py-1 text-[11px] text-zinc-200 focus:outline-none cursor-pointer"
+                            title="Font family"
+                          >
+                            <option value="Helvetica">Sans</option>
+                            <option value="HelveticaBold">Bold Sans</option>
+                            <option value="TimesRoman">Times (Serif / ID)</option>
+                            <option value="Courier">Courier (Mono)</option>
+                          </select>
+
+                          <div className="w-[1px] h-4 bg-zinc-700" />
+
+                          {/* Quick Color Swatches */}
+                          <div className="flex items-center gap-1 bg-zinc-950/80 px-1.5 py-0.5 rounded-lg border border-zinc-800">
+                            {[
+                              { hex: "#000000", label: "Black" },
+                              { hex: "#374151", label: "Dark Gray" },
+                              { hex: "#2563eb", label: "Blue" },
+                              { hex: "#dc2626", label: "Red" },
+                              { hex: "#ffffff", label: "White" },
+                            ].map((s) => (
+                              <button
+                                key={s.hex}
+                                type="button"
+                                onClick={() => handleColorChange(s.hex)}
+                                className={`w-4 h-4 rounded-full border transition-transform ${
+                                  (block.color || activeColor) === s.hex
+                                    ? "scale-125 border-emerald-400 ring-2 ring-emerald-500/50"
+                                    : "border-zinc-700 hover:scale-110"
+                                }`}
+                                style={{ backgroundColor: s.hex }}
+                                title={s.label}
+                              />
+                            ))}
+                            {/* Custom color picker */}
+                            <label
+                              className="relative w-5 h-5 rounded-full border border-zinc-700 flex items-center justify-center cursor-pointer hover:border-emerald-400 overflow-hidden bg-zinc-900 ml-0.5"
+                              title="Custom color picker"
+                            >
+                              <input
+                                type="color"
+                                value={block.color || activeColor}
+                                onChange={(e) => handleColorChange(e.target.value)}
+                                className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                              />
+                              <Palette className="w-2.5 h-2.5 text-zinc-300 pointer-events-none" />
+                            </label>
+                          </div>
+
+                          <div className="w-[1px] h-4 bg-zinc-700" />
+
+                          {/* Whiteout / Background Fill Selector */}
+                          <div className="flex items-center gap-0.5 bg-zinc-950/80 p-0.5 rounded-lg border border-zinc-800">
+                            <button
+                              type="button"
+                              onClick={() => handleBackgroundColorChange("#ffffff")}
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                                block.backgroundColor !== "transparent"
+                                  ? "bg-white text-zinc-950 font-bold shadow-sm"
+                                  : "text-zinc-400 hover:text-white"
+                              }`}
+                              title="Whiteout background"
+                            >
+                              Whiteout
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleBackgroundColorChange("transparent")}
+                              className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                                block.backgroundColor === "transparent"
+                                  ? "bg-zinc-800 text-emerald-400 font-bold shadow-sm"
+                                  : "text-zinc-400 hover:text-white"
+                              }`}
+                              title="Transparent background"
+                            >
+                              None
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Text Input Row */}
                         <div
                           className="relative flex items-center p-0.5 rounded shadow-lg border border-emerald-500 ring-2 ring-emerald-500/20"
                           style={{ backgroundColor: block.backgroundColor || "#ffffff" }}
@@ -972,6 +1296,7 @@ export default function EditPdfPage() {
                               fontSize: `${block.fontSize}px`,
                               color: block.color || "#000000",
                               fontWeight: block.isBold ? "bold" : "normal",
+                              fontStyle: block.isItalic ? "italic" : "normal",
                               fontFamily: blockFontFamily,
                               minWidth: `${Math.max(block.width + 10, (block.text || "").length * (block.fontSize * 0.65) + 15)}px`,
                               backgroundColor: block.backgroundColor || "#ffffff",
@@ -1037,6 +1362,7 @@ export default function EditPdfPage() {
                             fontSize: `${block.fontSize}px`,
                             color: block.color || "#000000",
                             fontWeight: block.isBold ? "bold" : "normal",
+                            fontStyle: block.isItalic ? "italic" : "normal",
                             fontFamily: blockFontFamily,
                             minWidth: `${Math.max(block.width, (block.text || "").length * (block.fontSize * 0.6))}px`,
                             height: `${Math.round(block.fontSize * 1.18)}px`,
@@ -1168,16 +1494,208 @@ export default function EditPdfPage() {
                   .map((t) => {
                     const screenTop = pageDimensions.height - t.y;
                     const isSelected = selectedElementId === t.id;
+                    const isNearTop = screenTop < 48;
 
                     return (
                       <div
                         key={t.id}
-                        className="annotation-box absolute group z-20"
+                        className="annotation-box absolute group z-20 flex flex-col items-start"
                         style={{
                           left: `${t.x}px`,
                           top: `${screenTop}px`,
                         }}
+                        onClick={(e) => e.stopPropagation()}
                       >
+                        {/* Floating Quick-Formatting Toolbar when selected */}
+                        {isSelected && (
+                          <div
+                            className={`absolute left-0 z-40 flex items-center gap-1.5 p-1 rounded-xl bg-zinc-900/95 backdrop-blur-md border border-zinc-700 shadow-2xl text-xs text-white select-none whitespace-nowrap animate-in fade-in zoom-in-95 duration-100 ${
+                              isNearTop ? "top-full mt-1.5" : "bottom-full mb-1.5"
+                            }`}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {/* Font Size Stepper */}
+                            <div className="flex items-center gap-0.5 bg-zinc-950/80 px-1.5 py-0.5 rounded-lg border border-zinc-800">
+                              <span className="text-[10px] text-zinc-400 mr-0.5 font-medium">Size</span>
+                              <button
+                                type="button"
+                                onClick={() => handleFontSizeChange(Math.max(4, Math.round(((t.fontSize || fontSize) - 1) * 10) / 10))}
+                                className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors"
+                                title="Decrease font size"
+                              >
+                                <Minus className="w-3 h-3" />
+                              </button>
+                              <input
+                                type="number"
+                                step="0.1"
+                                min="4"
+                                max="96"
+                                value={t.fontSize || fontSize}
+                                onChange={(e) => {
+                                  const val = parseFloat(e.target.value);
+                                  if (!isNaN(val) && val > 0) handleFontSizeChange(val);
+                                }}
+                                className="w-11 text-center text-[11px] font-mono font-bold bg-transparent text-white focus:outline-none border-b border-zinc-700"
+                              />
+                              <span className="text-[9px] text-zinc-500 font-mono">pt</span>
+                              <button
+                                type="button"
+                                onClick={() => handleFontSizeChange(Math.min(96, Math.round(((t.fontSize || fontSize) + 1) * 10) / 10))}
+                                className="w-5 h-5 flex items-center justify-center rounded hover:bg-zinc-800 text-zinc-300 hover:text-white transition-colors"
+                                title="Increase font size"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+
+                              {/* Presets dropdown */}
+                              <select
+                                value={t.fontSize || fontSize}
+                                onChange={(e) => handleFontSizeChange(Number(e.target.value))}
+                                className="ml-1 text-[10px] bg-zinc-900 border border-zinc-700 rounded px-1 py-0.5 text-zinc-300 focus:outline-none cursor-pointer"
+                                title="Font size preset"
+                              >
+                                <option value="6">6 pt</option>
+                                <option value="6.3">6.3 pt (ID)</option>
+                                <option value="7">7 pt</option>
+                                <option value="8">8 pt</option>
+                                <option value="9">9 pt</option>
+                                <option value="10">10 pt</option>
+                                <option value="12">12 pt</option>
+                                <option value="14">14 pt</option>
+                                <option value="16">16 pt</option>
+                                <option value="20">20 pt</option>
+                              </select>
+                            </div>
+
+                            <div className="w-[1px] h-4 bg-zinc-700" />
+
+                            {/* Bold and Italic */}
+                            <div className="flex items-center gap-0.5 bg-zinc-950/80 p-0.5 rounded-lg border border-zinc-800">
+                              <button
+                                type="button"
+                                onClick={handleBoldToggle}
+                                className={`w-6 h-6 flex items-center justify-center rounded font-bold text-xs transition-colors ${
+                                  (t.isBold ?? isBold)
+                                    ? "bg-emerald-500 text-zinc-950 font-black shadow"
+                                    : "text-zinc-300 hover:text-white hover:bg-zinc-800"
+                                }`}
+                                title="Toggle Bold"
+                              >
+                                <Bold className="w-3.5 h-3.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={handleItalicToggle}
+                                className={`w-6 h-6 flex items-center justify-center rounded italic text-xs transition-colors ${
+                                  (t.isItalic ?? isItalic)
+                                    ? "bg-emerald-500 text-zinc-950 font-bold shadow"
+                                    : "text-zinc-300 hover:text-white hover:bg-zinc-800"
+                                }`}
+                                title="Toggle Italic"
+                              >
+                                <Italic className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+
+                            <div className="w-[1px] h-4 bg-zinc-700" />
+
+                            {/* Font Family selector */}
+                            <select
+                              value={t.fontFamily || fontFamily}
+                              onChange={(e) => handleFontFamilyChange(e.target.value as any)}
+                              className="bg-zinc-950/80 border border-zinc-800 rounded-lg px-2 py-1 text-[11px] text-zinc-200 focus:outline-none cursor-pointer"
+                              title="Font family"
+                            >
+                              <option value="Helvetica">Sans</option>
+                              <option value="HelveticaBold">Bold Sans</option>
+                              <option value="TimesRoman">Times (Serif / ID)</option>
+                              <option value="Courier">Courier (Mono)</option>
+                            </select>
+
+                            <div className="w-[1px] h-4 bg-zinc-700" />
+
+                            {/* Quick Color Swatches */}
+                            <div className="flex items-center gap-1 bg-zinc-950/80 px-1.5 py-0.5 rounded-lg border border-zinc-800">
+                              {[
+                                { hex: "#000000", label: "Black" },
+                                { hex: "#374151", label: "Dark Gray" },
+                                { hex: "#2563eb", label: "Blue" },
+                                { hex: "#dc2626", label: "Red" },
+                                { hex: "#ffffff", label: "White" },
+                              ].map((s) => (
+                                <button
+                                  key={s.hex}
+                                  type="button"
+                                  onClick={() => handleColorChange(s.hex)}
+                                  className={`w-4 h-4 rounded-full border transition-transform ${
+                                    (t.color || activeColor) === s.hex
+                                      ? "scale-125 border-emerald-400 ring-2 ring-emerald-500/50"
+                                      : "border-zinc-700 hover:scale-110"
+                                  }`}
+                                  style={{ backgroundColor: s.hex }}
+                                  title={s.label}
+                                />
+                              ))}
+                              {/* Custom color picker */}
+                              <label
+                                className="relative w-5 h-5 rounded-full border border-zinc-700 flex items-center justify-center cursor-pointer hover:border-emerald-400 overflow-hidden bg-zinc-900 ml-0.5"
+                                title="Custom color picker"
+                              >
+                                <input
+                                  type="color"
+                                  value={t.color || activeColor}
+                                  onChange={(e) => handleColorChange(e.target.value)}
+                                  className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                                />
+                                <Palette className="w-2.5 h-2.5 text-zinc-300 pointer-events-none" />
+                              </label>
+                            </div>
+
+                            <div className="w-[1px] h-4 bg-zinc-700" />
+
+                            {/* Whiteout / Background Fill Selector */}
+                            <div className="flex items-center gap-0.5 bg-zinc-950/80 p-0.5 rounded-lg border border-zinc-800">
+                              <button
+                                type="button"
+                                onClick={() => handleBackgroundColorChange("#ffffff")}
+                                className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                                  t.hasWhiteoutBackground
+                                    ? "bg-white text-zinc-950 font-bold shadow-sm"
+                                    : "text-zinc-400 hover:text-white"
+                                }`}
+                                title="Whiteout background"
+                              >
+                                Whiteout
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleBackgroundColorChange("transparent")}
+                                className={`px-1.5 py-0.5 rounded text-[10px] font-medium transition-colors ${
+                                  !t.hasWhiteoutBackground
+                                    ? "bg-zinc-800 text-emerald-400 font-bold shadow-sm"
+                                    : "text-zinc-400 hover:text-white"
+                                }`}
+                                title="Transparent background"
+                              >
+                                None
+                              </button>
+                            </div>
+
+                            <div className="w-[1px] h-4 bg-zinc-700" />
+
+                            {/* Done button */}
+                            <button
+                              type="button"
+                              onClick={() => setSelectedElementId(null)}
+                              className="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500 hover:bg-emerald-600 text-white flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Apply & Close"
+                            >
+                              <CheckCircle2 className="w-3 h-3" />
+                              <span>Done</span>
+                            </button>
+                          </div>
+                        )}
+
                         <div
                           className={`relative flex items-center p-1 rounded border transition-all ${
                             isSelected
@@ -1193,6 +1711,11 @@ export default function EditPdfPage() {
                               setSelectedElementId(t.id);
                               setSelectedExistingBlockId(null);
                             }}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" || e.key === "Escape") {
+                                setSelectedElementId(null);
+                              }
+                            }}
                             style={{
                               fontSize: `${t.fontSize}px`,
                               color: t.color,
@@ -1202,6 +1725,7 @@ export default function EditPdfPage() {
                                 ? "Times New Roman, serif"
                                 : "Helvetica, Arial, sans-serif",
                               fontWeight: t.isBold ? "bold" : "normal",
+                              fontStyle: t.isItalic ? "italic" : "normal",
                               backgroundColor: t.hasWhiteoutBackground ? "#ffffff" : "transparent",
                             }}
                             className="bg-transparent px-1.5 py-0.5 rounded outline-none shadow-sm min-w-[60px]"
