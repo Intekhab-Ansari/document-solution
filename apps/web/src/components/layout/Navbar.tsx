@@ -25,6 +25,7 @@ import {
   FileCode,
 } from "lucide-react";
 import { CommandPalette } from "@/components/common/CommandPalette";
+import { BrandLogo } from "@/components/common/BrandLogo";
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -47,18 +48,8 @@ export function Navbar() {
       <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Brand */}
-          <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-zinc-950 shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-              <Sparkles className="w-5 h-5 fill-current" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg text-white tracking-tight flex items-center gap-1.5">
-                EditAnything
-                <span className="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded-full font-semibold uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                  100% Private
-                </span>
-              </span>
-            </div>
+          <Link href="/" className="shrink-0 flex items-center">
+            <BrandLogo size={36} />
           </Link>
 
           {/* Quick Search Bar Button (Opens Command Palette) */}

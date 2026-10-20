@@ -165,57 +165,91 @@ export default function HomePage() {
     <div className="w-full">
       {/* 1. Hero & Smart Upload Section with Aurora Glow */}
       <section className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-28 border-b border-zinc-800/80">
-        {/* Ambient radial glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-gradient-to-tr from-emerald-500/15 via-cyan-500/10 to-indigo-500/10 blur-[130px] rounded-full pointer-events-none" />
+        {/* Multi-layered atmospheric glows & perspective dot grid */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Subtle high-tech radial dot grid */}
+          <div className="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_15%,#000_60%,transparent_100%)]" />
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-7 relative z-10">
+          {/* Primary central emerald spotlight */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-emerald-500/20 via-teal-500/15 to-cyan-500/15 blur-[140px] rounded-full" />
+
+          {/* Secondary atmospheric cyan beam */}
+          <div className="absolute top-10 right-1/4 w-[500px] h-[300px] bg-cyan-500/10 blur-[130px] rounded-full" />
+
+          {/* Deep violet accent anchor */}
+          <div className="absolute bottom-0 left-1/3 w-[600px] h-[250px] bg-indigo-500/10 blur-[150px] rounded-full" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10">
+          {/* Floating Beacon Announcement Badge */}
           <div className="flex items-center justify-center">
-            <PrivacyBadge />
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs text-zinc-300 shadow-[0_0_30px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 transition-all">
+              <span className="flex h-2 w-2 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              </span>
+              <span className="font-bold text-emerald-400">100% On-Device Engine</span>
+              <span className="text-zinc-600">•</span>
+              <span className="text-zinc-300 hidden sm:inline">Zero Cloud Uploads • Air-Gapped WebAssembly</span>
+              <span className="text-zinc-300 sm:hidden">Air-Gapped Privacy</span>
+            </div>
           </div>
 
+          {/* Main Hero Headline */}
           <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.06]">
               All-in-One Document & Photo Suite. <br />
-              <span className="gradient-text-emerald">
-                100% On Your Device. Zero Uploads.
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.3)]">
+                100% On Your Device.
+              </span>{" "}
+              <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                Zero Uploads.
               </span>
             </h1>
 
             <p className="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              High-precision PDF and image manipulation engineered directly for your browser. Compress to exact target KB limits, merge, split, sign, convert, and edit with zero cloud uploads.
+              Professional PDF and image engineering executed directly in your browser memory. Direct in-place vector editing, exact target KB compression, merging, splitting, signing, and EXIF stripping with <span className="text-zinc-200 font-medium">zero server egress</span>.
             </p>
           </div>
 
           {/* Proof / Trust Metric Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 pt-1 text-xs">
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-medium backdrop-blur-md">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>Zero Network Egress</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1 text-xs">
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-emerald-500/30 transition-colors">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span className="font-semibold text-white">Zero Network Egress</span>
+              <span className="text-[10px] text-zinc-500 font-mono">(0 Bytes Sent)</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-medium backdrop-blur-md">
-              <Zap className="w-4 h-4 text-cyan-400" />
-              <span>Instant WebAssembly</span>
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-cyan-500/30 transition-colors">
+              <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
+              <span className="font-semibold text-white">Instant WebAssembly</span>
+              <span className="text-[10px] text-zinc-500 font-mono">(QPDF & Canvas)</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-medium backdrop-blur-md">
-              <Minimize2 className="w-4 h-4 text-amber-400" />
-              <span>Target KB Limits</span>
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-amber-500/30 transition-colors">
+              <Minimize2 className="w-4 h-4 text-amber-400 shrink-0" />
+              <span className="font-semibold text-white">Target KB Limits</span>
+              <span className="text-[10px] text-zinc-500 font-mono">(Govt & Portal Ready)</span>
             </div>
-            <div className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-800 text-zinc-300 font-medium backdrop-blur-md">
-              <Sparkles className="w-4 h-4 text-indigo-400" />
-              <span>Zero Watermarks</span>
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-indigo-500/30 transition-colors">
+              <Sparkles className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span className="font-semibold text-white">Vector Fidelity</span>
+              <span className="text-[10px] text-zinc-500 font-mono">(576 DPI Output)</span>
             </div>
           </div>
 
-          {/* Smart File Dropzone */}
-          <div className="max-w-2xl mx-auto pt-4 space-y-3">
+          {/* Smart File Dropzone with Glowing Neon Frame */}
+          <div className="max-w-2xl mx-auto pt-4 space-y-4">
             {!detectedFile ? (
               <>
-                <FileDropzone
-                  accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
-                  onFilesSelected={handleFileDropped}
-                  title="Drop any document or photo to begin"
-                  description="Our local engine inspects your file magic bytes in-memory and unlocks the perfect tools."
-                />
+                <div className="relative p-[1px] rounded-3xl bg-gradient-to-b from-emerald-500/40 via-cyan-500/20 to-zinc-800/40 shadow-[0_0_60px_-15px_rgba(16,185,129,0.25)]">
+                  <div className="rounded-[23px] bg-zinc-950/90 backdrop-blur-2xl">
+                    <FileDropzone
+                      accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
+                      onFilesSelected={handleFileDropped}
+                      title="Drop any document or photo to begin"
+                      description="Our local engine inspects your file magic bytes in-memory and unlocks the perfect tools."
+                    />
+                  </div>
+                </div>
 
                 {/* Instant Demos / Benchmark Samples */}
                 <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
@@ -253,7 +287,7 @@ export default function HomePage() {
                       key={s.name}
                       type="button"
                       onClick={() => handleLoadSample(s.url, s.name, s.kind)}
-                      className="px-3 py-1.5 rounded-full bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-emerald-500/40 text-zinc-300 hover:text-white transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5 font-medium"
+                      className="px-3.5 py-1.5 rounded-full bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-emerald-500/50 text-zinc-300 hover:text-white transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5 font-medium"
                     >
                       <span>{s.label}</span>
                     </button>
@@ -391,6 +425,95 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* 3 Core Capability Showcase Pillars */}
+          {!detectedFile && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 max-w-4xl mx-auto text-left">
+              {/* Card 1: In-Place Vector Editor */}
+              <Link
+                href="/pdf/edit"
+                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-emerald-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                      <PenTool className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">
+                      Studio
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+                    <span>In-Place Text Editor</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-400" />
+                  </h3>
+                  <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                    Directly click and edit text in Aadhaar, IDs & invoices with exact font sizes, colors, and seamless paper background match.
+                  </p>
+                </div>
+                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
+                  <Sparkles className="w-3 h-3" />
+                  <span>Devanagari & Latin Unicode Support</span>
+                </div>
+              </Link>
+
+              {/* Card 2: Target KB Limits */}
+              <Link
+                href="/pdf/compress"
+                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center">
+                      <Minimize2 className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase">
+                      Target KB
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-white text-sm group-hover:text-cyan-400 transition-colors flex items-center justify-between">
+                    <span>Target-Size Compression</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                  </h3>
+                  <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                    Shrink multi-page PDFs to exactly 50 KB, 100 KB, or 200 KB for passport & government portal uploads without quality loss.
+                  </p>
+                </div>
+                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-cyan-400 font-medium">
+                  <Zap className="w-3 h-3" />
+                  <span>Iterative Byte-Budget Engine</span>
+                </div>
+              </Link>
+
+              {/* Card 3: Privacy & Security */}
+              <Link
+                href="/security"
+                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-indigo-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 uppercase">
+                      Air-Gapped
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-white text-sm group-hover:text-indigo-400 transition-colors flex items-center justify-between">
+                    <span>Security & EXIF Vault</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-400" />
+                  </h3>
+                  <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
+                    AES-256 PDF encryption, password removal, digital signature stamping, and 1-click photo EXIF/GPS scrubbing.
+                  </p>
+                </div>
+                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-indigo-400 font-medium">
+                  <ShieldCheck className="w-3 h-3" />
+                  <span>100% Client-Side WebAssembly</span>
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { ShieldCheck, Lock, Cpu, Sparkles, Heart } from "lucide-react";
+import { ShieldCheck, Lock, Cpu } from "lucide-react";
+import { BrandLogo } from "@/components/common/BrandLogo";
 
 export function Footer() {
   return (
@@ -9,11 +10,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-10">
           {/* Column 1: Brand & Mission */}
           <div className="md:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-2 text-white font-bold text-base tracking-tight">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-zinc-950">
-                <Sparkles className="w-4 h-4 fill-current" />
-              </div>
-              <span>EditAnything</span>
+            <Link href="/" className="inline-block">
+              <BrandLogo size={32} showBadge={false} />
             </Link>
             <p className="text-zinc-400 leading-relaxed text-xs pr-4">
               A privacy-first, all-in-one document and image manipulation suite engineered for individuals and teams who care about sensitive data. Zero watermarks, zero forced signups, and local-first execution.
