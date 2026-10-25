@@ -108,7 +108,7 @@ export function FileDropzone({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative group cursor-pointer rounded-3xl border-2 border-dashed transition-all duration-300 p-8 sm:p-12 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-xl ${
+        className={`relative group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-dashed transition-all duration-300 p-6 sm:p-9 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-xl ${
           isDragOver
             ? "border-emerald-400 bg-emerald-500/10 scale-[1.01] shadow-2xl shadow-emerald-500/25 ring-2 ring-emerald-500/40"
             : "border-zinc-800/90 bg-zinc-900/40 hover:border-emerald-500/40 hover:bg-zinc-900/70 shadow-xl shadow-black/40"
@@ -128,16 +128,16 @@ export function FileDropzone({
         <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 via-transparent to-cyan-500/5 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity" />
 
         {/* Floating animated icon */}
-        <div className="relative w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/80 flex items-center justify-center text-emerald-400 shadow-xl group-hover:scale-110 group-hover:border-emerald-500/50 group-hover:shadow-emerald-500/20 transition-all duration-300">
-          <UploadCloud className="w-8 h-8 transition-transform group-hover:-translate-y-0.5" />
-          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 animate-ping opacity-75" />
-          <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-500" />
+        <div className="relative w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/80 flex items-center justify-center text-emerald-400 shadow-xl group-hover:scale-110 group-hover:border-emerald-500/50 group-hover:shadow-emerald-500/20 transition-all duration-300">
+          <UploadCloud className="w-7 h-7 transition-transform group-hover:-translate-y-0.5" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500" />
         </div>
 
-        <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight mb-2 group-hover:text-emerald-300 transition-colors">
+        <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight mb-1.5 group-hover:text-emerald-300 transition-colors">
           {title}
         </h3>
-        <p className="text-xs sm:text-sm text-zinc-400 max-w-md mb-6 leading-relaxed">
+        <p className="text-xs sm:text-sm text-zinc-400 max-w-md mb-4 leading-relaxed">
           {description}
         </p>
 

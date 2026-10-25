@@ -164,14 +164,14 @@ export default function HomePage() {
   return (
     <div className="w-full">
       {/* 1. Hero & Smart Upload Section with Aurora Glow */}
-      <section className="relative overflow-hidden pt-16 pb-20 sm:pt-24 sm:pb-28 border-b border-zinc-800/80">
+      <section className="relative overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24 border-b border-zinc-800/80">
         {/* Multi-layered atmospheric glows & perspective dot grid */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Subtle high-tech radial dot grid */}
-          <div className="absolute inset-0 dot-grid opacity-30 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_15%,#000_60%,transparent_100%)]" />
+          <div className="absolute inset-0 dot-grid opacity-35 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_15%,#000_60%,transparent_100%)]" />
 
           {/* Primary central emerald spotlight */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-emerald-500/20 via-teal-500/15 to-cyan-500/15 blur-[140px] rounded-full" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-emerald-500/25 via-teal-500/15 to-cyan-500/20 blur-[140px] rounded-full animate-aurora-glow" />
 
           {/* Secondary atmospheric cyan beam */}
           <div className="absolute top-10 right-1/4 w-[500px] h-[300px] bg-cyan-500/10 blur-[130px] rounded-full" />
@@ -180,26 +180,27 @@ export default function HomePage() {
           <div className="absolute bottom-0 left-1/3 w-[600px] h-[250px] bg-indigo-500/10 blur-[150px] rounded-full" />
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
           {/* Floating Beacon Announcement Badge */}
           <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs text-zinc-300 shadow-[0_0_30px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 transition-all">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.2)] backdrop-blur-xl hover:border-emerald-500/50 transition-all cursor-default">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
               <span className="font-bold text-emerald-400">100% On-Device Engine</span>
               <span className="text-zinc-600">•</span>
-              <span className="text-zinc-300 hidden sm:inline">Zero Cloud Uploads • Air-Gapped WebAssembly</span>
-              <span className="text-zinc-300 sm:hidden">Air-Gapped Privacy</span>
+              <span className="text-zinc-300">Zero Cloud Uploads</span>
+              <span className="text-zinc-600 hidden sm:inline">•</span>
+              <span className="text-emerald-300/80 hidden sm:inline font-mono text-[11px]">Air-Gapped WebAssembly</span>
             </div>
           </div>
 
           {/* Main Hero Headline */}
-          <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.06]">
+          <div className="space-y-3.5 max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
               All-in-One Document & Photo Suite. <br />
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.3)]">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">
                 100% On Your Device.
               </span>{" "}
               <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
@@ -207,91 +208,178 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="text-zinc-400 text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed">
-              Professional PDF and image engineering executed directly in your browser memory. Direct in-place vector editing, exact target KB compression, merging, splitting, signing, and EXIF stripping with <span className="text-zinc-200 font-medium">zero server egress</span>.
+            <p className="text-zinc-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
+              Professional PDF and image engineering executed directly in your browser memory. Direct in-place vector editing, exact target KB compression, merging, splitting, and EXIF stripping with <span className="text-zinc-200 font-semibold underline decoration-emerald-500/40 decoration-2 underline-offset-4">zero server egress</span>.
             </p>
           </div>
 
-          {/* Proof / Trust Metric Badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 pt-1 text-xs">
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-emerald-500/30 transition-colors">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="font-semibold text-white">Zero Network Egress</span>
-              <span className="text-[10px] text-zinc-500 font-mono">(0 Bytes Sent)</span>
-            </div>
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-cyan-500/30 transition-colors">
-              <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span className="font-semibold text-white">Instant WebAssembly</span>
-              <span className="text-[10px] text-zinc-500 font-mono">(QPDF & Canvas)</span>
-            </div>
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-amber-500/30 transition-colors">
-              <Minimize2 className="w-4 h-4 text-amber-400 shrink-0" />
-              <span className="font-semibold text-white">Target KB Limits</span>
-              <span className="text-[10px] text-zinc-500 font-mono">(Govt & Portal Ready)</span>
-            </div>
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-zinc-300 shadow-sm backdrop-blur-md hover:border-indigo-500/30 transition-colors">
-              <Sparkles className="w-4 h-4 text-indigo-400 shrink-0" />
-              <span className="font-semibold text-white">Vector Fidelity</span>
-              <span className="text-[10px] text-zinc-500 font-mono">(576 DPI Output)</span>
-            </div>
+          {/* Quick Tool Launchers Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+            <Link
+              href="/pdf/edit"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-105 active:scale-95 transition-all"
+            >
+              <PenTool className="w-3.5 h-3.5 text-emerald-400" />
+              <span>PDF Studio (Vector Edit)</span>
+            </Link>
+            <Link
+              href="/pdf/compress"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-cyan-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+            >
+              <Minimize2 className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Target KB Compress</span>
+            </Link>
+            <Link
+              href="/pdf/merge"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-purple-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+            >
+              <Merge className="w-3.5 h-3.5 text-purple-400" />
+              <span>Merge & Split</span>
+            </Link>
+            <Link
+              href="/image/compress"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+            >
+              <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+              <span>Photo Suite</span>
+            </Link>
+            <Link
+              href="/image/metadata"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-rose-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
+              <span>Strip EXIF / GPS</span>
+            </Link>
           </div>
 
-          {/* Smart File Dropzone with Glowing Neon Frame */}
-          <div className="max-w-2xl mx-auto pt-4 space-y-4">
+          {/* Central Air-Gapped Sandbox Workbench */}
+          <div className="max-w-3xl mx-auto pt-2 space-y-4">
             {!detectedFile ? (
               <>
-                <div className="relative p-[1px] rounded-3xl bg-gradient-to-b from-emerald-500/40 via-cyan-500/20 to-zinc-800/40 shadow-[0_0_60px_-15px_rgba(16,185,129,0.25)]">
-                  <div className="rounded-[23px] bg-zinc-950/90 backdrop-blur-2xl">
-                    <FileDropzone
-                      accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
-                      onFilesSelected={handleFileDropped}
-                      title="Drop any document or photo to begin"
-                      description="Our local engine inspects your file magic bytes in-memory and unlocks the perfect tools."
-                    />
+                <div className="relative p-[1px] rounded-3xl bg-gradient-to-b from-emerald-500/40 via-cyan-500/20 to-zinc-800/50 console-glow-frame">
+                  <div className="rounded-[23px] bg-zinc-950/90 backdrop-blur-2xl overflow-hidden border border-zinc-800/60">
+                    {/* Console Window Top Bar */}
+                    <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 bg-zinc-900/60 border-b border-zinc-800/80 text-xs">
+                      <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                        </div>
+                        <span className="text-zinc-600 font-mono text-[11px] mx-1">|</span>
+                        <span className="font-mono text-[11px] text-zinc-400 flex items-center gap-1.5">
+                          <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+                          <span className="text-zinc-300 font-semibold">IntekEdit Sandbox</span>
+                          <span className="text-zinc-500 hidden sm:inline">(RAM: Isolated)</span>
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2 font-mono text-[11px]">
+                        <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                          <ShieldCheck className="w-3.5 h-3.5" />
+                          <span>0 B Network Egress</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Dropzone Container */}
+                    <div className="p-3 sm:p-5">
+                      <FileDropzone
+                        accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
+                        onFilesSelected={handleFileDropped}
+                        title="Drop any document or photo to begin"
+                        description="Our client-side engine inspects your file magic bytes in-memory and unlocks the perfect tools."
+                      />
+                    </div>
+
+                    {/* Instant Live Sample Demos Toolbar Inside Console */}
+                    <div className="px-4 sm:px-6 py-3 bg-zinc-900/40 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="text-zinc-500 font-medium flex items-center gap-1.5 text-[11px]">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Instant Sample Fixtures:</span>
+                      </span>
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        {[
+                          {
+                            name: "sample_id_card.pdf",
+                            url: "/test-files/sample_id_card.pdf",
+                            label: "💳 ID / Aadhaar",
+                            kind: "pdf",
+                          },
+                          {
+                            name: "sample_scanned_contract_large.pdf",
+                            url: "/test-files/sample_scanned_contract_large.pdf",
+                            label: "📄 Scanned Contract",
+                            kind: "pdf",
+                          },
+                          {
+                            name: "portrait_curly_hair.jpg",
+                            url: "/test-files/portrait_curly_hair.jpg",
+                            label: "📸 Portrait Photo",
+                            kind: "image",
+                          },
+                          {
+                            name: "portrait_with_exif_gps.jpg",
+                            url: "/test-files/portrait_with_exif_gps.jpg",
+                            label: "📍 GPS EXIF Image",
+                            kind: "image",
+                          },
+                        ].map((s) => (
+                          <button
+                            key={s.name}
+                            type="button"
+                            onClick={() => handleLoadSample(s.url, s.name, s.kind)}
+                            className="px-2.5 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-emerald-500/50 text-zinc-300 hover:text-white text-[11px] font-medium transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
+                          >
+                            <span>{s.label}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Instant Demos / Benchmark Samples */}
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs">
-                  <span className="text-zinc-500 font-medium flex items-center gap-1 text-[11px] mr-1">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Instant Demos:</span>
-                  </span>
-                  {[
-                    {
-                      name: "sample_id_card.pdf",
-                      url: "/test-files/sample_id_card.pdf",
-                      label: "💳 ID / Aadhaar Card",
-                      kind: "pdf",
-                    },
-                    {
-                      name: "sample_scanned_contract_large.pdf",
-                      url: "/test-files/sample_scanned_contract_large.pdf",
-                      label: "📄 Scanned Contract (875 KB)",
-                      kind: "pdf",
-                    },
-                    {
-                      name: "portrait_curly_hair.jpg",
-                      url: "/test-files/portrait_curly_hair.jpg",
-                      label: "📸 Portrait Photo (Hair Matting)",
-                      kind: "image",
-                    },
-                    {
-                      name: "portrait_with_exif_gps.jpg",
-                      url: "/test-files/portrait_with_exif_gps.jpg",
-                      label: "📍 Photo with EXIF GPS",
-                      kind: "image",
-                    },
-                  ].map((s) => (
-                    <button
-                      key={s.name}
-                      type="button"
-                      onClick={() => handleLoadSample(s.url, s.name, s.kind)}
-                      className="px-3.5 py-1.5 rounded-full bg-zinc-900/90 hover:bg-zinc-850 border border-zinc-800 hover:border-emerald-500/50 text-zinc-300 hover:text-white transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer flex items-center gap-1.5 font-medium"
-                    >
-                      <span>{s.label}</span>
-                    </button>
-                  ))}
+                {/* Proof / Trust Metric Badges Dock directly below Console */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 pt-1 text-xs text-left">
+                  <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 text-zinc-300 backdrop-blur-md hover:border-emerald-500/30 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white text-xs">Zero Egress</div>
+                      <div className="text-[10px] text-zinc-500 font-mono">0 Bytes Sent</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 text-zinc-300 backdrop-blur-md hover:border-cyan-500/30 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center shrink-0">
+                      <Zap className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white text-xs">WebAssembly</div>
+                      <div className="text-[10px] text-zinc-500 font-mono">Fast On-Device</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 text-zinc-300 backdrop-blur-md hover:border-amber-500/30 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+                      <Minimize2 className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white text-xs">Target KB Limits</div>
+                      <div className="text-[10px] text-zinc-500 font-mono">Govt Portal Ready</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 p-2.5 rounded-2xl bg-zinc-900/60 border border-zinc-800/80 text-zinc-300 backdrop-blur-md hover:border-indigo-500/30 transition-colors">
+                    <div className="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white text-xs">Vector Fidelity</div>
+                      <div className="text-[10px] text-zinc-500 font-mono">576 DPI Output</div>
+                    </div>
+                  </div>
                 </div>
               </>
             ) : (
