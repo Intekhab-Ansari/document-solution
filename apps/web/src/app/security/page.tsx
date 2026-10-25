@@ -135,11 +135,11 @@ export default function SecurityToolsPage() {
               If you discover a security vulnerability or network leakage issue in any of our client-side tools, please report it immediately:
             </p>
             <pre className="p-4 rounded-2xl bg-zinc-950 border border-zinc-800 text-[11px] font-mono text-zinc-300 overflow-x-auto">
-{`Contact: mailto:security@editanything.dev
+{`Contact: mailto:security@intekedit.com
 Expires: 2027-12-31T23:59:59.000Z
 Preferred-Languages: en, hi
-Canonical: https://editanything.dev/.well-known/security.txt
-Policy: https://editanything.dev/security`}
+Canonical: https://intekedit.vercel.app/.well-known/security.txt
+Policy: https://intekedit.vercel.app/security`}
             </pre>
           </div>
         </div>

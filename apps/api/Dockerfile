@@ -23,7 +23,7 @@ RUN chown -R appuser:appuser /app
 USER 10001:10001
 
 # Temporary directory backed by tmpfs mounted at runtime
-ENV EDITANYTHING_TMPFS=/tmpfs
+ENV INTEKEDIT_TMPFS=/tmpfs
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000

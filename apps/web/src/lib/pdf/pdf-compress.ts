@@ -39,8 +39,8 @@ export async function optimizePdfStreams(pdfBytes: Uint8Array | ArrayBuffer): Pr
   doc.setAuthor("");
   doc.setSubject("");
   doc.setKeywords([]);
-  doc.setProducer("EditAnything (Client-Side)");
-  doc.setCreator("EditAnything");
+  doc.setProducer("IntekEdit (Client-Side)");
+  doc.setCreator("IntekEdit");
 
   return await doc.save({
     useObjectStreams: true,

@@ -77,14 +77,14 @@ describe("PDF Editing Engine (Client-Side Vector)", () => {
     page.drawText("ACME ENTERPRISE CORP.", { x: 50, y: 750, size: 20 });
     const originalBytes = await testDoc.save();
 
-    // 2. Edit the existing text block: rename to "EDITANYTHING CORP." and color Emerald
+    // 2. Edit the existing text block: rename to "INTEKEDIT CORP." and color Emerald
     const editedBytes = await editPdfDocument(originalBytes, {
       existingBlocks: [
         {
           id: "block-1",
           pageNumber: 1,
           originalText: "ACME ENTERPRISE CORP.",
-          text: "EDITANYTHING CORP.",
+          text: "INTEKEDIT CORP.",
           x: 50,
           y: 750,
           width: 250,

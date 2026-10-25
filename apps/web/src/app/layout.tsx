@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EditAnything — Privacy-First All-in-One PDF & Image Engineering",
+  title: "IntekEdit — Privacy-First All-in-One PDF & Image Engineering",
   description: "Free, local-in-browser document and photo editor. Target-size PDF & image compression, merge, split, rotate, convert, watermark, and strip EXIF metadata without cloud uploads.",
   keywords: ["pdf compress target size", "merge pdf free", "strip exif metadata", "client side pdf editor", "image to pdf", "heic converter"],
   icons: {

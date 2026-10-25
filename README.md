@@ -1,4 +1,4 @@
-# EditAnything 🛠️
+# IntekEdit 🛠️
 > **Privacy-First, All-in-One Document and Image Engineering Platform**
 
 [![Zero Uploads](https://img.shields.io/badge/Processing-100%25%20Client--Side-emerald.svg)](#privacy--security-guarantees)
@@ -6,13 +6,13 @@
 [![Commercial Safe](https://img.shields.io/badge/Licenses-MIT%2FApache%202.0-indigo.svg)](#legal--licensing-matrix)
 [![Tests Passing](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](#testing--verification)
 
-**EditAnything** is engineered as a privacy-by-default, zero-watermark, local-in-browser document and photo suite. Sensitive files (government IDs, contracts, statements) never touch remote servers.
+**IntekEdit** is engineered as a privacy-by-default, zero-watermark, local-in-browser document and photo suite. Sensitive files (government IDs, contracts, statements) never touch remote servers.
 
 ---
 
 ## 🌟 Problems We Solve
 
-1. **Upload Anxiety & Surveillance:** Competitors upload your tax returns and contracts to cloud servers. **EditAnything runs 100% in your browser** using Web Workers, WebAssembly, and local Canvas APIs.
+1. **Upload Anxiety & Surveillance:** Competitors upload your tax returns and contracts to cloud servers. **IntekEdit runs 100% in your browser** using Web Workers, WebAssembly, and local Canvas APIs.
 2. **Strict Upload Caps (100KB / 200KB / 500KB):** Portals reject applications that exceed strict size limits. Our **iterative binary search algorithm** hits your exact target KB budget while preserving text and OCR layers.
 3. **No Traps:** No watermarks, no forced signups, no daily document caps, and full-resolution exports.
 4. **Metadata Leaks:** Automatic detection of embedded GPS coordinates and camera serial numbers, with a 1-click stripper before sharing.
@@ -64,8 +64,8 @@
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/editanything.git
-   cd editanything
+   git clone https://github.com/Intekhab-Ansari/document-solution.git
+   cd document-solution
    ```
 
 2. **Install dependencies:**
@@ -105,7 +105,7 @@ docker compose up --build
 
 ## 🧪 Verification & Security Audits
 
-EditAnything includes automated verification suites:
+IntekEdit includes automated verification suites:
 
 ### 1. CI Security Static Audit
 Fails the build if any source file contains logging of file names, contents, or raw text buffers:
@@ -141,4 +141,4 @@ python apps/api/test_cleanup.py
 
 ## 📄 License
 
-EditAnything is open-source software licensed under the **MIT License**.
+IntekEdit is open-source software licensed under the **MIT License**.

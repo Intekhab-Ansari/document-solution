@@ -21,10 +21,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - EDITANYTHING_TMPFS=/tmpfs
+      - INTEKEDIT_TMPFS=/tmpfs
       - REDIS_URL=redis://redis:6379/0
       - S3_ENDPOINT=http://minio:9000
-      - S3_BUCKET=editanything-temp
+      - S3_BUCKET=intekedit-temp
       - S3_ACCESS_KEY=minioadmin
       - S3_SECRET_KEY=minioadmin
     # Hardened Sandbox Security Options

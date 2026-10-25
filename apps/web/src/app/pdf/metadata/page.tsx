@@ -217,7 +217,7 @@ export default function PdfMetadataPage() {
                     type="text"
                     value={creator}
                     onChange={(e) => setCreator(e.target.value)}
-                    placeholder="e.g. EditAnything Studio"
+                    placeholder="e.g. IntekEdit Studio"
                     className="w-full px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500"
                   />
                 </div>

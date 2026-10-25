@@ -12,7 +12,7 @@ async function createFixtures() {
   
   // Page 1
   const page1 = pdfDoc.addPage([600, 800]);
-  page1.drawText("EditAnything Privacy-First PDF Sample", {
+  page1.drawText("IntekEdit Privacy-First PDF Sample", {
     x: 50,
     y: 720,
     size: 20,

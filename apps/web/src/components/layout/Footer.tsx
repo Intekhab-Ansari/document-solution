@@ -75,7 +75,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="pt-8 border-t border-zinc-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-zinc-500 text-[11px]">
           <div>
-            &copy; {new Date().getFullYear()} EditAnything. Built with privacy and cryptographic transparency.
+            &copy; {new Date().getFullYear()} IntekEdit. Built with privacy and cryptographic transparency.
           </div>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-zinc-300 transition-colors">Privacy Policy</Link>

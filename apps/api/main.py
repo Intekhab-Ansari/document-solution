@@ -1,5 +1,5 @@
 """
-EditAnything Fallback API Microservice
+IntekEdit Fallback API Microservice
 Strictly sandboxed execution for heavy server-side operations (e.g. headless Office conversion).
 Operates with zero storage retention, single-use signed URLs, and tmpfs volume mounts.
 """
@@ -13,7 +13,7 @@ import tempfile
 import time
 
 app = FastAPI(
-    title="EditAnything Sandboxed API",
+    title="IntekEdit Sandboxed API",
     version="1.0.0",
     docs_url=None, # Disabled in production for security
     redoc_url=None,
@@ -21,13 +21,13 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://editanything.dev"],
+    allow_origins=["http://localhost:3000", "https://intekedit.vercel.app", "https://intekedit.dev"],
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
-TEMP_DIR = os.environ.get("EDITANYTHING_TMPFS", tempfile.gettempdir())
+TEMP_DIR = os.environ.get("INTEKEDIT_TMPFS", os.environ.get("EDITANYTHING_TMPFS", tempfile.gettempdir()))
 
 @app.get("/health")
 def health_check():

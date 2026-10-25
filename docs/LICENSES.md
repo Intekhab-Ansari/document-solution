@@ -1,7 +1,7 @@
-# EditAnything ⚖️ Dependency & Licensing Compliance Registry
+# IntekEdit ⚖️ Dependency & Licensing Compliance Registry
 
 > **Clean-Room & Commercial Safety Guarantee:**
-> All dependencies used in EditAnything are strictly evaluated against commercial closed-source and open-source compatibility. No copyleft viral licenses (AGPL, GPL, or SSPL) are permitted in client packages or unisolated backend components.
+> All dependencies used in IntekEdit are strictly evaluated against commercial closed-source and open-source compatibility. No copyleft viral licenses (AGPL, GPL, or SSPL) are permitted in client packages or unisolated backend components.
 
 ---
 
@@ -68,7 +68,7 @@ The following libraries are **STRICTLY FLAGGED** and excluded from the core code
 ---
 
 ## 5. Clean-Room Certification
-EditAnything code is written from the ground up:
+IntekEdit code is written from the ground up:
 - No reverse-engineering or copying of Stirling-PDF, iLovePDF, or Smallpdf codebase or CSS.
 - Independent visual design system with sleek dark mode, emerald/cyan accents, and glassmorphic micro-interactions.
 - Independent test suite ensuring zero network egress on client-side tools and cryptographic shredding on server jobs.

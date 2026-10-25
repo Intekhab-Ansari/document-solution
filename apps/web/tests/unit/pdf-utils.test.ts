@@ -38,7 +38,7 @@ describe("PDF In-Memory Stream Optimization", () => {
   it("optimizes an in-memory PDF without network access", async () => {
     const doc = await PDFDocument.create();
     const page = doc.addPage([400, 400]);
-    page.drawText("Test PDF Document for EditAnything");
+    page.drawText("Test PDF Document for IntekEdit");
     const bytes = await doc.save();
 
     const optimized = await optimizePdfStreams(bytes);

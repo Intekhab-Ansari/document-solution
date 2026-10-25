@@ -711,7 +711,7 @@ export default function HomePage() {
               <Sparkles className="w-3.5 h-3.5" /> Engineered For Perfection
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Why EditAnything Sets the New Standard
+              Why IntekEdit Sets the New Standard
             </h2>
             <p className="text-zinc-400 text-xs sm:text-base leading-relaxed">
               Engineered with strict client-side isolation, zero remote storage, and cryptographic precision for individuals and enterprises that demand true privacy.

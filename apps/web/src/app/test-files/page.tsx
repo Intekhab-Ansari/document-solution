@@ -127,7 +127,7 @@ export default function TestFilesHubPage() {
           Test Files & Benchmarking Hub
         </h1>
         <p className="text-zinc-400 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-          Pre-generated test fixtures to verify every tool in EditAnything: high-res scanned PDFs, curly hair portraits, EXIF GPS photos, vector invoices, and HEIC files.
+          Pre-generated test fixtures to verify every tool in IntekEdit: high-res scanned PDFs, curly hair portraits, EXIF GPS photos, vector invoices, and HEIC files.
         </p>
       </div>
 
