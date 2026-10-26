@@ -16,6 +16,7 @@ import {
   Scissors,
   Merge,
   Minimize2,
+  Maximize2,
   FileCheck,
   Search,
   PenTool,
@@ -23,6 +24,15 @@ import {
   Layers,
   Wrench,
   FileCode,
+  ArrowUpDown,
+  RotateCw,
+  Hash,
+  Stamp,
+  Contrast,
+  Crop,
+  FlipHorizontal,
+  FileSpreadsheet,
+  Archive,
 } from "lucide-react";
 import { CommandPalette } from "@/components/common/CommandPalette";
 import { BrandLogo } from "@/components/common/BrandLogo";
@@ -130,27 +140,31 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/pdf/reorder"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Reorder & Delete Pages
+                    <ArrowUpDown className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+                    <span>Reorder & Delete Pages</span>
                   </Link>
                   <Link
                     href="/pdf/rotate"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Rotate PDF Pages
+                    <RotateCw className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                    <span>Rotate PDF Pages</span>
                   </Link>
                   <Link
                     href="/pdf/page-numbers"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Add Page Numbers
+                    <Hash className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                    <span>Add Page Numbers</span>
                   </Link>
                   <Link
                     href="/pdf/watermark"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Watermark PDF
+                    <Stamp className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                    <span>Watermark PDF</span>
                   </Link>
                   <Link
                     href="/pdf/flatten"
@@ -166,15 +180,17 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/pdf/grayscale"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Convert to Grayscale (B&W)
+                    <Contrast className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+                    <span>Convert to Grayscale (B&W)</span>
                   </Link>
                   <Link
                     href="/pdf/repair"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Repair Corrupted PDF
+                    <Wrench className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>Repair Corrupted PDF</span>
                   </Link>
                 </div>
               </div>
@@ -212,27 +228,31 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/image/resize"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Resize Pixels & Presets
+                    <Maximize2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                    <span>Resize Pixels & Presets</span>
                   </Link>
                   <Link
                     href="/image/crop"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Crop Image & Aspect Ratios
+                    <Crop className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                    <span>Crop Image & Aspect Ratios</span>
                   </Link>
                   <Link
                     href="/image/rotate"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Rotate & Mirror Flip
+                    <FlipHorizontal className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                    <span>Rotate & Mirror Flip</span>
                   </Link>
                   <Link
                     href="/image/convert"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    Universal Convert (incl. HEIC)
+                    <RefreshCw className="w-3.5 h-3.5 text-pink-400 shrink-0" />
+                    <span>Universal Convert (incl. HEIC)</span>
                   </Link>
                   <Link
                     href="/image/metadata"
@@ -356,7 +376,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400/80 shrink-0"></span>
+                          <FileText className="w-3.5 h-3.5 text-blue-400 shrink-0" />
                           <span>Word to PDF (.docx)</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">DOCX</span>
@@ -367,7 +387,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0"></span>
+                          <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                           <span>Excel to PDF (.xlsx)</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Table</span>
@@ -378,7 +398,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-violet-400/80 shrink-0"></span>
+                          <FileText className="w-3.5 h-3.5 text-violet-400 shrink-0" />
                           <span>PDF to Word (.docx)</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Export</span>
@@ -389,7 +409,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0"></span>
+                          <FileSpreadsheet className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                           <span>PDF to Excel / CSV</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Sheets</span>
@@ -400,7 +420,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shrink-0"></span>
+                          <FileCode className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                           <span>HTML & Text to PDF</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Web</span>
@@ -419,7 +439,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 shrink-0"></span>
+                          <ImageIcon className="w-3.5 h-3.5 text-purple-400 shrink-0" />
                           <span>PDF to Images (PNG/JPG)</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Raster</span>
@@ -430,7 +450,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-pink-400/80 shrink-0"></span>
+                          <Layers className="w-3.5 h-3.5 text-pink-400 shrink-0" />
                           <span>Images to PDF</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Merge</span>
@@ -441,7 +461,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shrink-0"></span>
+                          <RefreshCw className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                           <span>Image Format Converter</span>
                         </span>
                         <span className="text-[10px] text-cyan-400 font-medium">HEIC/WebP</span>
@@ -452,7 +472,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shrink-0"></span>
+                          <Archive className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                           <span>Extract Images (ZIP)</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Raw</span>
@@ -463,7 +483,7 @@ export function Navbar() {
                         className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-teal-400/80 shrink-0"></span>
+                          <FileCheck className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                           <span>Extract Text & OCR</span>
                         </span>
                         <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">TXT/MD</span>
