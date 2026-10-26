@@ -77,40 +77,108 @@ export async function getPdfPageDimensions(
   };
 }
 
-export async function renderPageThumbnail(
-  pdfData: ArrayBuffer | Uint8Array,
+// Cache loaded PDF documents to avoid re-parsing the entire file for every thumbnail
+const loadedDocCache = new WeakMap<Uint8Array, any>();
+
+export async function getCachedPdfDoc(pdfData: ArrayBuffer | Uint8Array) {
+  const bytes = pdfData instanceof Uint8Array ? pdfData : new Uint8Array(pdfData);
+  if (loadedDocCache.has(bytes)) {
+    return loadedDocCache.get(bytes);
+  }
+  const promise = loadPdfDoc(bytes);
+  loadedDocCache.set(bytes, promise);
+  return promise;
+}
+
+// Queue to limit concurrent canvas thumbnail rendering (max 3 concurrent)
+class ConcurrencyQueue {
+  private active = 0;
+  private queue: (() => void)[] = [];
+  private maxConcurrent = 3;
+
+  async add<T>(task: () => Promise<T>): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      const runTask = async () => {
+        this.active++;
+        try {
+          const result = await task();
+          resolve(result);
+        } catch (err) {
+          reject(err);
+        } finally {
+          this.active--;
+          this.next();
+        }
+      };
+
+      if (this.active < this.maxConcurrent) {
+        runTask();
+      } else {
+        this.queue.push(runTask);
+      }
+    });
+  }
+
+  private next() {
+    if (this.queue.length > 0 && this.active < this.maxConcurrent) {
+      const nextTask = this.queue.shift();
+      if (nextTask) nextTask();
+    }
+  }
+
+  clear() {
+    this.queue = [];
+  }
+}
+
+export const thumbnailQueue = new ConcurrencyQueue();
+
+export async function renderDocPageThumbnail(
+  doc: any,
   pageNumber: number,
-  targetWidth = 480
+  targetWidth = 320
 ): Promise<string> {
-  const doc = await loadPdfDoc(pdfData);
-  const page = await doc.getPage(pageNumber);
-  const viewport = page.getViewport({ scale: 1 });
-  const scale = targetWidth / viewport.width;
-  const scaledViewport = page.getViewport({ scale });
+  return thumbnailQueue.add(async () => {
+    const page = await doc.getPage(pageNumber);
+    const viewport = page.getViewport({ scale: 1 });
+    const scale = targetWidth / viewport.width;
+    const scaledViewport = page.getViewport({ scale });
 
-  const canvas = document.createElement("canvas");
-  canvas.width = Math.floor(scaledViewport.width);
-  canvas.height = Math.floor(scaledViewport.height);
-  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.floor(scaledViewport.width);
+    canvas.height = Math.floor(scaledViewport.height);
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-  if (!ctx) throw new Error("Could not get 2D canvas context");
+    if (!ctx) throw new Error("Could not get 2D canvas context");
 
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = "high";
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "medium";
 
-  const renderContext = {
-    canvasContext: ctx,
-    viewport: scaledViewport,
-  };
+    const renderContext = {
+      canvasContext: ctx,
+      viewport: scaledViewport,
+    };
 
-  // @ts-expect-error pdfjs typing nuance
-  await page.render(renderContext).promise;
-  const dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+    await page.render(renderContext).promise;
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
 
-  // Clean up canvas
-  canvas.width = 0;
-  canvas.height = 0;
-  return dataUrl;
+    // Clean up canvas
+    canvas.width = 0;
+    canvas.height = 0;
+    return dataUrl;
+  });
+}
+
+export async function renderPageThumbnail(
+  pdfDataOrDoc: ArrayBuffer | Uint8Array | any,
+  pageNumber: number,
+  targetWidth = 320
+): Promise<string> {
+  if (pdfDataOrDoc && typeof pdfDataOrDoc.getPage === "function") {
+    return renderDocPageThumbnail(pdfDataOrDoc, pageNumber, targetWidth);
+  }
+  const doc = await getCachedPdfDoc(pdfDataOrDoc);
+  return renderDocPageThumbnail(doc, pageNumber, targetWidth);
 }
 
 export async function renderAllPageThumbnails(

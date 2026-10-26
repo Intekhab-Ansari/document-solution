@@ -41,14 +41,11 @@ export default function RotatePdfPage() {
     }
 
     setItems(initialItems);
+  };
 
-    for (let i = 1; i <= info.pageCount; i++) {
-      renderPageThumbnail(bytes, i, 480).then((thumb) => {
-        setItems((prev) =>
-          prev.map((it) => (it.originalPageNumber === i ? { ...it, dataUrl: thumb } : it))
-        );
-      });
-    }
+  const handleRequestThumbnail = async (pageNum: number) => {
+    if (!fileBytes) return undefined;
+    return await renderPageThumbnail(fileBytes, pageNum, 320);
   };
 
   const rotateAll = (deg: number) => {
@@ -174,6 +171,7 @@ export default function RotatePdfPage() {
           <div className="p-5 rounded-3xl bg-zinc-900/40 border border-zinc-800">
             <ThumbnailGrid
               items={items}
+              onRequestThumbnail={handleRequestThumbnail}
               onRotatePage={rotateSingle}
             />
           </div>
