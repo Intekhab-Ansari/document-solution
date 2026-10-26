@@ -17,6 +17,11 @@
   --font-mono: var(--font-geist-mono), monospace;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: #09090b;
   color: #f4f4f5;

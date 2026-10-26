@@ -108,7 +108,7 @@ export function FileDropzone({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative group cursor-pointer rounded-3xl border-2 border-dashed transition-all duration-300 p-7 sm:p-11 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-2xl ${
+        className={`relative group cursor-pointer rounded-3xl border-2 border-dashed transition-all duration-300 p-5 sm:p-11 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-2xl w-full max-w-full ${
           isDragOver
             ? "border-emerald-400 bg-emerald-500/15 scale-[1.01] shadow-2xl shadow-emerald-500/30 ring-2 ring-emerald-500/50"
             : "border-white/10 bg-gradient-to-b from-white/[0.03] to-zinc-950/80 hover:border-emerald-500/40 hover:bg-zinc-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_0_50px_rgba(16,185,129,0.18)]"
@@ -128,8 +128,8 @@ export function FileDropzone({
         <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-cyan-500/5 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
         {/* Floating animated icon */}
-        <div className="relative w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-zinc-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.25)] group-hover:scale-110 group-hover:border-emerald-400/70 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-all duration-300">
-          <UploadCloud className="w-8 h-8 transition-transform group-hover:-translate-y-0.5 text-emerald-400" />
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 mb-3 sm:mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-zinc-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.25)] group-hover:scale-110 group-hover:border-emerald-400/70 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-all duration-300">
+          <UploadCloud className="w-7 h-7 sm:w-8 sm:h-8 transition-transform group-hover:-translate-y-0.5 text-emerald-400" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
         </div>
@@ -137,13 +137,13 @@ export function FileDropzone({
         <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-2 group-hover:text-emerald-300 transition-colors">
           {title}
         </h3>
-        <p className="text-xs sm:text-sm text-zinc-300/90 max-w-md mb-5 leading-relaxed">
+        <p className="text-xs sm:text-sm text-zinc-300/90 max-w-md mb-4 sm:mb-5 leading-relaxed">
           {description}
         </p>
 
         {/* Main CTA button */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 relative z-10">
-          <span className="px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-zinc-950 shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_40px_rgba(16,185,129,0.55)] transition-all flex items-center gap-2.5 group-hover:scale-105 active:scale-95 cursor-pointer">
+        <div className="flex flex-col sm:flex-row items-center gap-3 relative z-10 w-full sm:w-auto">
+          <span className="w-full sm:w-auto justify-center px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-zinc-950 shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_40px_rgba(16,185,129,0.55)] transition-all flex items-center gap-2.5 group-hover:scale-105 active:scale-95 cursor-pointer">
             <Sparkles className="w-4 h-4 fill-zinc-950" />
             <span>Choose {multiple ? "Files" : "File"} from Device</span>
             <ArrowUpRight className="w-4 h-4 opacity-75" />

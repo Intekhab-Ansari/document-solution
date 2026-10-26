@@ -59,20 +59,20 @@ export function Navbar() {
         {/* Radiant top micro-accent line */}
         <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-400/40 via-cyan-400/40 to-transparent" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Brand */}
           <Link href="/" className="shrink-0 flex items-center">
-            <BrandLogo size={36} />
+            <BrandLogo size={34} />
           </Link>
 
           {/* Quick Search Bar Button (Opens Command Palette) */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-40 sm:w-52 lg:w-44 xl:w-60 shrink shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
+            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-9 h-9 sm:h-auto sm:w-52 lg:w-44 xl:w-60 shrink-0 sm:shrink justify-center sm:justify-start shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
             title="Search all 30+ tools (Ctrl+K)"
           >
-            <Search className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="truncate">Search 30+ tools...</span>
+            <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
+            <span className="truncate hidden sm:inline">Search 30+ tools...</span>
             <kbd className="ml-auto hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-zinc-900/90 border border-zinc-700/60 font-mono text-[10px] text-zinc-400 group-hover:text-emerald-300 group-hover:border-emerald-500/40 shrink-0 transition-colors">
               Ctrl K
             </kbd>

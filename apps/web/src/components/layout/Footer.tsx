@@ -220,8 +220,8 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Trust Badges - All 3 in 1 line */}
-            <div className="flex items-center gap-1.5 pt-1 overflow-x-auto no-scrollbar flex-nowrap whitespace-nowrap">
+            {/* Trust Badges - Responsive wrap on mobile */}
+            <div className="flex flex-wrap items-center gap-1.5 pt-1 max-w-full">
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-emerald-400 text-[10.5px] whitespace-nowrap shrink-0">
                 <ShieldCheck className="w-3 h-3 shrink-0" /> Client-Side Default
               </span>
