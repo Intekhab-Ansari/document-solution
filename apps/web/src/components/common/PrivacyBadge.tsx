@@ -41,7 +41,12 @@ export function PrivacyBadge({ className = "", variant = "pill" }: PrivacyBadgeP
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400"></span>
         </span>
         <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 transition-transform group-hover:scale-110 shrink-0" />
-        <span className="tracking-wide whitespace-nowrap shrink-0">100% On-Device · Zero Cloud Uploads</span>
+        <span className="tracking-wide whitespace-nowrap shrink-0 hidden sm:inline">
+          100% On-Device · Zero Cloud Uploads
+        </span>
+        <span className="tracking-wide whitespace-nowrap shrink-0 sm:hidden">
+          100% On-Device · Private
+        </span>
         <span className="w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] flex items-center justify-center font-mono opacity-80 group-hover:opacity-100 shrink-0">
           ?
         </span>
