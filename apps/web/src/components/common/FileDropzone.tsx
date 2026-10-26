@@ -108,10 +108,10 @@ export function FileDropzone({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`relative group cursor-pointer rounded-2xl sm:rounded-3xl border-2 border-dashed transition-all duration-300 p-6 sm:p-9 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-xl ${
+        className={`relative group cursor-pointer rounded-3xl border-2 border-dashed transition-all duration-300 p-7 sm:p-11 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-2xl ${
           isDragOver
-            ? "border-emerald-400 bg-emerald-500/10 scale-[1.01] shadow-2xl shadow-emerald-500/25 ring-2 ring-emerald-500/40"
-            : "border-zinc-800/90 bg-zinc-900/40 hover:border-emerald-500/40 hover:bg-zinc-900/70 shadow-xl shadow-black/40"
+            ? "border-emerald-400 bg-emerald-500/15 scale-[1.01] shadow-2xl shadow-emerald-500/30 ring-2 ring-emerald-500/50"
+            : "border-white/10 bg-gradient-to-b from-white/[0.03] to-zinc-950/80 hover:border-emerald-500/40 hover:bg-zinc-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_0_50px_rgba(16,185,129,0.18)]"
         }`}
       >
         <input
@@ -125,37 +125,37 @@ export function FileDropzone({
         />
 
         {/* Ambient background glow inside dropzone */}
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/5 via-transparent to-cyan-500/5 pointer-events-none opacity-50 group-hover:opacity-100 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-cyan-500/5 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
         {/* Floating animated icon */}
-        <div className="relative w-14 h-14 mb-3 rounded-2xl bg-gradient-to-br from-zinc-800 to-zinc-900 border border-zinc-700/80 flex items-center justify-center text-emerald-400 shadow-xl group-hover:scale-110 group-hover:border-emerald-500/50 group-hover:shadow-emerald-500/20 transition-all duration-300">
-          <UploadCloud className="w-7 h-7 transition-transform group-hover:-translate-y-0.5" />
+        <div className="relative w-16 h-16 mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-zinc-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.25)] group-hover:scale-110 group-hover:border-emerald-400/70 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-all duration-300">
+          <UploadCloud className="w-8 h-8 transition-transform group-hover:-translate-y-0.5 text-emerald-400" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-500" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />
         </div>
 
-        <h3 className="text-lg sm:text-2xl font-black text-white tracking-tight mb-1.5 group-hover:text-emerald-300 transition-colors">
+        <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight mb-2 group-hover:text-emerald-300 transition-colors">
           {title}
         </h3>
-        <p className="text-xs sm:text-sm text-zinc-400 max-w-md mb-4 leading-relaxed">
+        <p className="text-xs sm:text-sm text-zinc-300/90 max-w-md mb-5 leading-relaxed">
           {description}
         </p>
 
         {/* Main CTA button */}
         <div className="flex flex-col sm:flex-row items-center gap-3 relative z-10">
-          <span className="px-6 py-3 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-zinc-950 shadow-lg shadow-emerald-500/25 transition-all flex items-center gap-2 group-hover:shadow-emerald-500/40">
+          <span className="px-7 py-3.5 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 hover:from-emerald-300 hover:to-cyan-300 text-zinc-950 shadow-[0_0_25px_rgba(16,185,129,0.35)] hover:shadow-[0_0_40px_rgba(16,185,129,0.55)] transition-all flex items-center gap-2.5 group-hover:scale-105 active:scale-95 cursor-pointer">
             <Sparkles className="w-4 h-4 fill-zinc-950" />
             <span>Choose {multiple ? "Files" : "File"} from Device</span>
-            <ArrowUpRight className="w-4 h-4 opacity-70" />
+            <ArrowUpRight className="w-4 h-4 opacity-75" />
           </span>
         </div>
 
         {/* Supported format badges */}
-        <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-mono font-semibold text-zinc-400">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-mono font-bold text-zinc-400">
           {["PDF", "PNG", "JPG", "WEBP", "HEIC", "AVIF", "DOCX"].map((ext) => (
             <span
               key={ext}
-              className="px-2 py-0.5 rounded-md bg-zinc-800/80 border border-zinc-700/60 text-zinc-300 group-hover:border-zinc-600 transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300 group-hover:border-zinc-700/80 group-hover:text-zinc-200 transition-colors shadow-sm"
             >
               .{ext}
             </span>
@@ -164,9 +164,10 @@ export function FileDropzone({
 
         {/* Sample Files Instant Shortcuts */}
         {sampleFiles && sampleFiles.length > 0 && (
-          <div className="mt-6 pt-5 border-t border-zinc-800/80 w-full max-w-md flex flex-col items-center gap-2 relative z-10">
-            <span className="text-[11px] font-semibold text-zinc-400 flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Or test instantly with sample files:
+          <div className="mt-7 pt-6 border-t border-white/[0.08] w-full max-w-lg flex flex-col items-center gap-2.5 relative z-10">
+            <span className="text-[11px] font-bold text-zinc-400 flex items-center gap-1.5 uppercase tracking-wider">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Or test instantly with sample files:</span>
             </span>
             <div className="flex flex-wrap items-center justify-center gap-2">
               {sampleFiles.map((s) => (
@@ -175,12 +176,12 @@ export function FileDropzone({
                   type="button"
                   disabled={loadingSample !== null}
                   onClick={(e) => handleLoadSample(e, s)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium bg-zinc-800/90 hover:bg-zinc-700 text-zinc-200 hover:text-white border border-zinc-700/80 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50 hover:border-emerald-500/40"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-emerald-500/15 text-zinc-200 hover:text-white border border-white/10 hover:border-emerald-500/40 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-sm hover:shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                 >
                   {s.kind === "image" ? (
-                    <ImageIcon className="w-3 h-3 text-cyan-400" />
+                    <ImageIcon className="w-3.5 h-3.5 text-cyan-400" />
                   ) : (
-                    <FileText className="w-3 h-3 text-emerald-400" />
+                    <FileText className="w-3.5 h-3.5 text-emerald-400" />
                   )}
                   <span>{loadingSample === s.name ? "Loading..." : s.label}</span>
                 </button>
@@ -189,15 +190,15 @@ export function FileDropzone({
           </div>
         )}
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-[11px] text-zinc-500 font-medium">
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Zero upload limits
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-4 text-[11px] text-zinc-400 font-medium">
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" /> Zero upload limits
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> 100% In-Browser RAM
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" /> 100% In-Browser RAM
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" /> Zero Watermarks
+          <span className="flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_#818cf8]" /> Zero Watermarks
           </span>
         </div>
       </div>

@@ -55,7 +55,10 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-zinc-950/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+        {/* Radiant top micro-accent line */}
+        <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-400/40 via-cyan-400/40 to-transparent" />
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Brand */}
           <Link href="/" className="shrink-0 flex items-center">
@@ -65,32 +68,32 @@ export function Navbar() {
           {/* Quick Search Bar Button (Opens Command Palette) */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-zinc-900 hover:bg-zinc-800/90 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs transition-all w-40 sm:w-52 lg:w-44 xl:w-60 shrink shadow-inner whitespace-nowrap"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-40 sm:w-52 lg:w-44 xl:w-60 shrink shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
             title="Search all 30+ tools (Ctrl+K)"
           >
-            <Search className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <Search className="w-3.5 h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
             <span className="truncate">Search 30+ tools...</span>
-            <kbd className="ml-auto hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded bg-zinc-950 border border-zinc-700/60 font-mono text-[10px] text-zinc-400 shrink-0">
+            <kbd className="ml-auto hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-zinc-900/90 border border-zinc-700/60 font-mono text-[10px] text-zinc-400 group-hover:text-emerald-300 group-hover:border-emerald-500/40 shrink-0 transition-colors">
               Ctrl K
             </kbd>
           </button>
 
           {/* Desktop Mega-Menu Nav */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
+          <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
             {/* 1. PDF Tools Mega Dropdown */}
             <div className="relative group shrink-0">
               <Link
                 href="/pdf"
-                className="flex items-center gap-1.5 hover:text-white transition-colors py-2 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all py-2 whitespace-nowrap shrink-0"
               >
                 <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">PDF Tools</span>
               </Link>
               <div className="absolute left-0 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
+                <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(16,185,129,0.06)] ring-1 ring-white/5 space-y-1">
                   <Link
                     href="/pdf"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1 shadow-sm"
                   >
                     <span>Explore All PDF Tools (13+)</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
@@ -200,16 +203,16 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/image"
-                className="flex items-center gap-1.5 hover:text-white transition-colors py-2 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <ImageIcon className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="whitespace-nowrap">Image Tools</span>
               </Link>
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
+                <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(6,182,212,0.06)] ring-1 ring-white/5 space-y-1">
                   <Link
                     href="/image"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-semibold border border-cyan-500/20 transition-colors mb-1"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-semibold border border-cyan-500/20 transition-colors mb-1 shadow-sm"
                   >
                     <span>Explore All Image Tools (6+)</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
@@ -274,16 +277,16 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/security"
-                className="flex items-center gap-1.5 hover:text-white transition-colors py-2 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">Sign & Extract</span>
               </Link>
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
+                <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(16,185,129,0.06)] ring-1 ring-white/5 space-y-1">
                   <Link
                     href="/security"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1 shadow-sm"
                   >
                     <span>Security & Sign Suite</span>
                     <ArrowRight className="w-3.5 h-3.5 shrink-0" />
@@ -329,13 +332,13 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/convert"
-                className="flex items-center gap-1.5 hover:text-white transition-colors py-2 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <RefreshCw className="w-4 h-4 text-violet-400 shrink-0" />
                 <span className="whitespace-nowrap">Converters</span>
               </Link>
               <div className="absolute right-0 top-full pt-1.5 w-[480px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-2.5">
+                <div className="p-3.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(139,92,246,0.06)] ring-1 ring-white/5 space-y-2.5">
                   {/* Hero Link: Universal Converter Studio */}
                   <Link
                     href="/convert"
@@ -512,7 +515,7 @@ export function Navbar() {
             {/* 5. Privacy Link */}
             <Link
               href="/privacy"
-              className="flex items-center gap-1.5 hover:text-white transition-colors py-2 whitespace-nowrap shrink-0"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span className="whitespace-nowrap">Privacy</span>
@@ -521,10 +524,20 @@ export function Navbar() {
 
           {/* Right Badge & Quick Action */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 border border-zinc-800 text-zinc-300 whitespace-nowrap shrink-0">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <Link
+              href="/privacy"
+              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.08] hover:bg-emerald-500/[0.16] border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.12)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              title="View 100% In-Browser Privacy Guarantee"
+            >
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400" />
+              </span>
               <span className="whitespace-nowrap">100% In-Browser</span>
-            </div>
+              <span className="text-[10px] text-emerald-400/80 font-mono px-1 rounded bg-emerald-500/15 border border-emerald-500/25 hidden xl:inline">
+                Private
+              </span>
+            </Link>
           </div>
 
           {/* Mobile menu trigger */}

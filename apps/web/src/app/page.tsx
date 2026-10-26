@@ -183,16 +183,16 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
           {/* Floating Beacon Announcement Badge */}
           <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-emerald-500/30 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.2)] backdrop-blur-xl hover:border-emerald-500/50 transition-all cursor-default">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.03] border border-emerald-500/35 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 transition-all cursor-default">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
               </span>
               <span className="font-bold text-emerald-400">100% On-Device Engine</span>
               <span className="text-zinc-600">•</span>
               <span className="text-zinc-300">Zero Cloud Uploads</span>
               <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-emerald-300/80 hidden sm:inline font-mono text-[11px]">Air-Gapped WebAssembly</span>
+              <span className="text-emerald-300/90 hidden sm:inline font-mono text-[11px]">Air-Gapped WebAssembly</span>
             </div>
           </div>
 
@@ -224,28 +224,35 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pdf/compress"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-cyan-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-cyan-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.18)]"
             >
               <Minimize2 className="w-3.5 h-3.5 text-cyan-400" />
               <span>Target KB Compress</span>
             </Link>
             <Link
+              href="/pdf/split"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.18)]"
+            >
+              <Scissors className="w-3.5 h-3.5 text-teal-400" />
+              <span>Split PDF Pages</span>
+            </Link>
+            <Link
               href="/pdf/merge"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-purple-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.18)]"
             >
               <Merge className="w-3.5 h-3.5 text-purple-400" />
-              <span>Merge & Split</span>
+              <span>Merge Documents</span>
             </Link>
             <Link
               href="/image/compress"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-amber-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-amber-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(245,158,11,0.18)]"
             >
               <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
               <span>Photo Suite</span>
             </Link>
             <Link
               href="/image/metadata"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-zinc-800 hover:border-rose-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-rose-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(244,63,94,0.18)]"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
               <span>Strip EXIF / GPS</span>
@@ -256,27 +263,27 @@ export default function HomePage() {
           <div className="max-w-3xl mx-auto pt-2 space-y-4">
             {!detectedFile ? (
               <>
-                <div className="relative p-[1px] rounded-3xl bg-gradient-to-b from-emerald-500/40 via-cyan-500/20 to-zinc-800/50 console-glow-frame">
-                  <div className="rounded-[23px] bg-zinc-950/90 backdrop-blur-2xl overflow-hidden border border-zinc-800/60">
+                <div className="relative p-[1.5px] rounded-3xl bg-gradient-to-b from-emerald-500/50 via-cyan-500/30 to-violet-500/20 console-glow-frame">
+                  <div className="rounded-[23px] bg-zinc-950/95 backdrop-blur-2xl overflow-hidden border border-white/10">
                     {/* Console Window Top Bar */}
-                    <div className="flex items-center justify-between px-4 sm:px-6 py-2.5 bg-zinc-900/60 border-b border-zinc-800/80 text-xs">
+                    <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-zinc-900/70 border-b border-white/[0.08] text-xs">
                       <div className="flex items-center gap-2">
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_6px_#f43f5e]" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_6px_#f59e0b]" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_#10b981]" />
                         </div>
                         <span className="text-zinc-600 font-mono text-[11px] mx-1">|</span>
                         <span className="font-mono text-[11px] text-zinc-400 flex items-center gap-1.5">
                           <Cpu className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-zinc-300 font-semibold">IntekEdit Sandbox</span>
+                          <span className="text-zinc-200 font-bold">IntekEdit Sandbox</span>
                           <span className="text-zinc-500 hidden sm:inline">(RAM: Isolated)</span>
                         </span>
                       </div>
 
                       <div className="flex items-center gap-2 font-mono text-[11px]">
-                        <span className="inline-flex items-center gap-1 text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                          <ShieldCheck className="w-3.5 h-3.5" />
+                        <span className="inline-flex items-center gap-1 text-emerald-300 bg-emerald-500/15 px-2.5 py-0.5 rounded-full border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                          <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                           <span>0 B Network Egress</span>
                         </span>
                       </div>
