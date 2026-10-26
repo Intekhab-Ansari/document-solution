@@ -167,7 +167,7 @@ export function Footer() {
         {/* ============================================================== */}
         {/* 2. MIDDLE SECTION: Brand & Comprehensive 4-Column Navigation */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 pb-12 border-b border-zinc-800/60">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 sm:gap-10 pb-12 border-b border-zinc-800/60">
           {/* Column 1 & 2: Brand Identity, Mission & Interactive RAM Purge */}
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="inline-block group">
@@ -234,12 +234,14 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 3: PDF Studio & Core Tools */}
-          <div className="space-y-3">
-            <h4 className="text-white font-semibold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5 text-emerald-400" />
-              <span>PDF Studio</span>
-            </h4>
+          {/* 4 Tool Link Columns in 2x2 Grid on Mobile, 4 columns on Desktop */}
+          <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8">
+            {/* Column 1: PDF Studio & Core Tools */}
+            <div className="space-y-3">
+              <h4 className="text-white font-semibold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
+                <FileText className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                <span className="truncate">PDF Studio</span>
+              </h4>
             <ul className="space-y-2 text-zinc-400">
               <li>
                 <Link
@@ -247,7 +249,7 @@ export function Footer() {
                   className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
                   <span className="group-hover:translate-x-0.5 transition-transform truncate">Edit PDF (Studio)</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                     Studio
                   </span>
                 </Link>
@@ -258,7 +260,7 @@ export function Footer() {
                   className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
                   <span className="group-hover:translate-x-0.5 transition-transform truncate">Target-Size Compress</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                     Target KB
                   </span>
                 </Link>
@@ -363,7 +365,7 @@ export function Footer() {
                   className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
                   <span className="group-hover:translate-x-0.5 transition-transform truncate">Target KB Compress</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                     KB Limit
                   </span>
                 </Link>
@@ -394,7 +396,7 @@ export function Footer() {
                   className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
                   <span className="group-hover:translate-x-0.5 transition-transform truncate">EXIF & GPS Stripper</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                     Privacy
                   </span>
                 </Link>
@@ -459,6 +461,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
+      </div>
 
         {/* ============================================================== */}
         {/* 3. BOTTOM BAR: Colophon, Meta Links & Smooth Back-To-Top */}
