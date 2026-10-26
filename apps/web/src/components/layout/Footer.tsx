@@ -220,16 +220,16 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Trust Badges */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-emerald-400 text-[11px]">
-                <ShieldCheck className="w-3.5 h-3.5" /> Client-Side Default
+            {/* Trust Badges - All 3 in 1 line */}
+            <div className="flex items-center gap-1.5 pt-1 overflow-x-auto no-scrollbar flex-nowrap whitespace-nowrap">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-emerald-400 text-[10.5px] whitespace-nowrap shrink-0">
+                <ShieldCheck className="w-3 h-3 shrink-0" /> Client-Side Default
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-cyan-400 text-[11px]">
-                <Cpu className="w-3.5 h-3.5" /> WebAssembly 2.0
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-cyan-400 text-[10.5px] whitespace-nowrap shrink-0">
+                <Cpu className="w-3 h-3 shrink-0" /> WebAssembly 2.0
               </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 text-[11px]">
-                <EyeOff className="w-3.5 h-3.5" /> Zero File Telemetry
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-zinc-900 border border-zinc-800 text-amber-400 text-[10.5px] whitespace-nowrap shrink-0">
+                <EyeOff className="w-3 h-3 shrink-0" /> Zero File Telemetry
               </span>
             </div>
           </div>
@@ -244,10 +244,10 @@ export function Footer() {
               <li>
                 <Link
                   href="/pdf/edit"
-                  className="hover:text-white transition-colors flex items-center justify-between group"
+                  className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
-                  <span className="group-hover:translate-x-0.5 transition-transform">Edit PDF (Studio)</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1 rounded">
+                  <span className="group-hover:translate-x-0.5 transition-transform truncate">Edit PDF (Studio)</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
                     Studio
                   </span>
                 </Link>
@@ -255,10 +255,10 @@ export function Footer() {
               <li>
                 <Link
                   href="/pdf/compress"
-                  className="hover:text-white transition-colors flex items-center justify-between group"
+                  className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
-                  <span className="group-hover:translate-x-0.5 transition-transform">Target-Size Compress</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-1 rounded">
+                  <span className="group-hover:translate-x-0.5 transition-transform truncate">Target-Size Compress</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
                     Target KB
                   </span>
                 </Link>
@@ -360,10 +360,10 @@ export function Footer() {
               <li>
                 <Link
                   href="/image/compress"
-                  className="hover:text-white transition-colors flex items-center justify-between group"
+                  className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
-                  <span className="group-hover:translate-x-0.5 transition-transform">Target KB Compress</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1 rounded">
+                  <span className="group-hover:translate-x-0.5 transition-transform truncate">Target KB Compress</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
                     KB Limit
                   </span>
                 </Link>
@@ -391,10 +391,10 @@ export function Footer() {
               <li>
                 <Link
                   href="/image/metadata"
-                  className="hover:text-white transition-colors flex items-center justify-between group"
+                  className="hover:text-white transition-colors flex items-center justify-between gap-1 group"
                 >
-                  <span className="group-hover:translate-x-0.5 transition-transform">EXIF & GPS Stripper</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1 rounded">
+                  <span className="group-hover:translate-x-0.5 transition-transform truncate">EXIF & GPS Stripper</span>
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 inline-flex items-center">
                     Privacy
                   </span>
                 </Link>
