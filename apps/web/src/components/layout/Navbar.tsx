@@ -76,36 +76,36 @@ export function Navbar() {
                 <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">PDF Tools</span>
               </Link>
-              <div className="absolute left-0 top-full pt-2 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
+              <div className="absolute left-0 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
                 <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
                   <Link
                     href="/pdf"
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1"
                   >
                     <span>Explore All PDF Tools (13+)</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </Link>
                   <Link
                     href="/pdf/edit"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-100 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 text-xs transition-colors"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-100 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <PenTool className="w-3.5 h-3.5 text-emerald-400" />
-                      Edit PDF (Text & Colors)
+                    <span className="flex items-center gap-2 truncate">
+                      <PenTool className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">Edit PDF (Text & Colors)</span>
                     </span>
-                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold uppercase">
+                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold uppercase shrink-0 whitespace-nowrap ml-2">
                       Studio
                     </span>
                   </Link>
                   <Link
                     href="/pdf/compress"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <Minimize2 className="w-3.5 h-3.5 text-emerald-400" />
-                      Compress (Target KB)
+                    <span className="flex items-center gap-2 truncate">
+                      <Minimize2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">Compress (Target KB)</span>
                     </span>
-                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold">
+                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
                       Popular
                     </span>
                   </Link>
@@ -118,10 +118,15 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/pdf/split"
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <Scissors className="w-3.5 h-3.5 text-blue-400" />
-                    Split & Extract Pages
+                    <span className="flex items-center gap-2">
+                      <Scissors className="w-3.5 h-3.5 text-blue-400" />
+                      <span>Split 1 PDF to Multiple PDFs</span>
+                    </span>
+                    <span className="text-[10px] text-violet-400 bg-violet-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
+                      Multi
+                    </span>
                   </Link>
                   <Link
                     href="/pdf/reorder"
@@ -149,13 +154,13 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/pdf/flatten"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <Layers className="w-3.5 h-3.5 text-amber-400" />
-                      Flatten Forms & Annotations
+                    <span className="flex items-center gap-2 truncate">
+                      <Layers className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                      <span className="truncate">Flatten Forms & Annotations</span>
                     </span>
-                    <span className="text-[10px] text-amber-400 bg-amber-950/60 px-1.5 py-0.5 rounded font-bold">
+                    <span className="text-[10px] text-amber-400 bg-amber-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
                       New
                     </span>
                   </Link>
@@ -184,24 +189,24 @@ export function Navbar() {
                 <ImageIcon className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="whitespace-nowrap">Image Tools</span>
               </Link>
-              <div className="absolute left-0 top-full pt-2 w-72 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
                 <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
                   <Link
                     href="/image"
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-semibold border border-cyan-500/20 transition-colors mb-1"
                   >
                     <span>Explore All Image Tools (6+)</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </Link>
                   <Link
                     href="/image/compress"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <Minimize2 className="w-3.5 h-3.5 text-emerald-400" />
-                      Compress Image (Target KB)
+                    <span className="flex items-center gap-2 truncate">
+                      <Minimize2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">Compress Image (Target KB)</span>
                     </span>
-                    <span className="text-[10px] text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded font-bold">
+                    <span className="text-[10px] text-cyan-400 bg-cyan-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
                       Exact KB
                     </span>
                   </Link>
@@ -231,13 +236,13 @@ export function Navbar() {
                   </Link>
                   <Link
                     href="/image/metadata"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                      Strip EXIF & GPS
+                    <span className="flex items-center gap-2 truncate">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">Strip EXIF & GPS</span>
                     </span>
-                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold">
+                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
                       Privacy
                     </span>
                   </Link>
@@ -254,24 +259,24 @@ export function Navbar() {
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">Sign & Extract</span>
               </Link>
-              <div className="absolute left-0 top-full pt-2 w-72 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
                 <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
                   <Link
                     href="/security"
                     className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1"
                   >
                     <span>Security & Sign Suite</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </Link>
                   <Link
                     href="/security/sign"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                    className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <PenTool className="w-3.5 h-3.5 text-emerald-400" />
-                      E-Sign Document (Digital Signature)
+                    <span className="flex items-center gap-2 truncate">
+                      <PenTool className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">E-Sign Document</span>
                     </span>
-                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold">
+                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
                       Popular
                     </span>
                   </Link>
@@ -279,21 +284,21 @@ export function Navbar() {
                     href="/extract/text"
                     className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <FileCode className="w-3.5 h-3.5 text-cyan-400" />
+                    <FileCode className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                     Extract Text & Markdown
                   </Link>
                   <Link
                     href="/extract/images"
                     className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
+                    <ImageIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     Extract Embedded Images (ZIP)
                   </Link>
                   <Link
                     href="/image/metadata"
                     className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                     Strip GPS & EXIF Metadata
                   </Link>
                 </div>
@@ -309,7 +314,7 @@ export function Navbar() {
                 <RefreshCw className="w-4 h-4 text-violet-400 shrink-0" />
                 <span className="whitespace-nowrap">Converters</span>
               </Link>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[520px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
+              <div className="absolute right-0 top-full pt-1.5 w-[480px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
                 <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-2.5">
                   {/* Hero Link: Universal Converter Studio */}
                   <Link
