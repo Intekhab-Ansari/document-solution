@@ -14,11 +14,6 @@ const nextConfig: NextConfig = {
     return config;
   },
   turbopack: {
-    root: path.resolve(__dirname, "../.."),
-    resolveAlias: {
-      fs: path.resolve(__dirname, "src/lib/empty.js"),
-      path: path.resolve(__dirname, "src/lib/empty.js"),
-    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],

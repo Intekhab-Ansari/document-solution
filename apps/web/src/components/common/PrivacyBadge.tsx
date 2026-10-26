@@ -27,22 +27,22 @@ export function PrivacyBadge({ className = "", variant = "pill" }: PrivacyBadgeP
   }
 
   return (
-    <div className={`relative inline-flex items-center ${className}`}>
+    <div className={`relative inline-flex items-center whitespace-nowrap shrink-0 ${className}`}>
       <button
         type="button"
         onClick={() => setShowTooltip(!showTooltip)}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/60 hover:bg-emerald-900/40 transition-all cursor-pointer shadow-lg shadow-emerald-500/5 backdrop-blur-md"
+        className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/60 hover:bg-emerald-900/40 transition-all cursor-pointer shadow-lg shadow-emerald-500/5 backdrop-blur-md"
         aria-label="Privacy guarantee details"
       >
-        <span className="relative flex h-2 w-2">
+        <span className="relative flex h-2 w-2 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400"></span>
         </span>
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 transition-transform group-hover:scale-110" />
-        <span className="tracking-wide">100% On-Device · Zero Cloud Uploads</span>
-        <span className="w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] flex items-center justify-center font-mono opacity-80 group-hover:opacity-100">
+        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 transition-transform group-hover:scale-110 shrink-0" />
+        <span className="tracking-wide whitespace-nowrap shrink-0">100% On-Device · Zero Cloud Uploads</span>
+        <span className="w-3.5 h-3.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] flex items-center justify-center font-mono opacity-80 group-hover:opacity-100 shrink-0">
           ?
         </span>
       </button>
