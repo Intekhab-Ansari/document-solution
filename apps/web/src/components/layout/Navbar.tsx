@@ -309,33 +309,177 @@ export function Navbar() {
                 <RefreshCw className="w-4 h-4 text-violet-400 shrink-0" />
                 <span className="whitespace-nowrap">Converters</span>
               </Link>
-              <div className="absolute left-0 top-full pt-2 w-64 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
-                <div className="p-2 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-1">
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-[520px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200">
+                <div className="p-3 rounded-2xl bg-zinc-900 border border-zinc-800 shadow-2xl space-y-2.5">
+                  {/* Hero Link: Universal Converter Studio */}
                   <Link
                     href="/convert"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-violet-400 bg-violet-500/10 hover:bg-violet-500/20 text-xs font-semibold border border-violet-500/20 transition-colors mb-1"
+                    className="flex items-center justify-between p-2.5 rounded-xl text-white bg-gradient-to-r from-violet-950/90 via-purple-900/40 to-zinc-900 border border-violet-500/30 hover:border-violet-500/60 transition-all group/hero shadow-md"
                   >
-                    <span>View All Converters</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-violet-600/30 border border-violet-500/40 flex items-center justify-center text-violet-300 group-hover/hero:scale-105 transition-transform shrink-0">
+                        <RefreshCw className="w-4 h-4 text-violet-400 shrink-0" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-white tracking-wide">
+                            Universal Any-File Converter
+                          </span>
+                          <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30 whitespace-nowrap shrink-0">
+                            All-in-One Engine
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-zinc-400">
+                          Word, Excel, PDF, Images, Text & HTML converted 100% locally
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-violet-400 group-hover/hero:translate-x-0.5 transition-transform shrink-0" />
                   </Link>
-                  <Link
-                    href="/pdf/pdf-to-images"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    PDF to Images (PNG/JPG)
-                  </Link>
-                  <Link
-                    href="/pdf/images-to-pdf"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    Images to PDF
-                  </Link>
-                  <Link
-                    href="/image/convert"
-                    className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    Image Format Converter
-                  </Link>
+
+                  {/* 2-Column Options Grid */}
+                  <div className="grid grid-cols-2 gap-2 pt-0.5">
+                    {/* Column 1: Office & Documents */}
+                    <div className="space-y-1">
+                      <div className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
+                        <FileText className="w-3 h-3 text-blue-400 shrink-0" />
+                        <span>Office & Documents</span>
+                      </div>
+
+                      <Link
+                        href="/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400/80 shrink-0"></span>
+                          <span>Word to PDF (.docx)</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">DOCX</span>
+                      </Link>
+
+                      <Link
+                        href="/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0"></span>
+                          <span>Excel to PDF (.xlsx)</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Table</span>
+                      </Link>
+
+                      <Link
+                        href="/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-violet-400/80 shrink-0"></span>
+                          <span>PDF to Word (.docx)</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Export</span>
+                      </Link>
+
+                      <Link
+                        href="/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shrink-0"></span>
+                          <span>PDF to Excel / CSV</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Sheets</span>
+                      </Link>
+
+                      <Link
+                        href="/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shrink-0"></span>
+                          <span>HTML & Text to PDF</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Web</span>
+                      </Link>
+                    </div>
+
+                    {/* Column 2: Images & Visual Media */}
+                    <div className="space-y-1">
+                      <div className="px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-zinc-500 flex items-center gap-1.5">
+                        <ImageIcon className="w-3 h-3 text-cyan-400 shrink-0" />
+                        <span>Images & Media</span>
+                      </div>
+
+                      <Link
+                        href="/pdf/pdf-to-images"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-purple-400/80 shrink-0"></span>
+                          <span>PDF to Images (PNG/JPG)</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Raster</span>
+                      </Link>
+
+                      <Link
+                        href="/pdf/images-to-pdf"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-pink-400/80 shrink-0"></span>
+                          <span>Images to PDF</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Merge</span>
+                      </Link>
+
+                      <Link
+                        href="/image/convert"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/80 shrink-0"></span>
+                          <span>Image Format Converter</span>
+                        </span>
+                        <span className="text-[10px] text-cyan-400 font-medium">HEIC/WebP</span>
+                      </Link>
+
+                      <Link
+                        href="/extract/images"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shrink-0"></span>
+                          <span>Extract Images (ZIP)</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">Raw</span>
+                      </Link>
+
+                      <Link
+                        href="/extract/text"
+                        className="flex items-center justify-between px-2.5 py-1.5 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors group/item"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-teal-400/80 shrink-0"></span>
+                          <span>Extract Text & OCR</span>
+                        </span>
+                        <span className="text-[10px] text-zinc-500 group-hover/item:text-zinc-400 font-mono">TXT/MD</span>
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Bottom Guarantee Bar */}
+                  <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between text-[11px] text-zinc-400 px-1">
+                    <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                      <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                      100% In-Browser & Private
+                    </span>
+                    <Link
+                      href="/convert"
+                      className="text-violet-400 hover:text-violet-300 font-medium flex items-center gap-1 transition-colors"
+                    >
+                      <span>Open Converter Studio</span>
+                      <ArrowRight className="w-3 h-3 shrink-0" />
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -512,6 +656,79 @@ export function Navbar() {
               className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
             >
               Strip Metadata
+            </Link>
+          </div>
+
+          <div className="font-semibold text-xs uppercase tracking-wider text-violet-400 pt-2 flex items-center justify-between">
+            <span>Converters</span>
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-[10px] text-zinc-400 hover:text-white"
+            >
+              All-in-One Studio →
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
+            >
+              <span>Word to PDF</span>
+              <span className="text-[10px] text-blue-400 font-mono">DOCX</span>
+            </Link>
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
+            >
+              <span>Excel to PDF</span>
+              <span className="text-[10px] text-emerald-400 font-mono">XLSX</span>
+            </Link>
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
+            >
+              <span>PDF to Word</span>
+              <span className="text-[10px] text-violet-400 font-mono">Export</span>
+            </Link>
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
+            >
+              <span>PDF to Excel</span>
+              <span className="text-[10px] text-emerald-400 font-mono">CSV</span>
+            </Link>
+            <Link
+              href="/pdf/pdf-to-images"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+            >
+              PDF to Images
+            </Link>
+            <Link
+              href="/pdf/images-to-pdf"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+            >
+              Images to PDF
+            </Link>
+            <Link
+              href="/image/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+            >
+              Universal Image Conv
+            </Link>
+            <Link
+              href="/convert"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+            >
+              HTML & Text to PDF
             </Link>
           </div>
 
