@@ -466,12 +466,16 @@ export function Footer() {
         {/* ============================================================== */}
         {/* 3. BOTTOM BAR: Colophon, Meta Links & Smooth Back-To-Top */}
         {/* ============================================================== */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-5 text-zinc-500 text-[11px]">
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-zinc-500 text-[11px]">
+          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 text-center sm:text-left text-[11px] whitespace-nowrap">
             <span className="text-zinc-400">
-              &copy; {new Date().getFullYear()} <strong className="text-zinc-300 font-semibold">IntekEdit</strong>. Built with cryptographic privacy and local-first execution.
+              &copy; {new Date().getFullYear()} <strong className="text-zinc-300 font-semibold">IntekEdit</strong>
             </span>
-            <span className="hidden sm:inline text-zinc-700">&bull;</span>
+            <span className="text-zinc-600 hidden sm:inline">&bull;</span>
+            <span className="text-zinc-400 hidden sm:inline">
+              Local-first privacy engine
+            </span>
+            <span className="text-zinc-600">&bull;</span>
             <span className="text-zinc-500">
               Crafted by <span className="text-zinc-400 font-medium">Intekhab Ansari</span>
             </span>
