@@ -41,17 +41,31 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
-  // Global Ctrl+K / Cmd+K listener to open CommandPalette
+  // Prevent background scrolling when mobile sidebar is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  // Global keyboard listeners (Ctrl+K for search, Escape for mobile menu)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setCommandPaletteOpen((prev) => !prev);
+      } else if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [mobileMenuOpen]);
 
   return (
     <>
@@ -543,253 +557,251 @@ export function Navbar() {
           {/* Mobile menu trigger */}
           <div className="flex lg:hidden">
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/60"
-              aria-label="Toggle menu"
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800/60 cursor-pointer transition-colors"
+              aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
+      </header>
 
-      {/* Responsive Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-b border-zinc-800 bg-zinc-950 px-4 py-4 space-y-4">
-          {/* Category Hub Quick Links */}
-          <div className="font-semibold text-xs uppercase tracking-wider text-zinc-500">
-            Tool Categories
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <Link
-              href="/pdf"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-semibold flex items-center gap-1.5"
-            >
-              <FileText className="w-4 h-4 shrink-0" />
-              <span>All PDF Tools</span>
-            </Link>
-            <Link
-              href="/image"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 font-semibold flex items-center gap-1.5"
-            >
-              <ImageIcon className="w-4 h-4 shrink-0" />
-              <span>All Image Tools</span>
-            </Link>
-            <Link
-              href="/security"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-semibold flex items-center gap-1.5"
-            >
-              <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>Security & Sign</span>
-            </Link>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 font-semibold flex items-center gap-1.5"
-            >
-              <RefreshCw className="w-4 h-4 shrink-0" />
-              <span>All Converters</span>
-            </Link>
-          </div>
+      {/* Slide-over Mobile Sidebar Drawer */}
+      <div
+        className={`fixed inset-0 z-50 lg:hidden transition-visibility duration-300 ${
+          mobileMenuOpen ? "pointer-events-auto visible" : "pointer-events-none invisible"
+        }`}
+      >
+        {/* Dimmed Backdrop - lets page remain visible behind drawer */}
+        <div
+          onClick={() => setMobileMenuOpen(false)}
+          aria-hidden="true"
+          className={`fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ease-out ${
+            mobileMenuOpen ? "opacity-100" : "opacity-0"
+          }`}
+        />
 
-          <div className="font-semibold text-xs uppercase tracking-wider text-zinc-500 pt-1">
-            Popular Tools
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
+        {/* Slide-In Drawer Panel: compact width (w-[82vw] max-w-xs sm:max-w-sm) so it doesn't take whole space */}
+        <aside
+          aria-label="Mobile Navigation Sidebar"
+          className={`fixed top-0 right-0 bottom-0 h-full w-[82vw] max-w-xs sm:max-w-sm bg-zinc-950/95 border-l border-zinc-800/80 shadow-[0_0_50px_rgba(0,0,0,0.85),0_0_30px_rgba(16,185,129,0.08)] backdrop-blur-2xl flex flex-col z-10 transition-transform duration-300 ease-out ${
+            mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          {/* Drawer Top Header with Brand and Close Button */}
+          <div className="h-16 px-4 flex items-center justify-between border-b border-zinc-800/80 bg-zinc-900/40 shrink-0">
             <Link
-              href="/pdf/compress"
+              href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+              className="flex items-center gap-2"
             >
-              Compress PDF
+              <BrandLogo size={28} />
             </Link>
-            <Link
-              href="/pdf/merge"
+
+            <button
+              type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
+              className="p-2 rounded-xl bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 hover:border-zinc-700 transition-colors cursor-pointer active:scale-95"
+              aria-label="Close menu"
             >
-              Merge PDF
-            </Link>
-            <Link
-              href="/pdf/split"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Split PDF
-            </Link>
-            <Link
-              href="/pdf/reorder"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Reorder Pages
-            </Link>
-            <Link
-              href="/pdf/rotate"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Rotate PDF
-            </Link>
-            <Link
-              href="/pdf/pdf-to-images"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              PDF to Images
-            </Link>
-            <Link
-              href="/pdf/images-to-pdf"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Images to PDF
-            </Link>
-            <Link
-              href="/pdf/watermark"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Watermark
-            </Link>
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
-          <div className="font-semibold text-xs uppercase tracking-wider text-zinc-500 pt-2">
-            Image Tools
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <Link
-              href="/image/compress"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Compress Image
-            </Link>
-            <Link
-              href="/image/resize"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Resize Image
-            </Link>
-            <Link
-              href="/image/crop"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Crop Image
-            </Link>
-            <Link
-              href="/image/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Convert Format
-            </Link>
-            <Link
-              href="/image/metadata"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Strip Metadata
-            </Link>
+          {/* Drawer Body - Smooth Scrollable */}
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 scrollbar-none text-xs">
+            {/* Tool Categories Quick Cards */}
+            <div>
+              <div className="font-bold text-[11px] uppercase tracking-wider text-zinc-500 mb-2">
+                Tool Categories
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/pdf"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 font-semibold flex items-center gap-2 transition-colors"
+                >
+                  <FileText className="w-4 h-4 shrink-0" />
+                  <span>PDF Tools</span>
+                </Link>
+                <Link
+                  href="/image"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 text-cyan-400 font-semibold flex items-center gap-2 transition-colors"
+                >
+                  <ImageIcon className="w-4 h-4 shrink-0" />
+                  <span>Image Tools</span>
+                </Link>
+                <Link
+                  href="/security"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 font-semibold flex items-center gap-2 transition-colors"
+                >
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  <span>Security & Sign</span>
+                </Link>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/20 text-violet-400 font-semibold flex items-center gap-2 transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4 shrink-0" />
+                  <span>Converters</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Popular Tools */}
+            <div>
+              <div className="font-bold text-[11px] uppercase tracking-wider text-zinc-500 mb-2">
+                Popular Tools
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { href: "/pdf/compress", label: "Compress PDF" },
+                  { href: "/pdf/merge", label: "Merge PDF" },
+                  { href: "/pdf/split", label: "Split PDF" },
+                  { href: "/pdf/reorder", label: "Reorder Pages" },
+                  { href: "/pdf/rotate", label: "Rotate PDF" },
+                  { href: "/pdf/pdf-to-images", label: "PDF to Images" },
+                  { href: "/pdf/images-to-pdf", label: "Images to PDF" },
+                  { href: "/pdf/watermark", label: "Watermark" },
+                ].map((item) => (
+                  <Link
+                    key={item.href + item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 hover:border-zinc-700 transition-all truncate"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Image Tools */}
+            <div>
+              <div className="font-bold text-[11px] uppercase tracking-wider text-zinc-500 mb-2">
+                Image Tools
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { href: "/image/compress", label: "Compress Image" },
+                  { href: "/image/resize", label: "Resize Image" },
+                  { href: "/image/crop", label: "Crop Image" },
+                  { href: "/image/convert", label: "Convert Format" },
+                  { href: "/image/metadata", label: "Strip Metadata" },
+                ].map((item) => (
+                  <Link
+                    key={item.href + item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 hover:border-zinc-700 transition-all truncate"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Converters */}
+            <div>
+              <div className="font-bold text-[11px] uppercase tracking-wider text-violet-400 mb-2 flex items-center justify-between">
+                <span>Converters</span>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-[10px] text-zinc-400 hover:text-white"
+                >
+                  All-in-One Studio &rarr;
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 flex items-center justify-between"
+                >
+                  <span className="truncate">Word to PDF</span>
+                  <span className="text-[10px] text-blue-400 font-mono shrink-0 ml-1">DOCX</span>
+                </Link>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 flex items-center justify-between"
+                >
+                  <span className="truncate">Excel to PDF</span>
+                  <span className="text-[10px] text-emerald-400 font-mono shrink-0 ml-1">XLSX</span>
+                </Link>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 flex items-center justify-between"
+                >
+                  <span className="truncate">PDF to Word</span>
+                  <span className="text-[10px] text-violet-400 font-mono shrink-0 ml-1">Export</span>
+                </Link>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 flex items-center justify-between"
+                >
+                  <span className="truncate">PDF to Excel</span>
+                  <span className="text-[10px] text-emerald-400 font-mono shrink-0 ml-1">CSV</span>
+                </Link>
+                <Link
+                  href="/pdf/pdf-to-images"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 truncate"
+                >
+                  PDF to Images
+                </Link>
+                <Link
+                  href="/pdf/images-to-pdf"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 truncate"
+                >
+                  Images to PDF
+                </Link>
+                <Link
+                  href="/image/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 truncate"
+                >
+                  Universal Conv
+                </Link>
+                <Link
+                  href="/convert"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-xl bg-zinc-900/80 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800/80 truncate"
+                >
+                  HTML to PDF
+                </Link>
+              </div>
+            </div>
           </div>
 
-          <div className="font-semibold text-xs uppercase tracking-wider text-violet-400 pt-2 flex items-center justify-between">
-            <span>Converters</span>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="text-[10px] text-zinc-400 hover:text-white"
-            >
-              All-in-One Studio →
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
-            >
-              <span>Word to PDF</span>
-              <span className="text-[10px] text-blue-400 font-mono">DOCX</span>
-            </Link>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
-            >
-              <span>Excel to PDF</span>
-              <span className="text-[10px] text-emerald-400 font-mono">XLSX</span>
-            </Link>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
-            >
-              <span>PDF to Word</span>
-              <span className="text-[10px] text-violet-400 font-mono">Export</span>
-            </Link>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300 flex items-center justify-between"
-            >
-              <span>PDF to Excel</span>
-              <span className="text-[10px] text-emerald-400 font-mono">CSV</span>
-            </Link>
-            <Link
-              href="/pdf/pdf-to-images"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              PDF to Images
-            </Link>
-            <Link
-              href="/pdf/images-to-pdf"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Images to PDF
-            </Link>
-            <Link
-              href="/image/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              Universal Image Conv
-            </Link>
-            <Link
-              href="/convert"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-zinc-900 text-zinc-300"
-            >
-              HTML & Text to PDF
-            </Link>
-          </div>
-
-          <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+          {/* Drawer Footer */}
+          <div className="p-3.5 border-t border-zinc-800/80 bg-zinc-900/40 shrink-0 flex items-center justify-between text-xs">
             <Link
               href="/privacy"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 text-xs text-emerald-400 font-medium"
+              className="flex items-center gap-1.5 text-emerald-400 font-medium hover:text-emerald-300 transition-colors"
             >
-              <ShieldCheck className="w-4 h-4" />
+              <ShieldCheck className="w-4 h-4 shrink-0" />
               <span>Zero-Upload Guarantee</span>
             </Link>
             <Link
               href="/test-files"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-xs text-zinc-400 hover:text-white"
+              className="text-zinc-400 hover:text-white transition-colors"
             >
               Sample Files
             </Link>
           </div>
-        </div>
-      )}
-    </header>
+        </aside>
+      </div>
     <CommandPalette
       isOpen={commandPaletteOpen}
       onClose={() => setCommandPaletteOpen(false)}
