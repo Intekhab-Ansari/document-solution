@@ -737,28 +737,28 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* Tool Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+                {/* Tool Cards Grid - 2 columns on mobile */}
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5">
                   {cat.tools.map((tool) => {
                     const IconComponent = ICON_MAP[tool.iconName] || FileText;
                     return (
                       <Link
                         key={tool.id}
                         href={tool.href}
-                        className="group relative flex flex-col p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/90 hover:border-emerald-500/40 hover:bg-zinc-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
+                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/50 border border-zinc-800/90 hover:border-emerald-500/40 hover:bg-zinc-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
                       >
                         {/* Top: Icon + Badge */}
-                        <div className="flex items-start justify-between mb-4">
+                        <div className="flex items-start justify-between gap-1.5 mb-2.5 sm:mb-4">
                           <div
-                            className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
+                            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
                           >
-                            <IconComponent className="w-6 h-6" />
+                            <IconComponent className="w-4 h-4 sm:w-6 sm:h-6" />
                           </div>
 
                           <div className="flex items-center gap-1">
                             {tool.badge && (
                               <span
-                                className={`text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider ${
+                                className={`text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 truncate max-w-[76px] sm:max-w-none text-center ${
                                   tool.badge === "TARGET KB"
                                     ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
                                     : tool.badge === "POPULAR"
@@ -777,33 +777,39 @@ export default function HomePage() {
                         </div>
 
                         {/* Title & Description */}
-                        <div className="flex-1 space-y-2">
-                          <h3 className="font-bold text-sm text-zinc-100 group-hover:text-emerald-400 transition-colors flex items-center justify-between">
+                        <div className="flex-1 space-y-1 sm:space-y-2">
+                          <h3 className="font-bold text-xs sm:text-sm text-zinc-100 group-hover:text-emerald-400 transition-colors flex items-center justify-between leading-snug line-clamp-2">
                             <span>{tool.name}</span>
-                            <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-emerald-400" />
+                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-emerald-400 shrink-0 hidden sm:block" />
                           </h3>
-                          <p className="text-zinc-400 text-xs leading-relaxed line-clamp-2">
+                          <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
                             {tool.description}
                           </p>
                         </div>
 
                         {/* Bottom: Device vs Server Indicator */}
-                        <div className="mt-5 pt-3.5 border-t border-zinc-800/60 flex items-center justify-between text-[11px] text-zinc-500">
-                          <span className="flex items-center gap-1.5 font-medium">
+                        <div className="mt-3 sm:mt-5 pt-2 sm:pt-3.5 border-t border-zinc-800/60 flex items-center justify-between text-[10px] sm:text-[11px] text-zinc-500">
+                          <span className="flex items-center gap-1 sm:gap-1.5 font-medium truncate">
                             {tool.execution === "client" ? (
                               <>
-                                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400" />
-                                <span className="text-zinc-300">Device RAM (WASM)</span>
+                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0" />
+                                <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
+                                  <span className="sm:hidden">On-Device</span>
+                                  <span className="hidden sm:inline">Device RAM (WASM)</span>
+                                </span>
                               </>
                             ) : (
                               <>
-                                <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400" />
-                                <span className="text-zinc-300">Sandboxed Memory</span>
+                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400 shrink-0" />
+                                <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
+                                  <span className="sm:hidden">Sandboxed</span>
+                                  <span className="hidden sm:inline">Sandboxed Memory</span>
+                                </span>
                               </>
                             )}
                           </span>
 
-                          <span className="text-[10px] text-zinc-500 uppercase font-bold tracking-wider">
+                          <span className="text-[9px] sm:text-[10px] text-zinc-500 uppercase font-bold tracking-wider shrink-0 hidden min-[380px]:inline">
                             {tool.category}
                           </span>
                         </div>

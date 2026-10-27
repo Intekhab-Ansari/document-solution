@@ -249,43 +249,45 @@ export function CategoryHub({
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-5">
               {filteredTools.map((tool) => {
                 const IconComponent = ICON_MAP[tool.iconName] || FileText;
                 return (
                   <Link
                     key={tool.id}
                     href={tool.href}
-                    className="group relative flex flex-col p-6 rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
+                    className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
                   >
-                    <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start justify-between gap-1 mb-2.5 sm:mb-4">
                       <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
+                        className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
                       >
-                        <IconComponent className="w-6 h-6" />
+                        <IconComponent className="w-4 h-4 sm:w-6 sm:h-6" />
                       </div>
 
                       {tool.badge && (
-                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 truncate max-w-[76px] sm:max-w-none text-center">
                           {tool.badge}
                         </span>
                       )}
                     </div>
 
-                    <h3 className="font-bold text-base text-white group-hover:text-emerald-400 transition-colors mb-2">
+                    <h3 className="font-bold text-xs sm:text-base text-white group-hover:text-emerald-400 transition-colors mb-1 sm:mb-2 line-clamp-2">
                       {tool.name}
                     </h3>
-                    <p className="text-xs text-zinc-400 leading-relaxed mb-6 flex-1">
+                    <p className="text-[11px] sm:text-xs text-zinc-400 leading-relaxed mb-3 sm:mb-6 flex-1 line-clamp-2">
                       {tool.description}
                     </p>
 
-                    <div className="flex items-center justify-between pt-4 border-t border-zinc-800/60 text-xs">
-                      <span className="text-[11px] font-medium text-zinc-500">
-                        100% Client-Side
+                    <div className="flex items-center justify-between pt-2.5 sm:pt-4 border-t border-zinc-800/60 text-xs">
+                      <span className="text-[10px] sm:text-[11px] font-medium text-zinc-500 truncate">
+                        <span className="sm:hidden">On-Device</span>
+                        <span className="hidden sm:inline">100% Client-Side</span>
                       </span>
-                      <span className="flex items-center gap-1 font-semibold text-emerald-400 text-xs group-hover:translate-x-1 transition-transform">
-                        <span>Launch Tool</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
+                      <span className="flex items-center gap-1 font-semibold text-emerald-400 text-[10px] sm:text-xs group-hover:translate-x-1 transition-transform shrink-0">
+                        <span className="hidden sm:inline">Launch Tool</span>
+                        <span className="sm:hidden">Open</span>
+                        <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       </span>
                     </div>
                   </Link>
