@@ -84,6 +84,17 @@ body {
   background: #3f3f46;
 }
 
+/* Scrollbar hiding utilities */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* Glow effects */
 .glow-emerald {
   box-shadow: 0 0 40px -10px rgba(16, 185, 129, 0.25);

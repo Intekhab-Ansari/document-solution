@@ -150,54 +150,55 @@ export function FileDropzone({
           </span>
         </div>
 
-        {/* Supported format badges */}
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-mono font-bold text-zinc-400">
+        {/* Supported format badges - guaranteed single line */}
+        <div className="mt-5 sm:mt-6 flex flex-nowrap items-center justify-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-mono font-bold text-zinc-400 max-w-full overflow-x-auto scrollbar-none py-1 px-1">
           {["PDF", "PNG", "JPG", "WEBP", "HEIC", "AVIF", "DOCX"].map((ext) => (
             <span
               key={ext}
-              className="px-2.5 py-1 rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300 group-hover:border-zinc-700/80 group-hover:text-zinc-200 transition-colors shadow-sm"
+              className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md sm:rounded-lg bg-zinc-900/90 border border-zinc-800 text-zinc-300 group-hover:border-zinc-700/80 group-hover:text-zinc-200 transition-colors shadow-sm whitespace-nowrap shrink-0"
             >
               .{ext}
             </span>
           ))}
         </div>
 
-        {/* Sample Files Instant Shortcuts */}
+        {/* Sample Files Instant Shortcuts - guaranteed single line on mobile & desktop */}
         {sampleFiles && sampleFiles.length > 0 && (
-          <div className="mt-7 pt-6 border-t border-white/[0.08] w-full max-w-lg flex flex-col items-center gap-2.5 relative z-10">
-            <span className="text-[11px] font-bold text-zinc-400 flex items-center gap-1.5 uppercase tracking-wider">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+          <div className="mt-6 sm:mt-7 pt-5 sm:pt-6 border-t border-white/[0.08] w-full max-w-lg flex flex-col items-center gap-2.5 relative z-10">
+            <span className="text-[10.5px] sm:text-[11px] font-bold text-zinc-400 flex items-center gap-1.5 uppercase tracking-wider text-center whitespace-nowrap">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <span>Or test instantly with sample files:</span>
             </span>
-            <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="flex flex-nowrap items-center justify-center gap-1.5 sm:gap-2 max-w-full overflow-x-auto scrollbar-none py-1 px-1">
               {sampleFiles.map((s) => (
                 <button
                   key={s.name}
                   type="button"
                   disabled={loadingSample !== null}
                   onClick={(e) => handleLoadSample(e, s)}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white/[0.04] hover:bg-emerald-500/15 text-zinc-200 hover:text-white border border-white/10 hover:border-emerald-500/40 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50 shadow-sm hover:shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                  className="px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-lg sm:rounded-xl text-[11px] sm:text-xs font-semibold bg-white/[0.04] hover:bg-emerald-500/15 text-zinc-200 hover:text-white border border-white/10 hover:border-emerald-500/40 transition-all flex items-center gap-1.5 sm:gap-2 cursor-pointer disabled:opacity-50 shadow-sm hover:shadow-[0_0_15px_rgba(16,185,129,0.2)] whitespace-nowrap shrink-0"
                 >
                   {s.kind === "image" ? (
-                    <ImageIcon className="w-3.5 h-3.5 text-cyan-400" />
+                    <ImageIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
                   ) : (
-                    <FileText className="w-3.5 h-3.5 text-emerald-400" />
+                    <FileText className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
                   )}
-                  <span>{loadingSample === s.name ? "Loading..." : s.label}</span>
+                  <span className="whitespace-nowrap">{loadingSample === s.name ? "Loading..." : s.label}</span>
                 </button>
               ))}
             </div>
           </div>
         )}
 
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-4 text-[11px] text-zinc-400 font-medium">
-          <span className="flex items-center gap-1.5">
+        {/* Trust Badges - single line with clean overflow handling */}
+        <div className="mt-6 sm:mt-7 flex flex-nowrap items-center justify-center gap-2.5 sm:gap-4 text-[10px] sm:text-[11px] text-zinc-400 font-medium max-w-full overflow-x-auto scrollbar-none py-1 px-1">
+          <span className="flex items-center gap-1.5 whitespace-nowrap shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" /> Zero upload limits
           </span>
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1.5 whitespace-nowrap shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" /> 100% In-Browser RAM
           </span>
-          <span className="flex items-center gap-1.5">
+          <span className="flex items-center gap-1.5 whitespace-nowrap shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_6px_#818cf8]" /> Zero Watermarks
           </span>
         </div>

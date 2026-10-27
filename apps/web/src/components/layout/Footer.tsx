@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -25,6 +25,29 @@ import { BrandLogo } from "@/components/common/BrandLogo";
 
 export function Footer() {
   const [ramFlushed, setRamFlushed] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > 240) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+
+      if (totalScroll > 0) {
+        setScrollProgress(Math.min(100, Math.max(0, (currentScroll / totalScroll) * 100)));
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToTop = () => {
     if (typeof window !== "undefined") {
@@ -464,51 +487,75 @@ export function Footer() {
       </div>
 
         {/* ============================================================== */}
-        {/* 3. BOTTOM BAR: Colophon, Meta Links & Smooth Back-To-Top */}
+        {/* 3. BOTTOM BAR: Colophon in 1 Single Line */}
         {/* ============================================================== */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-zinc-500 text-[11px]">
-          <div className="flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 text-center sm:text-left text-[11px] whitespace-nowrap">
+        <div className="pt-8 flex items-center justify-center text-center text-zinc-500 text-[11px]">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center">
             <span className="text-zinc-400">
-              &copy; {new Date().getFullYear()} <strong className="text-zinc-300 font-semibold">IntekEdit</strong>
+              &copy; {new Date().getFullYear()} <strong className="text-zinc-300 font-semibold">IntekEdit</strong>. Built with cryptographic privacy and local-first execution.
             </span>
-            <span className="text-zinc-600 hidden sm:inline">&bull;</span>
-            <span className="text-zinc-400 hidden sm:inline">
-              Local-first privacy engine
-            </span>
-            <span className="text-zinc-600">&bull;</span>
+            <span className="text-zinc-700 hidden sm:inline">&bull;</span>
             <span className="text-zinc-500">
               Crafted by <span className="text-zinc-400 font-medium">Intekhab Ansari</span>
             </span>
-          </div>
-
-          <div className="flex items-center gap-5 flex-wrap justify-center">
-            <Link href="/privacy" className="hover:text-zinc-300 transition-colors">
-              Privacy Policy
-            </Link>
-            <span className="text-zinc-700">&bull;</span>
-            <Link href="/security" className="hover:text-zinc-300 transition-colors">
-              Security Architecture
-            </Link>
-            <span className="text-zinc-700">&bull;</span>
-            <Link href="/pdf" className="hover:text-zinc-300 transition-colors">
-              PDF Suite
-            </Link>
-            <span className="text-zinc-700">&bull;</span>
-            <Link href="/image" className="hover:text-zinc-300 transition-colors">
-              Image Suite
-            </Link>
-
-            {/* Back to top button */}
-            <button
-              onClick={scrollToTop}
-              className="ml-2 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700 transition-all text-xs cursor-pointer group shadow-inner"
-              title="Back to top"
-            >
-              <span>Back to Top</span>
-              <ArrowUp className="w-3.5 h-3.5 text-emerald-400 group-hover:-translate-y-0.5 transition-transform" />
-            </button>
-          </div>
+          </p>
         </div>
+      </div>
+
+      {/* Floating Back-To-Top Button on Bottom Right */}
+      <div
+        className={`fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50 transition-all duration-300 ${
+          showScrollTop
+            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+            : "opacity-0 translate-y-6 scale-90 pointer-events-none"
+        }`}
+      >
+        <button
+          onClick={scrollToTop}
+          type="button"
+          aria-label="Back to top"
+          className="group relative flex items-center justify-center w-12 h-12 rounded-full bg-zinc-900/90 hover:bg-zinc-800/95 backdrop-blur-md border border-zinc-700/60 hover:border-emerald-500/60 text-zinc-300 hover:text-white shadow-xl shadow-black/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all duration-200 cursor-pointer active:scale-95"
+        >
+          {/* Subtle hover glow aura */}
+          <div className="absolute inset-0 rounded-full bg-emerald-500/15 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+          {/* Circular Scroll Progress Track & Dynamic Progress Ring */}
+          <svg
+            className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none"
+            viewBox="0 0 48 48"
+          >
+            <circle
+              cx="24"
+              cy="24"
+              r="20"
+              className="text-zinc-800/70"
+              strokeWidth="2.5"
+              stroke="currentColor"
+              fill="transparent"
+            />
+            <circle
+              cx="24"
+              cy="24"
+              r="20"
+              className="text-emerald-400 transition-all duration-150"
+              strokeWidth="2.5"
+              strokeDasharray={125.66}
+              strokeDashoffset={125.66 - (125.66 * scrollProgress) / 100}
+              strokeLinecap="round"
+              stroke="currentColor"
+              fill="transparent"
+            />
+          </svg>
+
+          {/* Up Arrow Icon with Micro-Animation */}
+          <ArrowUp className="w-4 h-4 text-emerald-400 group-hover:-translate-y-0.5 group-hover:text-emerald-300 transition-all duration-200 relative z-10" />
+
+          {/* Hover Tooltip (Desktop) */}
+          <span className="absolute right-full mr-3.5 px-2.5 py-1 rounded-lg bg-zinc-900/95 border border-zinc-700/60 text-[11px] font-medium text-zinc-200 shadow-xl shadow-black/50 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 pointer-events-none whitespace-nowrap hidden sm:flex items-center gap-1.5 backdrop-blur-md">
+            <span>Back to top</span>
+            <span className="text-[10px] text-emerald-400 font-mono font-semibold">{Math.round(scrollProgress)}%</span>
+          </span>
+        </button>
       </div>
     </footer>
   );
