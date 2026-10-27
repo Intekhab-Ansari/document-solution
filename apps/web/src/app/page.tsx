@@ -198,13 +198,17 @@ export default function HomePage() {
 
           {/* Main Hero Headline */}
           <div className="space-y-3.5 max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
-              All-in-One Document & Photo Suite. <br />
-              <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">
-                100% On Your Device.
-              </span>{" "}
-              <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
-                Zero Uploads.
+            <h1 className="font-black text-white tracking-tight leading-[1.15] text-center">
+              <span className="block whitespace-nowrap text-[18px] min-[360px]:text-[20px] min-[400px]:text-[22px] sm:text-4xl md:text-5xl lg:text-6xl">
+                All-in-One Document & Photo Suite.
+              </span>
+              <span className="block whitespace-nowrap text-[17px] min-[360px]:text-[19px] min-[400px]:text-[21px] sm:text-4xl md:text-5xl lg:text-6xl mt-1">
+                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">
+                  100% On Your Device.
+                </span>{" "}
+                <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                  Zero Uploads.
+                </span>
               </span>
             </h1>
 
@@ -213,49 +217,64 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Quick Tool Launchers Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
+          {/* Quick Tool Launchers Bar - 3 tags in one line */}
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 max-w-xl sm:max-w-2xl mx-auto text-xs">
             <Link
               href="/pdf/edit"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-105 active:scale-95 transition-all"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 text-[10.5px] sm:text-xs font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-105 active:scale-95 transition-all truncate"
             >
-              <PenTool className="w-3.5 h-3.5 text-emerald-400" />
-              <span>PDF Studio (Vector Edit)</span>
+              <PenTool className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden">PDF Studio</span>
+                <span className="hidden sm:inline">PDF Studio (Vector Edit)</span>
+              </span>
             </Link>
             <Link
               href="/pdf/compress"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-cyan-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.18)]"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-cyan-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.18)] truncate"
             >
-              <Minimize2 className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Target KB Compress</span>
+              <Minimize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden">Target Compress</span>
+                <span className="hidden sm:inline">Target KB Compress</span>
+              </span>
             </Link>
             <Link
               href="/pdf/split"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.18)]"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.18)] truncate"
             >
-              <Scissors className="w-3.5 h-3.5 text-teal-400" />
-              <span>Split PDF Pages</span>
+              <Scissors className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-400 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden">Split PDF</span>
+                <span className="hidden sm:inline">Split PDF Pages</span>
+              </span>
             </Link>
             <Link
               href="/pdf/merge"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.18)]"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.18)] truncate"
             >
-              <Merge className="w-3.5 h-3.5 text-purple-400" />
-              <span>Merge Documents</span>
+              <Merge className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden">Merge PDF</span>
+                <span className="hidden sm:inline">Merge Documents</span>
+              </span>
             </Link>
             <Link
-              href="/image/compress"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-amber-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(245,158,11,0.18)]"
+              href="/image"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-amber-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(245,158,11,0.18)] truncate"
             >
-              <ImageIcon className="w-3.5 h-3.5 text-amber-400" />
-              <span>Photo Suite</span>
+              <ImageIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 shrink-0" />
+              <span className="truncate">Photo Suite</span>
             </Link>
             <Link
               href="/image/metadata"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-rose-500/50 text-zinc-300 hover:text-white font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(244,63,94,0.18)]"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-rose-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(244,63,94,0.18)] truncate"
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-rose-400" />
-              <span>Strip EXIF / GPS</span>
+              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-rose-400 shrink-0" />
+              <span className="truncate">
+                <span className="sm:hidden">Strip EXIF</span>
+                <span className="hidden sm:inline">Strip EXIF / GPS</span>
+              </span>
             </Link>
           </div>
 
