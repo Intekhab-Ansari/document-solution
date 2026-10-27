@@ -7,9 +7,8 @@ import { ProgressModal } from "@/components/common/ProgressModal";
 import { formatBytes, downloadBuffer } from "@/lib/utils";
 import { convertImagesToPdf, ImageToPdfOptions } from "@/lib/pdf/pdf-convert";
 import { decodeHeicIfApplicable } from "@/lib/image/image-convert";
-import Link from "next/link";
 import { ToolWorkspaceHeader } from "@/components/common/ToolWorkspaceHeader";
-import { FileText, ArrowUp, ArrowDown, Trash2, Download, Plus, Sparkles, Sliders, ArrowRight } from "lucide-react";
+import { FileText, ArrowUp, ArrowDown, Trash2, Download, Plus, Sliders, Sparkles } from "lucide-react";
 
 interface ImageItem {
   id: string;
@@ -109,23 +108,6 @@ export default function ImagesToPdfPage() {
         badge="Zero-Loss Conversion"
         currentStep={items.length === 0 ? 1 : !generatedPdfBytes ? 2 : 3}
       />
-
-      {/* Reciprocal Switcher Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-xs text-emerald-200 gap-3">
-        <span className="flex items-center gap-2.5">
-          <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
-          <span>
-            Looking to extract <strong>images from an existing PDF document</strong> instead?
-          </span>
-        </span>
-        <Link
-          href="/pdf/pdf-to-images"
-          className="px-3.5 py-1.5 rounded-xl bg-emerald-500 text-zinc-950 font-bold hover:bg-emerald-400 transition-colors whitespace-nowrap self-start sm:self-auto flex items-center gap-1 shadow-sm"
-        >
-          <span>Switch to PDF to Images</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
 
       {items.length === 0 ? (
         <FileDropzone

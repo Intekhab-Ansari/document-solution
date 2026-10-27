@@ -14,11 +14,10 @@ import {
   Download,
   RefreshCw,
   Archive,
-  Sparkles,
-  ArrowRight,
   AlertTriangle,
   FileText,
   FileCheck,
+  Sparkles,
 } from "lucide-react";
 
 export default function PdfToImagesPage() {
@@ -138,25 +137,6 @@ export default function PdfToImagesPage() {
         badge="Zero-Loss Rasterization"
         currentStep={!file ? 1 : images.length === 0 ? 2 : 3}
       />
-
-      {/* Helper Banner for Users Looking to Convert Images into PDF */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4.5 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-zinc-900/60 to-cyan-950/30 border border-cyan-500/25 text-xs text-cyan-200 gap-3 shadow-[0_0_25px_rgba(6,182,212,0.1)] backdrop-blur-xl">
-        <span className="flex items-center gap-2.5 sm:gap-3">
-          <div className="w-8 h-8 rounded-xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0 border border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.2)]">
-            <Sparkles className="w-4 h-4 text-cyan-300" />
-          </div>
-          <span className="leading-relaxed">
-            Looking to convert <strong>photos, screenshots, or images into a PDF</strong> instead?
-          </span>
-        </span>
-        <Link
-          href="/pdf/images-to-pdf"
-          className="w-full sm:w-auto justify-center px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 text-zinc-950 font-extrabold hover:brightness-110 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:scale-[1.02] active:scale-[0.98] transition-all whitespace-nowrap flex items-center gap-1.5 shrink-0"
-        >
-          <span>Switch to Images to PDF</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </Link>
-      </div>
 
       {/* Smart Helper if user selected an image on this tool */}
       {imageSelectedNotice && (
