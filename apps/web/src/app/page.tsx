@@ -207,20 +207,20 @@ export default function HomePage() {
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
-          {/* Floating Beacon Announcement Badge */}
+          {/* Floating Beacon Announcement Badge - Guaranteed 1 Single Line */}
           <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-emerald-500/35 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 hover:bg-white/[0.07] transition-all cursor-default group">
-              <span className="flex h-2 w-2 relative">
+            <div className="inline-flex items-center gap-2 sm:gap-2.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/[0.04] border border-emerald-500/35 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 hover:bg-white/[0.07] transition-all cursor-default group whitespace-nowrap">
+              <span className="relative flex h-2 w-2 shrink-0">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_10px_#34d399]" />
               </span>
-              <span className="font-bold text-emerald-400">100% On-Device Engine</span>
-              <span className="text-zinc-600">•</span>
-              <span className="text-zinc-300">Zero Cloud Uploads</span>
-              <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-emerald-300/90 hidden sm:inline font-mono text-[11px] flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-emerald-400" />
-                Air-Gapped WebAssembly
+              <span className="font-bold text-emerald-400 whitespace-nowrap shrink-0">100% On-Device Engine</span>
+              <span className="text-zinc-600 shrink-0">•</span>
+              <span className="text-zinc-300 whitespace-nowrap shrink-0">Zero Cloud Uploads</span>
+              <span className="text-zinc-600 hidden sm:inline shrink-0">•</span>
+              <span className="text-emerald-300/90 hidden sm:inline-flex items-center gap-1.5 font-mono text-[11px] whitespace-nowrap shrink-0">
+                <Sparkles className="w-3 h-3 text-emerald-400 shrink-0" />
+                <span>Air-Gapped WebAssembly</span>
               </span>
             </div>
           </div>
