@@ -168,7 +168,7 @@ export function ToolWorkspaceHeader({
           <span className="truncate sm:hidden">3. Save</span>
           <span className="truncate hidden sm:inline">3. Instant Download</span>
           {currentStep === 3 && (
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping hidden sm:inline-block ml-1" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 hidden sm:inline-block ml-1" />
           )}
         </div>
       </div>

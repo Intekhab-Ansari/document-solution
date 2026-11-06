@@ -548,14 +548,14 @@ export function Navbar() {
                   window.dispatchEvent(new CustomEvent("open-ai-assistant"));
                 }
               }}
-              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.12] hover:bg-emerald-500/[0.22] border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 hover:text-white shadow-[0_0_15px_rgba(16,185,129,0.18)] hover:shadow-[0_0_22px_rgba(16,185,129,0.3)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
               title="Ask IntekEdit AI Assistant (Ctrl+J)"
             >
               <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span className="whitespace-nowrap font-medium hidden sm:inline">Ask AI</span>
-              <span className="text-[9px] font-mono px-1 rounded bg-black/40 text-emerald-300 border border-emerald-500/30 hidden xl:inline">
+              <kbd className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400 hidden xl:inline">
                 Ctrl+J
-              </span>
+              </kbd>
             </button>
 
             {/* IntekChat External App Button */}
@@ -563,32 +563,26 @@ export function Navbar() {
               href="https://intekchat.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500/[0.12] via-sky-500/[0.08] to-indigo-500/[0.12] hover:from-cyan-500/[0.22] hover:via-sky-500/[0.18] hover:to-indigo-500/[0.22] border border-cyan-500/35 hover:border-cyan-400/70 text-cyan-200 hover:text-white shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_22px_rgba(6,182,212,0.3)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              className="group flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-cyan-500/40 text-cyan-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
               title="Open IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
             >
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-sm shadow-cyan-400" />
-              </span>
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
               <span className="whitespace-nowrap font-medium">IntekChat</span>
-              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hidden md:inline-flex">
+              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hidden md:inline-flex">
                 P2P
               </span>
-              <ExternalLink className="w-3 h-3 text-cyan-400/80 group-hover:text-cyan-200 group-hover:translate-x-0.5 transition-transform shrink-0" />
+              <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-all shrink-0" />
             </a>
 
             {/* 100% In-Browser Privacy Badge (shown on wider displays) */}
             <Link
               href="/privacy"
-              className="hidden 2xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.08] hover:bg-emerald-500/[0.16] border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.12)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              className="hidden 2xl:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
               title="View 100% In-Browser Privacy Guarantee"
             >
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400" />
-              </span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
               <span className="whitespace-nowrap">100% In-Browser</span>
-              <span className="text-[10px] text-emerald-400/80 font-mono px-1 rounded bg-emerald-500/15 border border-emerald-500/25">
+              <span className="text-[10px] text-emerald-400 font-mono px-1 rounded bg-emerald-500/10 border border-emerald-500/20">
                 Private
               </span>
             </Link>

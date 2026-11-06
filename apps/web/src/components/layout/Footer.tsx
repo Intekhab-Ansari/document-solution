@@ -98,7 +98,7 @@ export function Footer() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
               <span className="text-[11px] font-mono tracking-widest text-emerald-400 uppercase font-semibold flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 Air-Gapped Engineering Architecture
               </span>
               <h3 className="text-lg sm:text-xl font-bold text-white mt-1">
@@ -204,11 +204,8 @@ export function Footer() {
             {/* Live Engine Status Badge */}
             <div className="p-3.5 rounded-2xl bg-zinc-900/70 border border-zinc-800/80 space-y-2.5">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="text-zinc-300 font-medium flex items-center gap-1.5">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-                  </span>
+                <span className="text-zinc-300 font-medium flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                   Sandbox Status: Active
                 </span>
                 <span className="font-mono text-emerald-400 text-[10px] bg-emerald-950/60 border border-emerald-500/20 px-2 py-0.5 rounded-full">

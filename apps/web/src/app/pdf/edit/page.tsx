@@ -1024,7 +1024,7 @@ export default function EditPdfPage() {
             {/* Helper Banner for Existing Text Editing */}
             <div className="px-4 py-2 bg-zinc-900/60 border-b border-zinc-800/80 flex items-center justify-between text-xs text-zinc-400">
               <div className="flex items-center gap-2">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
                 <span className="text-zinc-300 font-medium">
                   {toolMode === "edit-existing"
                     ? "Hover over and click any text directly on the document below to edit its words, change font colors, or delete it."

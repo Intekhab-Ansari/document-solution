@@ -123,7 +123,7 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
     <div className={`flex items-center gap-2.5 group ${className}`}>
       <BrandLogoMark
         size={size}
-        className="group-hover:scale-105 transition-transform duration-300 drop-shadow-[0_0_15px_rgba(16,185,129,0.35)] shrink-0"
+        className="group-hover:scale-105 transition-transform duration-300 drop-shadow-sm shrink-0"
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
@@ -134,13 +134,13 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
             </span>
           </span>
           {showBadge && (
-            <span className="hidden md:inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="hidden md:inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               <span>100% Private</span>
             </span>
           )}
         </div>
-        <span className="text-[10px] text-zinc-500 font-mono tracking-tight -mt-0.5 hidden 2xl:block">
+        <span className="text-[10px] text-zinc-500 font-medium tracking-tight -mt-0.5 hidden 2xl:block">
           Local-First Vector & Image Engine
         </span>
       </div>

@@ -161,7 +161,7 @@ export function AiAssistantModal() {
 
   return (
     <>
-      {/* Floating Bottom-Left Trigger Pill (Shifted to Left to prevent overlap with Scroll-To-Top) */}
+      {/* Floating Bottom-Left Trigger Pill (Clean & Refined SaaS Style) */}
       {!isOpen && (
         <button
           type="button"
@@ -169,25 +169,21 @@ export function AiAssistantModal() {
             setIsOpen(true);
             setIsMinimized(false);
           }}
-          className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-40 group flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:via-teal-500/30 hover:to-cyan-500/30 border border-emerald-500/40 hover:border-emerald-400 text-emerald-200 hover:text-white shadow-[0_10px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_10px_35px_rgba(0,0,0,0.6),0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xl"
+          className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-40 group flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-full bg-zinc-900/95 hover:bg-zinc-850 border border-zinc-750 hover:border-zinc-600 text-zinc-300 hover:text-white shadow-lg shadow-black/40 hover:shadow-xl transition-all cursor-pointer backdrop-blur-md active:scale-95 border-zinc-800 hover:border-zinc-700"
           title="Open IntekEdit AI Assistant (Ctrl + J)"
           aria-label="Open AI Assistant"
         >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+          <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+            <Bot className="w-3.5 h-3.5" />
+          </div>
+
+          <span className="text-xs font-medium whitespace-nowrap">
+            Ask AI
           </span>
 
-          <Bot className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform shrink-0" />
-
-          <span className="text-xs font-semibold whitespace-nowrap">
-            <span className="hidden sm:inline">Ask AI Copilot</span>
-            <span className="sm:hidden">AI Guide</span>
-          </span>
-
-          <span className="hidden md:inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-black/40 border border-emerald-500/30 text-emerald-300/80">
+          <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-800/80 border border-zinc-700/50 text-zinc-400">
             Ctrl+J
-          </span>
+          </kbd>
         </button>
       )}
 
@@ -218,8 +214,8 @@ export function AiAssistantModal() {
                     Client AI
                   </span>
                 </div>
-                <p className="text-[10px] text-zinc-400 truncate flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <p className="text-[10px] text-zinc-400 truncate flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                   100% On-Device Engine • Zero Uploads
                 </p>
               </div>

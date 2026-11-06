@@ -33,14 +33,11 @@ export function PrivacyBadge({ className = "", variant = "pill" }: PrivacyBadgeP
         onClick={() => setShowTooltip(!showTooltip)}
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 bg-emerald-950/40 text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/60 hover:bg-emerald-900/40 transition-all cursor-pointer shadow-lg shadow-emerald-500/5 backdrop-blur-md"
+        className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium whitespace-nowrap shrink-0 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 hover:border-zinc-700 transition-all cursor-pointer shadow-sm backdrop-blur-md"
         aria-label="Privacy guarantee details"
       >
-        <span className="relative flex h-2 w-2 shrink-0">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400"></span>
-        </span>
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 transition-transform group-hover:scale-110 shrink-0" />
+        <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
         <span className="tracking-wide whitespace-nowrap shrink-0 hidden sm:inline">
           100% On-Device · Zero Cloud Uploads
         </span>
