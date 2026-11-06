@@ -161,7 +161,7 @@ export function AiAssistantModal() {
 
   return (
     <>
-      {/* Floating Bottom-Right Trigger Pill */}
+      {/* Floating Bottom-Left Trigger Pill (Shifted to Left to prevent overlap with Scroll-To-Top) */}
       {!isOpen && (
         <button
           type="button"
@@ -169,7 +169,7 @@ export function AiAssistantModal() {
             setIsOpen(true);
             setIsMinimized(false);
           }}
-          className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-40 group flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:via-teal-500/30 hover:to-cyan-500/30 border border-emerald-500/40 hover:border-emerald-400 text-emerald-200 hover:text-white shadow-[0_10px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_10px_35px_rgba(0,0,0,0.6),0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xl"
+          className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-40 group flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-emerald-500/20 via-teal-500/20 to-cyan-500/20 hover:from-emerald-500/30 hover:via-teal-500/30 hover:to-cyan-500/30 border border-emerald-500/40 hover:border-emerald-400 text-emerald-200 hover:text-white shadow-[0_10px_30px_rgba(0,0,0,0.5),0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_10px_35px_rgba(0,0,0,0.6),0_0_30px_rgba(16,185,129,0.5)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xl"
           title="Open IntekEdit AI Assistant (Ctrl + J)"
           aria-label="Open AI Assistant"
         >
@@ -196,8 +196,8 @@ export function AiAssistantModal() {
         <div
           className={`fixed z-50 transition-all duration-200 ease-out flex flex-col ${
             isMinimized
-              ? "bottom-4 right-4 sm:bottom-6 sm:right-6 w-72 sm:w-80 h-14 rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/40 bg-zinc-950/95 backdrop-blur-2xl"
-              : "bottom-3 sm:bottom-6 right-3 sm:right-6 w-[calc(100vw-24px)] sm:w-[480px] max-h-[88vh] h-[640px] rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.2)] border border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl ring-1 ring-white/10"
+              ? "bottom-4 left-4 sm:bottom-6 sm:left-6 w-72 sm:w-80 h-14 rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/40 bg-zinc-950/95 backdrop-blur-2xl"
+              : "bottom-3 sm:bottom-6 left-3 sm:left-6 w-[calc(100vw-24px)] sm:w-[480px] max-h-[88vh] h-[640px] rounded-3xl overflow-hidden shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.2)] border border-zinc-800 bg-zinc-950/95 backdrop-blur-2xl ring-1 ring-white/10"
           }`}
         >
           {/* Radiant Top Glow Line */}
@@ -443,3 +443,4 @@ export function AiAssistantModal() {
     </>
   );
 }
+
