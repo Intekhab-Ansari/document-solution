@@ -180,13 +180,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Main Hero Headline - Guaranteed in exactly 2 lines, never crops */}
-          <div className="space-y-3 max-w-4xl mx-auto w-full px-2">
-            <h1 className="font-black tracking-tight text-center leading-[1.15]">
-              <span className="block whitespace-nowrap text-[clamp(15px,3.8vw,50px)] text-white">
-                Every Tool You Need for Documents & Photos.
+          {/* Main Hero Headline - Guaranteed in exactly 2 lines, never crops or overflows */}
+          <div className="space-y-3 max-w-4xl mx-auto w-full px-2 overflow-hidden">
+            <h1 className="font-black tracking-tight text-center leading-[1.18] sm:leading-[1.15]">
+              <span className="block whitespace-nowrap text-[clamp(14px,3vw,44px)] text-white">
+                All-in-One Document & Photo Suite.
               </span>
-              <span className="block whitespace-nowrap text-[clamp(14px,3.65vw,48px)] mt-1.5 sm:mt-2">
+              <span className="block whitespace-nowrap text-[clamp(13px,2.8vw,42px)] mt-1.5 sm:mt-2">
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
                   100% On Your Device.
                 </span>{" "}
