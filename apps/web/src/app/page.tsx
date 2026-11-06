@@ -163,21 +163,47 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
-      {/* 1. Hero & Smart Upload Section with Aurora Glow */}
+      {/* 1. Hero & Smart Upload Section with Cyber Aurora & Blueprint Grid Background */}
       <section className="relative overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-24 border-b border-zinc-800/80">
-        {/* Multi-layered atmospheric glows & perspective dot grid */}
+        {/* Top Radiant Horizon Line */}
+        <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/70 via-cyan-400/60 to-transparent blur-[0.5px] z-20 pointer-events-none" />
+
+        {/* Multi-layered celestial atmospheric glows & precision grid */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          {/* Subtle high-tech radial dot grid */}
-          <div className="absolute inset-0 dot-grid opacity-35 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_15%,#000_60%,transparent_100%)]" />
+          {/* Top Luminous Horizon Arc */}
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[1100px] h-[380px] bg-gradient-to-b from-emerald-500/30 via-teal-500/15 to-transparent blur-[110px] rounded-full" />
 
-          {/* Primary central emerald spotlight */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-gradient-to-tr from-emerald-500/25 via-teal-500/15 to-cyan-500/20 blur-[140px] rounded-full animate-aurora-glow" />
+          {/* Precision Cyber Blueprint Grid */}
+          <div
+            className="absolute inset-0 opacity-[0.22]"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, rgba(52, 211, 153, 0.25) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(52, 211, 153, 0.25) 1px, transparent 1px)
+              `,
+              backgroundSize: "48px 48px",
+              maskImage: "radial-gradient(ellipse 85% 65% at 50% 25%, #000 35%, transparent 85%)",
+              WebkitMaskImage: "radial-gradient(ellipse 85% 65% at 50% 25%, #000 35%, transparent 85%)",
+            }}
+          />
 
-          {/* Secondary atmospheric cyan beam */}
-          <div className="absolute top-10 right-1/4 w-[500px] h-[300px] bg-cyan-500/10 blur-[130px] rounded-full" />
+          {/* High-tech radial dot matrix layer */}
+          <div className="absolute inset-0 dot-grid opacity-35 [mask-image:radial-gradient(ellipse_75%_55%_at_50%_35%,#000_50%,transparent_100%)]" />
 
-          {/* Deep violet accent anchor */}
-          <div className="absolute bottom-0 left-1/3 w-[600px] h-[250px] bg-indigo-500/10 blur-[150px] rounded-full" />
+          {/* Primary central pulsating emerald & cyan spotlight */}
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] h-[520px] bg-gradient-to-tr from-emerald-500/30 via-teal-500/20 to-cyan-500/25 blur-[140px] rounded-full animate-aurora-glow" />
+
+          {/* Secondary atmospheric cyan beam (top-right) */}
+          <div className="absolute top-6 right-1/4 w-[550px] h-[360px] bg-gradient-to-bl from-cyan-400/20 via-teal-400/10 to-transparent blur-[130px] rounded-full" />
+
+          {/* Deep violet / indigo ambient anchor (bottom-left) */}
+          <div className="absolute bottom-0 left-1/4 w-[650px] h-[320px] bg-gradient-to-tr from-indigo-500/15 via-purple-500/10 to-transparent blur-[140px] rounded-full" />
+
+          {/* Floating Subtle Ambient Stars / Micro-Glow Orbs */}
+          <div className="absolute top-1/4 left-[15%] w-1.5 h-1.5 rounded-full bg-emerald-400/80 shadow-[0_0_10px_#34d399] animate-pulse" />
+          <div className="absolute top-1/3 right-[18%] w-1.5 h-1.5 rounded-full bg-cyan-400/80 shadow-[0_0_10px_#22d3ee] animate-pulse delay-700" />
+          <div className="absolute bottom-1/3 left-[22%] w-1 h-1 rounded-full bg-teal-300/60 shadow-[0_0_8px_#5eead4] animate-pulse delay-1000" />
+          <div className="absolute top-1/2 right-[12%] w-1 h-1 rounded-full bg-indigo-400/60 shadow-[0_0_8px_#818cf8] animate-pulse delay-500" />
         </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
@@ -199,17 +225,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Main Hero Headline */}
-          <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="font-black tracking-tight text-center leading-[1.12]">
-              <span className="block text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
+          {/* Main Hero Headline - Guaranteed in exactly 2 lines */}
+          <div className="space-y-3 sm:space-y-4 max-w-6xl mx-auto w-full px-2">
+            <h1 className="font-black tracking-tight text-center leading-[1.18] sm:leading-[1.12]">
+              <span className="block whitespace-nowrap text-[18px] min-[360px]:text-[20px] min-[400px]:text-[23px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
                 All-in-One Document & Photo Suite.
               </span>
-              <span className="block text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl mt-1.5 sm:mt-3">
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">
+              <span className="block whitespace-nowrap text-[17px] min-[360px]:text-[19px] min-[400px]:text-[22px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mt-1.5 sm:mt-3">
+                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(16,185,129,0.45)]">
                   100% On Your Device.
                 </span>{" "}
-                <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-400 via-sky-300 to-indigo-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(6,182,212,0.35)]">
                   Zero Uploads.
                 </span>
               </span>
