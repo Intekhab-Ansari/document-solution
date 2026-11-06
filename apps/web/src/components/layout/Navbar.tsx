@@ -33,6 +33,7 @@ import {
   FlipHorizontal,
   FileSpreadsheet,
   Archive,
+  ExternalLink,
 } from "lucide-react";
 import { CommandPalette } from "@/components/common/CommandPalette";
 import { BrandLogo } from "@/components/common/BrandLogo";
@@ -82,7 +83,7 @@ export function Navbar() {
           {/* Quick Search Bar Button (Opens Command Palette) */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-9 h-9 sm:h-auto sm:w-52 lg:w-44 xl:w-60 shrink-0 sm:shrink justify-center sm:justify-start shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
+            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-9 h-9 sm:h-auto sm:w-36 md:w-44 lg:w-36 xl:w-44 2xl:w-56 shrink min-w-[36px] justify-center sm:justify-start shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
             title="Search all 30+ tools (Ctrl+K)"
           >
             <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
@@ -93,12 +94,12 @@ export function Navbar() {
           </button>
 
           {/* Desktop Mega-Menu Nav */}
-          <nav className="hidden lg:flex items-center gap-1.5 xl:gap-2 text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
+          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
             {/* 1. PDF Tools Mega Dropdown */}
             <div className="relative group shrink-0">
               <Link
                 href="/pdf"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all py-2 whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">PDF Tools</span>
@@ -217,7 +218,7 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/image"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <ImageIcon className="w-4 h-4 text-cyan-400 shrink-0" />
                 <span className="whitespace-nowrap">Image Tools</span>
@@ -291,7 +292,7 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/security"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="whitespace-nowrap">Sign & Extract</span>
@@ -346,7 +347,7 @@ export function Navbar() {
             <div className="relative group shrink-0">
               <Link
                 href="/convert"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
               >
                 <RefreshCw className="w-4 h-4 text-violet-400 shrink-0" />
                 <span className="whitespace-nowrap">Converters</span>
@@ -529,18 +530,38 @@ export function Navbar() {
             {/* 5. Privacy Link */}
             <Link
               href="/privacy"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+              className="hidden xl:flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span className="whitespace-nowrap">Privacy</span>
             </Link>
           </nav>
 
-          {/* Right Badge & Quick Action */}
-          <div className="hidden sm:flex items-center gap-3 shrink-0">
+          {/* Right Action Area: IntekChat Button & Privacy Badge */}
+          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+            {/* IntekChat External App Button */}
+            <a
+              href="https://intekchat.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-cyan-500/[0.12] via-sky-500/[0.08] to-indigo-500/[0.12] hover:from-cyan-500/[0.22] hover:via-sky-500/[0.18] hover:to-indigo-500/[0.22] border border-cyan-500/35 hover:border-cyan-400/70 text-cyan-200 hover:text-white shadow-[0_0_15px_rgba(6,182,212,0.15)] hover:shadow-[0_0_22px_rgba(6,182,212,0.3)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              title="Open IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
+            >
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400 shadow-sm shadow-cyan-400" />
+              </span>
+              <span className="whitespace-nowrap font-medium">IntekChat</span>
+              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hidden md:inline-flex">
+                P2P
+              </span>
+              <ExternalLink className="w-3 h-3 text-cyan-400/80 group-hover:text-cyan-200 group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </a>
+
+            {/* 100% In-Browser Privacy Badge (shown on wider displays) */}
             <Link
               href="/privacy"
-              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.08] hover:bg-emerald-500/[0.16] border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.12)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              className="hidden 2xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.08] hover:bg-emerald-500/[0.16] border border-emerald-500/25 hover:border-emerald-400/50 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.12)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
               title="View 100% In-Browser Privacy Guarantee"
             >
               <span className="relative flex h-2 w-2 shrink-0">
@@ -548,7 +569,7 @@ export function Navbar() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-sm shadow-emerald-400" />
               </span>
               <span className="whitespace-nowrap">100% In-Browser</span>
-              <span className="text-[10px] text-emerald-400/80 font-mono px-1 rounded bg-emerald-500/15 border border-emerald-500/25 hidden xl:inline">
+              <span className="text-[10px] text-emerald-400/80 font-mono px-1 rounded bg-emerald-500/15 border border-emerald-500/25">
                 Private
               </span>
             </Link>
@@ -611,6 +632,35 @@ export function Navbar() {
 
           {/* Drawer Body - Smooth Scrollable */}
           <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 scrollbar-none text-xs">
+            {/* IntekChat Companion Link */}
+            <div>
+              <a
+                href="https://intekchat.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-3 rounded-2xl bg-gradient-to-r from-cyan-950/60 via-sky-950/30 to-zinc-900 border border-cyan-500/30 hover:border-cyan-400/60 flex items-center justify-between text-xs transition-all group shadow-[0_4px_20px_rgba(6,182,212,0.1)] cursor-pointer"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/30 flex items-center justify-center text-cyan-300 shrink-0">
+                    <Zap className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-1.5 font-semibold text-white">
+                      <span>IntekChat</span>
+                      <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
+                        P2P Drop
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-zinc-400">
+                      Peer-to-peer file sharing & live chat
+                    </div>
+                  </div>
+                </div>
+                <ExternalLink className="w-4 h-4 text-cyan-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+              </a>
+            </div>
+
             {/* Tool Categories Quick Cards */}
             <div>
               <div className="font-bold text-[11px] uppercase tracking-wider text-zinc-500 mb-2">

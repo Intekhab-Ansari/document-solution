@@ -140,7 +140,7 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
             </span>
           )}
         </div>
-        <span className="text-[10px] text-zinc-500 font-mono tracking-tight -mt-0.5 hidden xl:block">
+        <span className="text-[10px] text-zinc-500 font-mono tracking-tight -mt-0.5 hidden 2xl:block">
           Local-First Vector & Image Engine
         </span>
       </div>

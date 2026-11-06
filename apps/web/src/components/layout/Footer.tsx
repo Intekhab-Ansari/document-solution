@@ -476,6 +476,17 @@ export function Footer() {
                 </span>
               </li>
               <li>
+                <a
+                  href="https://intekchat.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5 text-cyan-400 font-medium group"
+                >
+                  <span>IntekChat (P2P Files & Chat)</span>
+                  <ExternalLink className="w-3 h-3 text-cyan-400/80 group-hover:translate-x-0.5 transition-transform" />
+                </a>
+              </li>
+              <li>
                 <span className="text-zinc-500 flex items-center gap-1.5">
                   <span className="w-1 h-1 rounded-full bg-zinc-600" />
                   MIT Commercial-Safe
