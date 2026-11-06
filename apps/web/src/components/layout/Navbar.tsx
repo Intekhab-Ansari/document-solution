@@ -75,45 +75,33 @@ export function Navbar() {
         {/* Radiant top micro-accent line */}
         <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-400/40 via-cyan-400/40 to-transparent" />
         
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
-          {/* Brand */}
-          <Link href="/" className="shrink-0 flex items-center">
-            <BrandLogo size={34} />
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+          {/* Left: Brand + Desktop Mega-Menu Nav */}
+          <div className="flex items-center gap-4 xl:gap-8 min-w-0">
+            <Link href="/" className="shrink-0 flex items-center">
+              <BrandLogo size={34} />
+            </Link>
 
-          {/* Quick Search Bar Button (Opens Command Palette) */}
-          <button
-            onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-emerald-500/40 text-zinc-300 hover:text-white text-xs transition-all w-9 h-9 sm:h-auto sm:w-36 md:w-44 lg:w-36 xl:w-44 2xl:w-56 shrink min-w-[36px] justify-center sm:justify-start shadow-[0_2px_10px_rgba(0,0,0,0.2)] hover:shadow-[0_0_20px_rgba(16,185,129,0.18)] whitespace-nowrap group cursor-pointer"
-            title="Search all 30+ tools (Ctrl+K)"
-          >
-            <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
-            <span className="truncate hidden sm:inline">Search 30+ tools...</span>
-            <kbd className="ml-auto hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-zinc-900/90 border border-zinc-700/60 font-mono text-[10px] text-zinc-400 group-hover:text-emerald-300 group-hover:border-emerald-500/40 shrink-0 transition-colors">
-              Ctrl K
-            </kbd>
-          </button>
-
-          {/* Desktop Mega-Menu Nav */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 text-xs xl:text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
-            {/* 1. PDF Tools Mega Dropdown */}
-            <div className="relative group shrink-0">
-              <Link
-                href="/pdf"
-                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
-              >
-                <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="whitespace-nowrap">PDF Tools</span>
-              </Link>
-              <div className="absolute left-0 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(16,185,129,0.06)] ring-1 ring-white/5 space-y-1">
-                  <Link
-                    href="/pdf"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1 shadow-sm"
-                  >
-                    <span>Explore All PDF Tools (13+)</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                  </Link>
+            {/* Desktop Mega-Menu Nav */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
+              {/* 1. PDF Tools Mega Dropdown */}
+              <div className="relative group shrink-0">
+                <Link
+                  href="/pdf"
+                  className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+                >
+                  <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span className="whitespace-nowrap">PDF Tools</span>
+                </Link>
+                <div className="absolute left-0 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
+                  <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(16,185,129,0.06)] ring-1 ring-white/5 space-y-1">
+                    <Link
+                      href="/pdf"
+                      className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1 shadow-sm"
+                    >
+                      <span>Explore All PDF Tools (13+)</span>
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                    </Link>
                   <Link
                     href="/pdf/edit"
                     className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-100 hover:text-white bg-zinc-800/50 hover:bg-zinc-800 text-xs transition-colors"
@@ -537,17 +525,31 @@ export function Navbar() {
               <span className="whitespace-nowrap">Privacy</span>
             </Link>
           </nav>
+        </div>
 
-          {/* Right Action Area: Ask AI, IntekChat Button & Privacy Badge */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Ask AI Assistant Button */}
-            <button
-              type="button"
-              onClick={() => {
-                if (typeof window !== "undefined") {
-                  window.dispatchEvent(new CustomEvent("open-ai-assistant"));
-                }
-              }}
+        {/* Right Action Area: Search, Ask AI, IntekChat Button & Privacy Badge */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Quick Search Button (Command Palette Ctrl+K) */}
+          <button
+            onClick={() => setCommandPaletteOpen(true)}
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            title="Search all 30+ tools (Ctrl+K)"
+          >
+            <Search className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="hidden xl:inline text-zinc-300 text-xs font-medium">Search</span>
+            <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400">
+              ⌘K
+            </kbd>
+          </button>
+
+          {/* Ask AI Assistant Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined") {
+                window.dispatchEvent(new CustomEvent("open-ai-assistant"));
+              }
+            }}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
               title="Ask IntekEdit AI Assistant (Ctrl+J)"
             >

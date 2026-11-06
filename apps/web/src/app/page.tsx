@@ -165,28 +165,28 @@ export default function HomePage() {
 
   return (
     <div className="w-full">
-      {/* 1. Clean & Structured Hero Section (Theme & Architecture like iLovePDF) */}
-      <section className="relative overflow-hidden pt-10 pb-12 sm:pt-14 sm:pb-16 border-b border-zinc-800/80 bg-gradient-to-b from-zinc-950 via-zinc-900/20 to-zinc-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
+      {/* 1. Clean & Structured Hero Section (Inspired by iLovePDF) */}
+      <section className="relative overflow-hidden pt-8 pb-10 sm:pt-12 sm:pb-14 border-b border-zinc-800/80 bg-gradient-to-b from-zinc-950 via-zinc-900/30 to-zinc-950">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6 relative z-10">
           {/* Trust Tag */}
           <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/80 border border-zinc-700/60 text-xs text-zinc-300 shadow-sm backdrop-blur-md">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs text-zinc-300 shadow-sm backdrop-blur-md">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span className="font-semibold text-emerald-400">100% In-Browser Privacy</span>
               <span className="text-zinc-600">•</span>
               <span>Zero Server Uploads</span>
               <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-zinc-400 hidden sm:inline">Free & Open Architecture</span>
+              <span className="text-zinc-400 hidden sm:inline">Always Free & Open</span>
             </div>
           </div>
 
           {/* Main Hero Headline - Guaranteed in exactly 2 lines, never crops */}
-          <div className="space-y-3 sm:space-y-4 max-w-4xl mx-auto w-full px-2">
-            <h1 className="font-extrabold tracking-tight text-center leading-[1.16] sm:leading-[1.12]">
-              <span className="block whitespace-nowrap text-[clamp(15px,3.8vw,52px)] text-white">
-                All-in-One Document & Photo Suite.
+          <div className="space-y-3 max-w-4xl mx-auto w-full px-2">
+            <h1 className="font-black tracking-tight text-center leading-[1.15]">
+              <span className="block whitespace-nowrap text-[clamp(15px,3.8vw,50px)] text-white">
+                Every Tool You Need for Documents & Photos.
               </span>
-              <span className="block whitespace-nowrap text-[clamp(14px,3.65vw,50px)] mt-1.5 sm:mt-2.5">
+              <span className="block whitespace-nowrap text-[clamp(14px,3.65vw,48px)] mt-1.5 sm:mt-2">
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
                   100% On Your Device.
                 </span>{" "}
@@ -195,7 +195,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-zinc-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-              Every tool you need to edit, compress, convert, merge, split, sign, and secure documents and photos — processed entirely in your browser memory with <span className="text-zinc-200 font-semibold underline decoration-emerald-500/40 decoration-2 underline-offset-4">zero server egress</span>.
+              Merge, split, compress, edit, convert, sign, and enhance files directly in your browser memory — ultra-fast, air-gapped, and completely private with zero server egress.
             </p>
           </div>
 
@@ -271,36 +271,9 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Clean Dropzone Section (Integrated like iLovePDF) */}
-          <div className="max-w-2xl mx-auto pt-3 space-y-3">
-            {!detectedFile ? (
-              <div className="p-3 sm:p-4 rounded-2xl bg-zinc-900/40 border border-dashed border-zinc-800 hover:border-zinc-700 transition-colors">
-                <FileDropzone
-                  accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
-                  onFilesSelected={handleFileDropped}
-                  title="Or drop a document/photo here to auto-detect tools"
-                  description="Client-side engine inspects your file in memory and recommends instant actions."
-                />
-                {/* Instant Sample Fixtures */}
-                <div className="mt-3 pt-3 border-t border-zinc-800/60 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-                  <span className="text-zinc-500 text-[11px] font-medium mr-1">Sample files:</span>
-                  {[
-                    { name: "sample_id_card.pdf", url: "/test-files/sample_id_card.pdf", label: "💳 ID Card", kind: "pdf" },
-                    { name: "sample_scanned_contract_large.pdf", url: "/test-files/sample_scanned_contract_large.pdf", label: "📄 Contract", kind: "pdf" },
-                    { name: "portrait_curly_hair.jpg", url: "/test-files/portrait_curly_hair.jpg", label: "📸 Portrait Photo", kind: "image" },
-                  ].map((s) => (
-                    <button
-                      key={s.name}
-                      type="button"
-                      onClick={() => handleLoadSample(s.url, s.name, s.kind)}
-                      className="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] transition-colors cursor-pointer"
-                    >
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : (
+          {/* Contextual Smart Action Card or Clean Dropzone Drawer */}
+          <div className="max-w-2xl mx-auto pt-1 space-y-3">
+            {detectedFile ? (
               /* Contextual Smart Action Card */
               <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900 border border-emerald-500/40 shadow-xl flex flex-col gap-4 text-left">
                 <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
@@ -379,11 +352,38 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+            ) : (
+              <div className="p-3 sm:p-4 rounded-2xl bg-zinc-900/50 border border-dashed border-zinc-800 hover:border-zinc-700 transition-colors">
+                <FileDropzone
+                  accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
+                  onFilesSelected={handleFileDropped}
+                  title="Or drop a document/photo to auto-detect actions"
+                  description="Client-side engine inspects your file in browser memory and recommends the right tool."
+                />
+                {/* Instant Sample Fixtures */}
+                <div className="mt-2.5 pt-2.5 border-t border-zinc-800/60 flex flex-wrap items-center justify-center gap-1.5 text-xs">
+                  <span className="text-zinc-500 text-[11px] font-medium mr-1">Sample files:</span>
+                  {[
+                    { name: "sample_id_card.pdf", url: "/test-files/sample_id_card.pdf", label: "💳 ID Card", kind: "pdf" },
+                    { name: "sample_scanned_contract_large.pdf", url: "/test-files/sample_scanned_contract_large.pdf", label: "📄 Contract", kind: "pdf" },
+                    { name: "portrait_curly_hair.jpg", url: "/test-files/portrait_curly_hair.jpg", label: "📸 Portrait Photo", kind: "image" },
+                  ].map((s) => (
+                    <button
+                      key={s.name}
+                      type="button"
+                      onClick={() => handleLoadSample(s.url, s.name, s.kind)}
+                      className="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] transition-colors cursor-pointer"
+                    >
+                      {s.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
 
           {/* Trust Highlights Row */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-2 text-xs text-zinc-400 border-t border-zinc-900">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-1 text-xs text-zinc-400 border-t border-zinc-900">
             <span className="flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>100% Client-Side Engine</span>
@@ -404,16 +404,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 2. Category & Instant Search Navigation Bar */}
-      <section className="sticky top-16 z-30 border-b border-zinc-800/80 bg-zinc-950/85 backdrop-blur-xl py-3.5 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3.5">
+      {/* 2. Category Navigation Bar (Clean & Sticky) */}
+      <section className="sticky top-16 z-30 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl py-3 transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
           {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full pb-0.5 scrollbar-none">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === "all"
-                  ? "bg-gradient-to-r from-emerald-500 to-cyan-500 text-zinc-950 shadow-md shadow-emerald-500/20"
+                  ? "bg-zinc-100 text-zinc-950 shadow-md font-bold"
                   : "bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800/80 border border-zinc-800"
               }`}
             >
@@ -427,7 +427,7 @@ export default function HomePage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                     isSelected
                       ? "bg-zinc-100 text-zinc-950 shadow-md"
                       : "bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800/80 border border-zinc-800"
@@ -444,32 +444,6 @@ export default function HomePage() {
                 </button>
               );
             })}
-          </div>
-
-          {/* Instant Search Bar with Ctrl+K shortcut indicator */}
-          <div className="relative w-full md:w-80 shrink-0">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              id="tool-search-input"
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search 50+ tools (e.g. compress, ocr, split)..."
-              className="w-full pl-10 pr-16 py-2.5 rounded-xl bg-zinc-900/90 border border-zinc-800 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/40 transition-all shadow-inner"
-            />
-            {searchQuery ? (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white p-0.5 rounded"
-                title="Clear search"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            ) : (
-              <span className="hidden sm:inline-block absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700/60 pointer-events-none">
-                ⌘K
-              </span>
-            )}
           </div>
         </div>
       </section>
@@ -518,15 +492,12 @@ export default function HomePage() {
                       <Link
                         key={tool.id}
                         href={tool.href}
-                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-white/[0.08] hover:border-emerald-500/40 hover:from-zinc-900/90 hover:to-zinc-900/95 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_25px_rgba(16,185,129,0.12)] backdrop-blur-md overflow-hidden"
+                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 hover:border-zinc-700 hover:shadow-xl transition-all duration-200 hover:-translate-y-1 backdrop-blur-md overflow-hidden"
                       >
-                        {/* Top Micro-Accent Sheen */}
-                        <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:via-emerald-400/60 transition-colors" />
-
                         {/* Top: Icon + Badge */}
                         <div className="flex items-start justify-between gap-1.5 mb-2.5 sm:mb-4">
                           <div
-                            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
+                            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 shadow-sm ${tool.accentColor}`}
                           >
                             <IconComponent className="w-4 h-4 sm:w-6 sm:h-6" />
                           </div>
@@ -553,10 +524,10 @@ export default function HomePage() {
                         </div>
 
                         {/* Title & Description */}
-                        <div className="flex-1 space-y-1 sm:space-y-2">
-                          <h3 className="font-bold text-xs sm:text-sm text-zinc-100 group-hover:text-emerald-400 transition-colors flex items-center justify-between leading-snug line-clamp-2">
+                        <div className="flex-1 space-y-1 sm:space-y-1.5">
+                          <h3 className="font-bold text-xs sm:text-sm text-zinc-100 group-hover:text-white transition-colors flex items-center justify-between leading-snug line-clamp-2">
                             <span>{tool.name}</span>
-                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-emerald-400 shrink-0 hidden sm:block" />
+                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-zinc-400 group-hover:text-emerald-400 shrink-0 hidden sm:block" />
                           </h3>
                           <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
                             {tool.description}
@@ -568,7 +539,7 @@ export default function HomePage() {
                           <span className="flex items-center gap-1 sm:gap-1.5 font-medium truncate">
                             {tool.execution === "client" ? (
                               <>
-                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0" />
+                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 shrink-0" />
                                 <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
                                   <span className="sm:hidden">On-Device</span>
                                   <span className="hidden sm:inline">Device RAM (WASM)</span>
@@ -576,7 +547,7 @@ export default function HomePage() {
                               </>
                             ) : (
                               <>
-                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 shadow-sm shadow-cyan-400 shrink-0" />
+                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 shrink-0" />
                                 <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
                                   <span className="sm:hidden">Sandboxed</span>
                                   <span className="hidden sm:inline">Sandboxed Memory</span>
