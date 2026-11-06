@@ -183,26 +183,29 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 sm:space-y-7 relative z-10">
           {/* Floating Beacon Announcement Badge */}
           <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.03] border border-emerald-500/35 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 transition-all cursor-default">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-emerald-500/35 text-xs text-zinc-300 shadow-[0_0_25px_rgba(16,185,129,0.18)] backdrop-blur-xl hover:border-emerald-500/50 hover:bg-white/[0.07] transition-all cursor-default group">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_8px_#34d399]" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_10px_#34d399]" />
               </span>
               <span className="font-bold text-emerald-400">100% On-Device Engine</span>
               <span className="text-zinc-600">•</span>
               <span className="text-zinc-300">Zero Cloud Uploads</span>
               <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-emerald-300/90 hidden sm:inline font-mono text-[11px]">Air-Gapped WebAssembly</span>
+              <span className="text-emerald-300/90 hidden sm:inline font-mono text-[11px] flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-400" />
+                Air-Gapped WebAssembly
+              </span>
             </div>
           </div>
 
           {/* Main Hero Headline */}
-          <div className="space-y-3.5 max-w-4xl mx-auto">
-            <h1 className="font-black text-white tracking-tight leading-[1.15] text-center">
-              <span className="block whitespace-nowrap text-[18px] min-[360px]:text-[20px] min-[400px]:text-[22px] sm:text-4xl md:text-5xl lg:text-6xl">
+          <div className="space-y-4 max-w-4xl mx-auto">
+            <h1 className="font-black tracking-tight text-center leading-[1.12]">
+              <span className="block text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
                 All-in-One Document & Photo Suite.
               </span>
-              <span className="block whitespace-nowrap text-[17px] min-[360px]:text-[19px] min-[400px]:text-[21px] sm:text-4xl md:text-5xl lg:text-6xl mt-1">
+              <span className="block text-2xl min-[360px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl mt-1.5 sm:mt-3">
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(16,185,129,0.35)]">
                   100% On Your Device.
                 </span>{" "}
@@ -213,7 +216,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-zinc-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-              Professional PDF and image engineering executed directly in your browser memory. Direct in-place vector editing, exact target KB compression, merging, splitting, and EXIF stripping with <span className="text-zinc-200 font-semibold underline decoration-emerald-500/40 decoration-2 underline-offset-4">zero server egress</span>.
+              Professional PDF, document, and image engineering executed directly in your browser memory. Direct in-place vector editing, exact target KB compression, and format conversions with <span className="text-zinc-200 font-semibold underline decoration-emerald-500/40 decoration-2 underline-offset-4">zero server egress</span>.
             </p>
           </div>
 
@@ -221,9 +224,9 @@ export default function HomePage() {
           <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 max-w-xl sm:max-w-2xl mx-auto text-xs">
             <Link
               href="/pdf/edit"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 text-[10.5px] sm:text-xs font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-105 active:scale-95 transition-all truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/40 text-emerald-300 hover:text-white hover:border-emerald-400 text-[10.5px] sm:text-xs font-semibold shadow-[0_0_15px_rgba(16,185,129,0.2)] hover:scale-105 active:scale-95 transition-all truncate group"
             >
-              <PenTool className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 shrink-0" />
+              <PenTool className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-emerald-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">
                 <span className="sm:hidden">PDF Studio</span>
                 <span className="hidden sm:inline">PDF Studio (Vector Edit)</span>
@@ -231,9 +234,9 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pdf/compress"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-cyan-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.18)] truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-cyan-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(6,182,212,0.18)] truncate group"
             >
-              <Minimize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
+              <Minimize2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">
                 <span className="sm:hidden">Target Compress</span>
                 <span className="hidden sm:inline">Target KB Compress</span>
@@ -241,9 +244,9 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pdf/split"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-teal-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.18)] truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-teal-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.18)] truncate group"
             >
-              <Scissors className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-400 shrink-0" />
+              <Scissors className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-teal-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">
                 <span className="sm:hidden">Split PDF</span>
                 <span className="hidden sm:inline">Split PDF Pages</span>
@@ -251,9 +254,9 @@ export default function HomePage() {
             </Link>
             <Link
               href="/pdf/merge"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-purple-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.18)] truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-purple-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(168,85,247,0.18)] truncate group"
             >
-              <Merge className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400 shrink-0" />
+              <Merge className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">
                 <span className="sm:hidden">Merge PDF</span>
                 <span className="hidden sm:inline">Merge Documents</span>
@@ -261,16 +264,16 @@ export default function HomePage() {
             </Link>
             <Link
               href="/image"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-amber-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(245,158,11,0.18)] truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-amber-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(245,158,11,0.18)] truncate group"
             >
-              <ImageIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 shrink-0" />
+              <ImageIcon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">Photo Suite</span>
             </Link>
             <Link
               href="/image/metadata"
-              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-rose-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(244,63,94,0.18)] truncate"
+              className="inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-rose-500/50 text-zinc-300 hover:text-white text-[10.5px] sm:text-xs font-medium hover:scale-105 active:scale-95 transition-all shadow-sm hover:shadow-[0_0_15px_rgba(244,63,94,0.18)] truncate group"
             >
-              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-rose-400 shrink-0" />
+              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-rose-400 group-hover:scale-110 transition-transform shrink-0" />
               <span className="truncate">
                 <span className="sm:hidden">Strip EXIF</span>
                 <span className="hidden sm:inline">Strip EXIF / GPS</span>
@@ -546,27 +549,52 @@ export default function HomePage() {
               {/* Card 1: In-Place Vector Editor */}
               <Link
                 href="/pdf/edit"
-                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-emerald-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+                className="relative p-5 rounded-2xl bg-zinc-900/50 hover:bg-zinc-900/90 border border-white/[0.08] hover:border-emerald-500/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-md shadow-xl flex flex-col justify-between overflow-hidden"
               >
+                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                       <PenTool className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase">
-                      Studio
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-wider">
+                      Studio Engine
                     </span>
                   </div>
-                  <h3 className="font-bold text-white text-sm group-hover:text-emerald-400 transition-colors flex items-center justify-between">
-                    <span>In-Place Text Editor</span>
-                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-400" />
+                  <h3 className="font-bold text-white text-sm group-hover:text-emerald-300 transition-colors flex items-center justify-between">
+                    <span>In-Place Text & Vector Edit</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-emerald-400 shrink-0" />
                   </h3>
                   <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
-                    Directly click and edit text in Aadhaar, IDs & invoices with exact font sizes, colors, and seamless paper background match.
+                    Directly click and edit text in Aadhaar, ID cards & invoices with exact font sizes, colors, and paper background match.
                   </p>
+
+                  {/* Simulated Micro UI Preview */}
+                  <div className="my-3 p-2.5 rounded-xl bg-zinc-950/80 border border-white/[0.06] text-[11px] font-mono space-y-1.5 shadow-inner">
+                    <div className="flex items-center justify-between text-zinc-500 border-b border-zinc-800/60 pb-1 text-[10px]">
+                      <span>id_card_verified.pdf</span>
+                      <span className="text-emerald-400 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        Edit Active
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-zinc-300">
+                      <span className="text-zinc-500">Holder:</span>
+                      <span className="bg-emerald-500/20 text-emerald-300 px-1 py-0.5 rounded border border-emerald-500/30 flex items-center">
+                        Alex Rivera
+                        <span className="inline-block w-0.5 h-3 bg-emerald-400 ml-0.5 animate-pulse" />
+                      </span>
+                    </div>
+                    <div className="text-[10px] text-zinc-500 flex items-center gap-2">
+                      <span>Latin & Devanagari</span>
+                      <span>•</span>
+                      <span>Zero Watermark</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
-                  <Sparkles className="w-3 h-3" />
+
+                <div className="pt-2 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-emerald-400 font-medium">
+                  <Sparkles className="w-3 h-3 shrink-0" />
                   <span>Devanagari & Latin Unicode Support</span>
                 </div>
               </Link>
@@ -574,55 +602,94 @@ export default function HomePage() {
               {/* Card 2: Target KB Limits */}
               <Link
                 href="/pdf/compress"
-                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+                className="relative p-5 rounded-2xl bg-zinc-900/50 hover:bg-zinc-900/90 border border-white/[0.08] hover:border-cyan-500/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-md shadow-xl flex flex-col justify-between overflow-hidden"
               >
+                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                       <Minimize2 className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase">
-                      Target KB
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 uppercase tracking-wider">
+                      Target-Size KB
                     </span>
                   </div>
-                  <h3 className="font-bold text-white text-sm group-hover:text-cyan-400 transition-colors flex items-center justify-between">
+                  <h3 className="font-bold text-white text-sm group-hover:text-cyan-300 transition-colors flex items-center justify-between">
                     <span>Target-Size Compression</span>
-                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-cyan-400" />
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-cyan-400 shrink-0" />
                   </h3>
                   <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
                     Shrink multi-page PDFs to exactly 50 KB, 100 KB, or 200 KB for passport & government portal uploads without quality loss.
                   </p>
+
+                  {/* Simulated Micro UI Gauge */}
+                  <div className="my-3 p-2.5 rounded-xl bg-zinc-950/80 border border-white/[0.06] text-[11px] font-mono space-y-1.5 shadow-inner">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-zinc-400">4.8 MB file</span>
+                      <span className="text-cyan-300 font-bold flex items-center gap-1">
+                        <ArrowRight className="w-3 h-3 text-cyan-400" /> 195 KB
+                      </span>
+                    </div>
+                    <div className="w-full bg-zinc-900 rounded-full h-2 p-0.5 border border-zinc-800">
+                      <div className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 h-full rounded-full w-[96%]" />
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] text-zinc-500">
+                      <span className="text-emerald-400 font-semibold">96% Reduction</span>
+                      <span>Passport Portal Ready</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-cyan-400 font-medium">
-                  <Zap className="w-3 h-3" />
-                  <span>Iterative Byte-Budget Engine</span>
+
+                <div className="pt-2 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-cyan-400 font-medium">
+                  <Zap className="w-3 h-3 shrink-0" />
+                  <span>Iterative Byte-Budget Binary Search</span>
                 </div>
               </Link>
 
               {/* Card 3: Privacy & Security */}
               <Link
                 href="/security"
-                className="p-4 rounded-2xl bg-zinc-900/40 hover:bg-zinc-900/80 border border-zinc-800/80 hover:border-indigo-500/40 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-sm shadow-lg flex flex-col justify-between"
+                className="relative p-5 rounded-2xl bg-zinc-900/50 hover:bg-zinc-900/90 border border-white/[0.08] hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-1 group backdrop-blur-md shadow-xl flex flex-col justify-between overflow-hidden"
               >
+                <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <div>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-9 h-9 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                       <ShieldCheck className="w-4 h-4" />
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 uppercase">
-                      Air-Gapped
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 uppercase tracking-wider">
+                      Air-Gapped Vault
                     </span>
                   </div>
-                  <h3 className="font-bold text-white text-sm group-hover:text-indigo-400 transition-colors flex items-center justify-between">
-                    <span>Security & EXIF Vault</span>
-                    <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-400" />
+                  <h3 className="font-bold text-white text-sm group-hover:text-indigo-300 transition-colors flex items-center justify-between">
+                    <span>Security & EXIF Scrubber</span>
+                    <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-400 shrink-0" />
                   </h3>
                   <p className="text-zinc-400 text-xs mt-1 leading-relaxed">
                     AES-256 PDF encryption, password removal, digital signature stamping, and 1-click photo EXIF/GPS scrubbing.
                   </p>
+
+                  {/* Simulated Micro UI Badge */}
+                  <div className="my-3 p-2.5 rounded-xl bg-zinc-950/80 border border-white/[0.06] text-[11px] font-mono space-y-1.5 shadow-inner">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="text-zinc-400">Network Egress</span>
+                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        0 B Uploaded
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-[10px] text-zinc-400 truncate">
+                      <span className="text-rose-400 line-through">GPS: 37.77, -122.41</span>
+                      <span className="text-emerald-400 font-bold ml-auto">Cleaned</span>
+                    </div>
+                    <div className="text-[10px] text-indigo-300 bg-indigo-950/40 px-1.5 py-0.5 rounded border border-indigo-500/20 text-center font-bold">
+                      AES-256 / SHA-256 Verified
+                    </div>
+                  </div>
                 </div>
-                <div className="mt-3 pt-2.5 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-indigo-400 font-medium">
-                  <ShieldCheck className="w-3 h-3" />
+
+                <div className="pt-2 border-t border-zinc-800/60 flex items-center gap-1.5 text-[11px] text-indigo-400 font-medium">
+                  <ShieldCheck className="w-3 h-3 shrink-0" />
                   <span>100% Client-Side WebAssembly</span>
                 </div>
               </Link>
@@ -745,8 +812,11 @@ export default function HomePage() {
                       <Link
                         key={tool.id}
                         href={tool.href}
-                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/50 border border-zinc-800/90 hover:border-emerald-500/40 hover:bg-zinc-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
+                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-white/[0.08] hover:border-emerald-500/40 hover:from-zinc-900/90 hover:to-zinc-900/95 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_25px_rgba(16,185,129,0.12)] backdrop-blur-md overflow-hidden"
                       >
+                        {/* Top Micro-Accent Sheen */}
+                        <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:via-emerald-400/60 transition-colors" />
+
                         {/* Top: Icon + Badge */}
                         <div className="flex items-start justify-between gap-1.5 mb-2.5 sm:mb-4">
                           <div
@@ -758,7 +828,7 @@ export default function HomePage() {
                           <div className="flex items-center gap-1">
                             {tool.badge && (
                               <span
-                                className={`text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 truncate max-w-[76px] sm:max-w-none text-center ${
+                                className={`text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 truncate max-w-[76px] sm:max-w-none text-center shadow-sm ${
                                   tool.badge === "TARGET KB"
                                     ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
                                     : tool.badge === "POPULAR"
@@ -809,7 +879,7 @@ export default function HomePage() {
                             )}
                           </span>
 
-                          <span className="text-[9px] sm:text-[10px] text-zinc-500 uppercase font-bold tracking-wider shrink-0 hidden min-[380px]:inline">
+                          <span className="text-[9px] sm:text-[10px] text-zinc-500 uppercase font-mono font-bold tracking-wider shrink-0 hidden min-[380px]:inline">
                             {tool.category}
                           </span>
                         </div>
@@ -824,49 +894,144 @@ export default function HomePage() {
       </section>
 
       {/* 4. Core Architectural Pillars & Engineering Advantages */}
-      <section className="py-20 border-t border-zinc-800/80 bg-zinc-900/40">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-14">
+      <section className="py-20 border-t border-zinc-800/80 bg-zinc-900/40 relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-emerald-500/10 blur-[150px] rounded-full pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           <div className="text-center space-y-3 max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-2">
-              <Sparkles className="w-3.5 h-3.5" /> Engineered For Perfection
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Engineered For Precision & Privacy
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
               Why IntekEdit Sets the New Standard
             </h2>
             <p className="text-zinc-400 text-xs sm:text-base leading-relaxed">
-              Engineered with strict client-side isolation, zero remote storage, and cryptographic precision for individuals and enterprises that demand true privacy.
+              Engineered with strict client-side isolation, zero remote storage, and cryptographic precision for individuals and enterprises that demand true data sovereignty.
             </p>
           </div>
 
+          {/* 3 Pillar Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-7 rounded-3xl bg-zinc-950 border border-zinc-800/90 space-y-4 hover:border-emerald-500/40 transition-all shadow-xl">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-emerald-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <ShieldCheck className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-white text-lg">100% Air-Gapped Privacy</h3>
+              <h3 className="font-bold text-white text-lg group-hover:text-emerald-300 transition-colors">100% Air-Gapped Privacy</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
                 Your sensitive files, tax forms, and contracts never touch a remote server. All parsing, rendering, and cryptographic signing execute 100% in your local browser RAM via WebAssembly.
               </p>
             </div>
 
-            <div className="p-7 rounded-3xl bg-zinc-950 border border-zinc-800/90 space-y-4 hover:border-cyan-500/40 transition-all shadow-xl">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center">
+            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-cyan-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
+              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Minimize2 className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-white text-lg">Exact Target KB Compression</h3>
+              <h3 className="font-bold text-white text-lg group-hover:text-cyan-300 transition-colors">Exact Target KB Compression</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
                 Need to hit strict government portal upload limits (under 100KB, 200KB, or 500KB)? Our iterative binary search algorithm calculates the optimal compression ratio while keeping text sharp.
               </p>
             </div>
 
-            <div className="p-7 rounded-3xl bg-zinc-950 border border-zinc-800/90 space-y-4 hover:border-indigo-500/40 transition-all shadow-xl">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center">
+            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-indigo-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
+              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Sparkles className="w-6 h-6" />
               </div>
-              <h3 className="font-bold text-white text-lg">Full Image & Media Studio</h3>
+              <h3 className="font-bold text-white text-lg group-hover:text-indigo-300 transition-colors">Full Image & Media Studio</h3>
               <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
                 Universal image format conversion (including Apple HEIC, AVIF, WebP, Lossless PNG), EXIF GPS stripping, and multi-resolution page extraction with zero watermarks or file size restrictions.
               </p>
+            </div>
+          </div>
+
+          {/* Architectural Comparison Matrix */}
+          <div className="rounded-3xl bg-zinc-950/90 border border-white/[0.08] p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                  <span>IntekEdit vs Traditional Cloud PDF Tools</span>
+                </h3>
+                <p className="text-xs text-zinc-400 mt-0.5">
+                  How our client-side architecture compares to typical online converters
+                </p>
+              </div>
+              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold self-start sm:self-auto">
+                No Cloud Egress Guarantee
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-zinc-800 text-zinc-400 text-[11px] uppercase tracking-wider font-mono">
+                    <th className="pb-3 pr-4 font-semibold">Feature / Metric</th>
+                    <th className="pb-3 px-4 font-semibold text-emerald-400">IntekEdit (Local-First Engine)</th>
+                    <th className="pb-3 pl-4 font-semibold text-zinc-500">Traditional Cloud Converters</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
+                  <tr>
+                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                      Document Privacy
+                    </td>
+                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
+                      100% In-Browser RAM (0 B Uploaded)
+                    </td>
+                    <td className="py-3.5 pl-4 text-zinc-500">
+                      Uploaded & stored on remote servers
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
+                      <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
+                      Daily Tasks & Limits
+                    </td>
+                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
+                      Unlimited & Forever Free
+                    </td>
+                    <td className="py-3.5 pl-4 text-zinc-500">
+                      Capped at 1-2 free tasks per day
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
+                      <Minimize2 className="w-4 h-4 text-amber-400 shrink-0" />
+                      File Size Limits
+                    </td>
+                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
+                      Gigabyte-Scale (Bounded by Device RAM)
+                    </td>
+                    <td className="py-3.5 pl-4 text-zinc-500">
+                      Strict 50MB - 100MB cloud upload caps
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
+                      Watermarks & Ads
+                    </td>
+                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
+                      Zero Watermarks • Zero Spam Ads
+                    </td>
+                    <td className="py-3.5 pl-4 text-zinc-500">
+                      Forced watermarks or ad-heavy overlays
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
+                      <RefreshCw className="w-4 h-4 text-indigo-400 shrink-0" />
+                      Offline Execution
+                    </td>
+                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
+                      Fully Functional Offline in Web Worker
+                    </td>
+                    <td className="py-3.5 pl-4 text-zinc-500">
+                      Requires active internet upload
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

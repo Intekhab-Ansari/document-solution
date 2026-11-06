@@ -111,7 +111,7 @@ export function FileDropzone({
         className={`relative group cursor-pointer rounded-3xl border-2 border-dashed transition-all duration-300 p-5 sm:p-11 text-center flex flex-col items-center justify-center overflow-hidden backdrop-blur-2xl w-full max-w-full ${
           isDragOver
             ? "border-emerald-400 bg-emerald-500/15 scale-[1.01] shadow-2xl shadow-emerald-500/30 ring-2 ring-emerald-500/50"
-            : "border-white/10 bg-gradient-to-b from-white/[0.03] to-zinc-950/80 hover:border-emerald-500/40 hover:bg-zinc-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_0_50px_rgba(16,185,129,0.18)]"
+            : "border-white/10 bg-gradient-to-b from-white/[0.04] via-zinc-900/40 to-zinc-950/80 hover:border-emerald-500/40 hover:bg-zinc-900/60 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:shadow-[0_0_50px_rgba(16,185,129,0.18)]"
         }`}
       >
         <input
@@ -127,8 +127,11 @@ export function FileDropzone({
         {/* Ambient background glow inside dropzone */}
         <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/10 via-transparent to-cyan-500/5 pointer-events-none opacity-60 group-hover:opacity-100 transition-opacity" />
 
+        {/* Top subtle sheen line */}
+        <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+
         {/* Floating animated icon */}
-        <div className="relative w-14 h-14 sm:w-16 sm:h-16 mb-3 sm:mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/20 via-zinc-900 to-zinc-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.25)] group-hover:scale-110 group-hover:border-emerald-400/70 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.4)] transition-all duration-300">
+        <div className="relative w-14 h-14 sm:w-16 sm:h-16 mb-3 sm:mb-4 rounded-2xl bg-gradient-to-br from-emerald-500/25 via-zinc-900 to-zinc-950 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.25)] group-hover:scale-110 group-hover:border-emerald-400/80 group-hover:shadow-[0_0_40px_rgba(16,185,129,0.45)] transition-all duration-300">
           <UploadCloud className="w-7 h-7 sm:w-8 sm:h-8 transition-transform group-hover:-translate-y-0.5 text-emerald-400" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping opacity-75" />
           <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399]" />

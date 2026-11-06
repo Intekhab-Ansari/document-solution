@@ -256,8 +256,11 @@ export function CategoryHub({
                   <Link
                     key={tool.id}
                     href={tool.href}
-                    className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/40 border border-zinc-800/80 hover:border-emerald-500/40 hover:bg-zinc-900/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 backdrop-blur-sm"
+                    className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-zinc-900/60 to-zinc-950/80 border border-white/[0.08] hover:border-emerald-500/40 hover:from-zinc-900/90 hover:to-zinc-900/95 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8),0_0_25px_rgba(16,185,129,0.12)] backdrop-blur-md overflow-hidden"
                   >
+                    {/* Top Micro-Accent Sheen */}
+                    <div className="absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent group-hover:via-emerald-400/60 transition-colors" />
+
                     <div className="flex items-start justify-between gap-1 mb-2.5 sm:mb-4">
                       <div
                         className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 shadow-lg ${tool.accentColor}`}
@@ -266,7 +269,7 @@ export function CategoryHub({
                       </div>
 
                       {tool.badge && (
-                        <span className="text-[9px] sm:text-[10px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 truncate max-w-[76px] sm:max-w-none text-center">
+                        <span className="text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 truncate max-w-[76px] sm:max-w-none text-center shadow-sm">
                           {tool.badge}
                         </span>
                       )}
@@ -280,7 +283,8 @@ export function CategoryHub({
                     </p>
 
                     <div className="flex items-center justify-between pt-2.5 sm:pt-4 border-t border-zinc-800/60 text-xs">
-                      <span className="text-[10px] sm:text-[11px] font-medium text-zinc-500 truncate">
+                      <span className="text-[10px] sm:text-[11px] font-medium text-zinc-500 truncate flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400 shrink-0" />
                         <span className="sm:hidden">On-Device</span>
                         <span className="hidden sm:inline">100% Client-Side</span>
                       </span>

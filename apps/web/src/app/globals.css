@@ -33,34 +33,55 @@ body {
   background-attachment: fixed;
 }
 
-/* Glassmorphism utilities */
+/* Enhanced Glassmorphism & Surface utilities */
 .glass-panel {
   background: rgba(18, 18, 24, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.glass-card {
+  background: rgba(16, 16, 22, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
 .glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
-  background: rgba(24, 24, 32, 0.85);
-  border-color: rgba(16, 185, 129, 0.35);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.12);
+  background: rgba(24, 24, 34, 0.88);
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.16), 0 0 0 1px rgba(16, 185, 129, 0.15);
 }
 
-/* Subtle dot matrix grid background */
+/* Subtle dot matrix & fine line grid backgrounds */
 .dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
-/* Animated gradient text */
+.linear-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Animated gradient text utilities */
 .gradient-text-emerald {
   background: linear-gradient(135deg, #34d399 0%, #06b6d4 50%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-silver {
+  background: linear-gradient(180deg, #ffffff 0%, #e4e4e7 60%, #a1a1aa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -181,5 +202,29 @@ body,
     0 0 50px -15px rgba(16, 185, 129, 0.25),
     0 0 100px -30px rgba(6, 182, 212, 0.18),
     0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Gradient border glow utility for high-end cards */
+.glow-border-card {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-border-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.glow-border-card:hover::before {
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.5) 0%, rgba(6, 182, 212, 0.25) 50%, rgba(255, 255, 255, 0.05) 100%);
 }
 
