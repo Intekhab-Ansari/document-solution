@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FileDropzone } from "@/components/common/FileDropzone";
 import { PrivacyBadge } from "@/components/common/PrivacyBadge";
 import { BeforeAfterSlider } from "@/components/common/BeforeAfterSlider";
@@ -26,6 +26,24 @@ export default function CompressPdfPage() {
   const [preset, setPreset] = useState<CompressionPreset>("medium");
   const [targetKb, setTargetKb] = useState<number>(200);
   const [grayscale, setGrayscale] = useState<boolean>(false);
+
+  // Auto pre-fill target KB from customer query URL params
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const targetParam = params.get("targetKb") || params.get("kb") || params.get("target");
+      if (targetParam) {
+        const val = parseInt(targetParam, 10);
+        if (!isNaN(val) && val > 0) {
+          setTargetKb(val);
+          setMode("target");
+        }
+      }
+      if (params.get("grayscale") === "true") {
+        setGrayscale(true);
+      }
+    }
+  }, []);
 
   // Execution state
   const [isProcessing, setIsProcessing] = useState(false);

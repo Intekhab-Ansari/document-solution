@@ -34,6 +34,7 @@ import {
   FileSpreadsheet,
   Archive,
   ExternalLink,
+  Bot,
 } from "lucide-react";
 import { CommandPalette } from "@/components/common/CommandPalette";
 import { BrandLogo } from "@/components/common/BrandLogo";
@@ -537,8 +538,26 @@ export function Navbar() {
             </Link>
           </nav>
 
-          {/* Right Action Area: IntekChat Button & Privacy Badge */}
-          <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Right Action Area: Ask AI, IntekChat Button & Privacy Badge */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {/* Ask AI Assistant Button */}
+            <button
+              type="button"
+              onClick={() => {
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("open-ai-assistant"));
+                }
+              }}
+              className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/[0.12] hover:bg-emerald-500/[0.22] border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 hover:text-white shadow-[0_0_15px_rgba(16,185,129,0.18)] hover:shadow-[0_0_22px_rgba(16,185,129,0.3)] transition-all whitespace-nowrap shrink-0 cursor-pointer"
+              title="Ask IntekEdit AI Assistant (Ctrl+J)"
+            >
+              <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span className="whitespace-nowrap font-medium hidden sm:inline">Ask AI</span>
+              <span className="text-[9px] font-mono px-1 rounded bg-black/40 text-emerald-300 border border-emerald-500/30 hidden xl:inline">
+                Ctrl+J
+              </span>
+            </button>
+
             {/* IntekChat External App Button */}
             <a
               href="https://intekchat.vercel.app/"
@@ -631,7 +650,37 @@ export function Navbar() {
           </div>
 
           {/* Drawer Body - Smooth Scrollable */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 scrollbar-none text-xs">
+          <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-none text-xs">
+            {/* Ask AI Assistant Mobile Action */}
+            <button
+              type="button"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                if (typeof window !== "undefined") {
+                  window.dispatchEvent(new CustomEvent("open-ai-assistant"));
+                }
+              }}
+              className="w-full p-3 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-teal-950/40 to-zinc-900 border border-emerald-500/40 hover:border-emerald-400 flex items-center justify-between text-xs transition-all shadow-[0_4px_20px_rgba(16,185,129,0.15)] cursor-pointer text-left group"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0 group-hover:scale-110 transition-transform">
+                  <Bot className="w-4 h-4" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5 font-bold text-white">
+                    <span>IntekEdit AI Copilot</span>
+                    <span className="text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      Private
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-zinc-400">
+                    Ask questions & auto-launch tools
+                  </div>
+                </div>
+              </div>
+              <ArrowRight className="w-4 h-4 text-emerald-400 group-hover:translate-x-0.5 transition-transform shrink-0" />
+            </button>
+
             {/* IntekChat Companion Link */}
             <div>
               <a

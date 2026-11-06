@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FileDropzone } from "@/components/common/FileDropzone";
 import { PrivacyBadge } from "@/components/common/PrivacyBadge";
 import { BeforeAfterSlider } from "@/components/common/BeforeAfterSlider";
@@ -19,6 +19,21 @@ export default function CompressImagePage() {
   const [mode, setMode] = useState<"target" | "quality">("target");
   const [targetKb, setTargetKb] = useState<number>(100);
   const [qualityPercent, setQualityPercent] = useState<number>(80);
+
+  // Auto pre-fill target KB from customer query URL params
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const targetParam = params.get("targetKb") || params.get("kb") || params.get("target");
+      if (targetParam) {
+        const val = parseInt(targetParam, 10);
+        if (!isNaN(val) && val > 0) {
+          setTargetKb(val);
+          setMode("target");
+        }
+      }
+    }
+  }, []);
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState({ percent: 0, stage: "" });

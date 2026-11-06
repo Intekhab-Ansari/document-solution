@@ -44,6 +44,7 @@ import {
   Check,
   Contrast,
   Wrench,
+  Bot,
 } from "lucide-react";
 
 // Icon resolution map
@@ -77,6 +78,7 @@ export default function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | "all">("all");
   const [detectedFile, setDetectedFile] = useState<{ file: File; kind: string } | null>(null);
+  const [aiQuery, setAiQuery] = useState("");
 
   // Keyboard shortcut (Ctrl+K or Cmd+K) to focus search
   useEffect(() => {
@@ -225,13 +227,13 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Main Hero Headline - Guaranteed in exactly 2 lines */}
-          <div className="space-y-3 sm:space-y-4 max-w-6xl mx-auto w-full px-2">
+          {/* Main Hero Headline - Guaranteed in exactly 2 lines, never crops */}
+          <div className="space-y-3 sm:space-y-4 max-w-6xl mx-auto w-full px-3 sm:px-4">
             <h1 className="font-black tracking-tight text-center leading-[1.18] sm:leading-[1.12]">
-              <span className="block whitespace-nowrap text-[18px] min-[360px]:text-[20px] min-[400px]:text-[23px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="block whitespace-nowrap text-[clamp(14px,3.8vw,54px)] bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent drop-shadow-sm">
                 All-in-One Document & Photo Suite.
               </span>
-              <span className="block whitespace-nowrap text-[17px] min-[360px]:text-[19px] min-[400px]:text-[22px] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mt-1.5 sm:mt-3">
+              <span className="block whitespace-nowrap text-[clamp(13px,3.65vw,52px)] mt-1 sm:mt-2.5">
                 <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(16,185,129,0.45)]">
                   100% On Your Device.
                 </span>{" "}
@@ -305,6 +307,77 @@ export default function HomePage() {
                 <span className="hidden sm:inline">Strip EXIF / GPS</span>
               </span>
             </Link>
+          </div>
+
+          {/* AI Assistance Direct Field & Customer Query Launcher */}
+          <div className="max-w-xl sm:max-w-2xl mx-auto w-full px-2 pt-1">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (aiQuery.trim() && typeof window !== "undefined") {
+                  window.dispatchEvent(
+                    new CustomEvent("open-ai-assistant", {
+                      detail: { query: aiQuery.trim() },
+                    })
+                  );
+                  setAiQuery("");
+                }
+              }}
+              className="relative flex items-center p-1 sm:p-1.5 rounded-2xl bg-zinc-950/80 border border-emerald-500/35 hover:border-emerald-400/70 shadow-[0_0_25px_rgba(16,185,129,0.12)] hover:shadow-[0_0_35px_rgba(16,185,129,0.22)] transition-all group backdrop-blur-xl"
+            >
+              <div className="pl-2.5 sm:pl-3 pr-2 text-emerald-400 flex items-center shrink-0">
+                <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400 group-hover:scale-110 transition-transform" />
+              </div>
+
+              <input
+                type="text"
+                value={aiQuery}
+                onChange={(e) => setAiQuery(e.target.value)}
+                placeholder="Ask AI Copilot: 'Compress PDF to 150KB', 'Edit text', 'Convert HEIC'..."
+                className="flex-1 bg-transparent text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none py-1.5 px-1 font-medium min-w-0"
+              />
+
+              <button
+                type="submit"
+                className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-semibold text-xs transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
+              >
+                <Sparkles className="w-3.5 h-3.5 fill-black" />
+                <span className="hidden sm:inline">Ask AI & Launch</span>
+                <span className="sm:hidden">Ask</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </form>
+
+            {/* Quick Query Recommendation Pills */}
+            <div className="flex items-center justify-center gap-1.5 mt-2 overflow-x-auto scrollbar-none py-0.5 text-[11px] text-zinc-400">
+              <span className="text-zinc-500 text-[10px] uppercase font-bold shrink-0 hidden sm:inline">
+                Try:
+              </span>
+              {[
+                "Compress PDF to 200 KB",
+                "Edit text in PDF",
+                "Convert HEIC to JPG",
+                "Strip EXIF / GPS",
+                "Merge multiple PDFs",
+              ].map((prompt, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.dispatchEvent(
+                        new CustomEvent("open-ai-assistant", {
+                          detail: { query: prompt },
+                        })
+                      );
+                    }
+                  }}
+                  className="px-2.5 py-0.5 rounded-full bg-white/[0.03] hover:bg-emerald-500/15 border border-white/5 hover:border-emerald-500/35 text-zinc-400 hover:text-emerald-300 transition-all shrink-0 cursor-pointer"
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Central Air-Gapped Sandbox Workbench */}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FileDropzone } from "@/components/common/FileDropzone";
 import { PrivacyBadge } from "@/components/common/PrivacyBadge";
 import { ProgressModal } from "@/components/common/ProgressModal";
@@ -14,6 +14,21 @@ export default function ConvertImagePage() {
   const [targetFormat, setTargetFormat] = useState<SupportedTargetFormat>("image/webp");
   const [quality, setQuality] = useState<number>(90);
   const [bgColor, setBgColor] = useState<string>("#ffffff");
+
+  // Auto pre-fill target format from customer query URL params
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const to = (params.get("to") || params.get("format") || "").toLowerCase();
+      if (to === "jpg" || to === "jpeg") {
+        setTargetFormat("image/jpeg");
+      } else if (to === "png") {
+        setTargetFormat("image/png");
+      } else if (to === "webp") {
+        setTargetFormat("image/webp");
+      }
+    }
+  }, []);
 
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<{ blob: Blob; dataUrl: string; width: number; height: number; filename: string } | null>(null);
