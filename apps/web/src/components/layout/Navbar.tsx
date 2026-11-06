@@ -71,26 +71,26 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-zinc-950/80 backdrop-blur-2xl shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
-        {/* Radiant top micro-accent line */}
-        <div className="h-[1.5px] w-full bg-gradient-to-r from-transparent via-emerald-400/40 via-cyan-400/40 to-transparent" />
+      <header className="sticky top-0 z-40 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur-md shadow-xs">
+        {/* Soft top micro-accent line */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#F05138]/60 via-amber-400/60 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           {/* Left: Brand + Desktop Mega-Menu Nav */}
-          <div className="flex items-center gap-4 xl:gap-8 min-w-0">
+          <div className="flex items-center gap-6 xl:gap-8 min-w-0">
             <Link href="/" className="shrink-0 flex items-center">
               <BrandLogo size={34} />
             </Link>
 
             {/* Desktop Mega-Menu Nav */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-sm font-medium text-zinc-400 whitespace-nowrap shrink-0">
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-sm font-semibold text-zinc-600 whitespace-nowrap shrink-0">
               {/* 1. PDF Tools Mega Dropdown */}
               <div className="relative group shrink-0">
                 <Link
                   href="/pdf"
-                  className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:text-zinc-950 hover:bg-zinc-100 transition-all whitespace-nowrap shrink-0"
                 >
-                  <FileText className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <FileText className="w-4 h-4 text-[#F05138] shrink-0" />
                   <span className="whitespace-nowrap">PDF Tools</span>
                 </Link>
                 <div className="absolute left-0 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
@@ -481,11 +481,11 @@ export function Navbar() {
           {/* Quick Search Button (Command Palette Ctrl+K) */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold bg-zinc-100 hover:bg-zinc-200 border border-zinc-200/90 text-zinc-700 hover:text-zinc-950 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-xs"
             title="Search all 30+ tools (Ctrl+K)"
           >
-            <Search className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400">
+            <Search className="w-3.5 h-3.5 text-[#F05138] shrink-0" />
+            <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-white border border-zinc-300 text-zinc-500 shadow-xs">
               ⌘K
             </kbd>
           </button>
@@ -498,11 +498,11 @@ export function Navbar() {
                 window.dispatchEvent(new CustomEvent("open-ai-assistant"));
               }
             }}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[#F05138] transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-xs"
             title="Ask IntekEdit AI Assistant (Ctrl+J)"
           >
-            <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span className="whitespace-nowrap font-medium hidden sm:inline">Ask AI</span>
+            <Bot className="w-3.5 h-3.5 text-[#F05138] shrink-0" />
+            <span className="whitespace-nowrap hidden sm:inline">Ask AI</span>
           </button>
 
           {/* IntekChat External App Button */}
@@ -510,12 +510,12 @@ export function Navbar() {
             href="https://intekchat.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-cyan-500/40 text-cyan-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-700 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-xs"
             title="Open IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
           >
-            <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-            <span className="whitespace-nowrap font-medium">IntekChat</span>
-            <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-all shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-sky-500 shrink-0" />
+            <span className="whitespace-nowrap">IntekChat</span>
+            <ExternalLink className="w-3 h-3 text-sky-500 group-hover:translate-x-0.5 transition-all shrink-0" />
           </a>
 
             {/* 100% In-Browser Privacy Badge (shown on wider displays) */}

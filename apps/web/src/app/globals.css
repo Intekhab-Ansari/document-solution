@@ -1,10 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #09090b;
-  --foreground: #f4f4f5;
-  --card: #111116;
-  --card-border: rgba(255, 255, 255, 0.08);
+  --background: #FAF8F5;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.08);
+  --accent-coral: #F05138;
   --accent-emerald: #10b981;
   --accent-cyan: #06b6d4;
   --accent-indigo: #6366f1;
@@ -23,28 +24,28 @@ html, body {
 }
 
 body {
-  background-color: #090a10;
-  color: #f4f4f5;
+  background-color: #FAF8F5;
+  color: #18181b;
   font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
   overflow-x: hidden;
-  background-image: radial-gradient(1200px 500px at 50% 0px, rgba(16, 185, 129, 0.04), transparent 80%);
+  background-image: radial-gradient(1200px 500px at 50% 0px, rgba(240, 81, 56, 0.04), transparent 80%);
   background-attachment: fixed;
 }
 
 /* Enhanced Glassmorphism & Surface utilities */
 .glass-panel {
-  background: rgba(18, 18, 24, 0.7);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .glass-card {
-  background: rgba(16, 16, 22, 0.65);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
 }
 
 .glass-panel-hover {
@@ -52,34 +53,30 @@ body {
 }
 
 .glass-panel-hover:hover {
-  background: rgba(24, 24, 34, 0.88);
-  border-color: rgba(16, 185, 129, 0.4);
+  background: #ffffff;
+  border-color: rgba(240, 81, 56, 0.4);
   transform: translateY(-3px);
-  box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.16), 0 0 0 1px rgba(16, 185, 129, 0.15);
+  box-shadow: 0 20px 40px -12px rgba(240, 81, 56, 0.12);
 }
 
-/* Card Hover & Focus States (Professional iLovePDF tactile feel) */
+/* Card Hover & Focus States (Professional Tactile Dribbble feel) */
 .tool-card {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tool-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
 }
 
-/* Animated gradient text utilities */
-.gradient-text-emerald {
-  background: linear-gradient(135deg, #34d399 0%, #06b6d4 50%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Subtle clean card elevation */
+.card-soft {
+  transition: all 0.2s ease;
 }
 
-.gradient-text-silver {
-  background: linear-gradient(180deg, #ffffff 0%, #e4e4e7 60%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.card-soft:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 /* Global Scrollbar Hiding - hide scroller across all browsers while retaining full smooth scrolling */

@@ -127,15 +127,15 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-lg text-white tracking-tight flex items-center">
+          <span className="font-extrabold text-lg text-zinc-900 tracking-tight flex items-center">
             <span>Intek</span>
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+            <span className="text-[#F05138]">
               Edit
             </span>
           </span>
           {showBadge && (
-            <span className="hidden 2xl:inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+            <span className="hidden 2xl:inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               <span>100% Private</span>
             </span>
           )}

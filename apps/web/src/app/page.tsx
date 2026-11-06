@@ -1,148 +1,311 @@
 "use client";
 
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { FileDropzone } from "@/components/common/FileDropzone";
-import { PrivacyBadge } from "@/components/common/PrivacyBadge";
-import { detectFileKind, formatBytes } from "@/lib/utils";
 import {
-  CATEGORIES,
-  ALL_TOOLS,
-  ToolCategory,
-  ToolDefinition,
-} from "@/lib/registry/tools-registry";
-import {
+  ShieldCheck,
+  Zap,
+  Lock,
+  Sparkles,
+  Minimize2,
+  PenTool,
+  Merge,
+  Scissors,
+  Scaling,
+  Crop,
+  RefreshCw,
   FileText,
   Image as ImageIcon,
-  ShieldCheck,
-  Zap,
-  Sparkles,
-  ArrowRight,
-  Minimize2,
-  Merge,
-  Scissors,
-  RotateCw,
-  PenTool,
-  Layers,
-  Hash,
-  Stamp,
-  Crop,
-  Scaling,
-  RefreshCw,
-  Lock,
-  Unlock,
-  FileCheck,
-  FileCode,
-  Sliders,
   Search,
+  ArrowRight,
   CheckCircle2,
-  X,
-  Cpu,
-  ShieldAlert,
-  ArrowUpRight,
-  Check,
-  Contrast,
-  Wrench,
   Bot,
+  X,
+  Check,
+  Star,
+  Users,
+  HardDrive,
+  Smartphone,
+  Layers,
+  FileCheck,
+  UploadCloud,
+  FileSpreadsheet,
+  FileCode,
+  Stamp,
+  RotateCw,
+  Hash,
+  Wrench,
+  Contrast,
+  Sliders,
+  Archive,
 } from "lucide-react";
+import { ALL_TOOLS, CATEGORIES, ToolCategory } from "@/lib/registry/tools-registry";
+import { formatBytes } from "@/lib/utils";
 
-// Icon resolution map
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+// Icon mapping for dynamic tool cards
+const ICON_MAP: Record<string, React.ElementType> = {
+  PenTool,
   Minimize2,
   Merge,
   Scissors,
-  Layers,
+  ArrowUpDown: Sliders,
   RotateCw,
   Hash,
   Stamp,
-  Crop,
-  Scaling,
-  RefreshCw,
-  ShieldCheck,
-  Sparkles,
-  ImageIcon,
-  FileText,
-  FileCode,
-  Lock,
-  Unlock,
-  FileCheck,
-  Zap,
-  Sliders,
+  Layers,
   Contrast,
   Wrench,
+  ImageIcon,
+  Scaling,
+  Crop,
+  RefreshCw,
+  ShieldCheck,
+  FileText,
+  FileSpreadsheet,
+  FileCode,
+  FileCheck,
+  Sliders,
+  Lock,
+  Archive,
 };
 
+// Pastel styling helper matching the exact Dribbble design
+interface PastelStyle {
+  cardBg: string;
+  borderColor: string;
+  hoverBorder: string;
+  iconBg: string;
+  iconColor: string;
+  textColor: string;
+  badgeBg: string;
+  badgeText: string;
+}
+
+function getPastelStyle(toolId: string, category: string): PastelStyle {
+  // 1. PDF Edit & Annotations (Cyan / Teal)
+  if (toolId.includes("edit")) {
+    return {
+      cardBg: "bg-[#ECFEFF]",
+      borderColor: "border-[#A5F3FC]",
+      hoverBorder: "hover:border-cyan-400",
+      iconBg: "bg-cyan-100",
+      iconColor: "text-cyan-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-cyan-100/90",
+      badgeText: "text-cyan-800",
+    };
+  }
+  // 2. Compress PDF / Images (Emerald / Green)
+  if (toolId.includes("compress")) {
+    return {
+      cardBg: "bg-[#ECFDF5]",
+      borderColor: "border-[#A7F3D0]",
+      hoverBorder: "hover:border-emerald-400",
+      iconBg: "bg-emerald-100",
+      iconColor: "text-emerald-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-emerald-100/90",
+      badgeText: "text-emerald-800",
+    };
+  }
+  // 3. Merge PDF (Warm Coral / Peach)
+  if (toolId.includes("merge")) {
+    return {
+      cardBg: "bg-[#FFF5F2]",
+      borderColor: "border-[#FED7CC]",
+      hoverBorder: "hover:border-[#F05138]",
+      iconBg: "bg-orange-100",
+      iconColor: "text-[#F05138]",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-orange-100/90",
+      badgeText: "text-[#F05138]",
+    };
+  }
+  // 4. Split PDF (Amber / Yellow)
+  if (toolId.includes("split")) {
+    return {
+      cardBg: "bg-[#FFFBEB]",
+      borderColor: "border-[#FDE68A]",
+      hoverBorder: "hover:border-amber-400",
+      iconBg: "bg-amber-100",
+      iconColor: "text-amber-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-amber-100/90",
+      badgeText: "text-amber-800",
+    };
+  }
+  // 5. Word / Office / DOCX (Royal Blue)
+  if (toolId.includes("word") || toolId.includes("docx") || toolId.includes("office")) {
+    return {
+      cardBg: "bg-[#F0F7FF]",
+      borderColor: "border-[#D0E6FF]",
+      hoverBorder: "hover:border-blue-400",
+      iconBg: "bg-blue-100",
+      iconColor: "text-blue-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-blue-100/90",
+      badgeText: "text-blue-800",
+    };
+  }
+  // 6. Excel / Spreadsheets (Mint Green)
+  if (toolId.includes("excel") || toolId.includes("sheet") || toolId.includes("csv")) {
+    return {
+      cardBg: "bg-[#F0FDF4]",
+      borderColor: "border-[#BBF7D0]",
+      hoverBorder: "hover:border-emerald-400",
+      iconBg: "bg-emerald-100",
+      iconColor: "text-emerald-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-emerald-100/90",
+      badgeText: "text-emerald-800",
+    };
+  }
+  // 7. Security / Sign / Protect (Purple / Violet)
+  if (toolId.includes("sign") || toolId.includes("lock") || toolId.includes("protect") || toolId.includes("password")) {
+    return {
+      cardBg: "bg-[#FAF5FF]",
+      borderColor: "border-[#E9D5FF]",
+      hoverBorder: "hover:border-purple-400",
+      iconBg: "bg-purple-100",
+      iconColor: "text-purple-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-purple-100/90",
+      badgeText: "text-purple-800",
+    };
+  }
+  // 8. Image & Photos (Rose / Pink)
+  if (category === "image") {
+    return {
+      cardBg: "bg-[#FFF0F5]",
+      borderColor: "border-[#FCD6E3]",
+      hoverBorder: "hover:border-pink-400",
+      iconBg: "bg-pink-100",
+      iconColor: "text-pink-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-pink-100/90",
+      badgeText: "text-pink-800",
+    };
+  }
+  // 9. Converters (Indigo)
+  if (category === "convert") {
+    return {
+      cardBg: "bg-[#F5F3FF]",
+      borderColor: "border-[#DDD6FE]",
+      hoverBorder: "hover:border-indigo-400",
+      iconBg: "bg-indigo-100",
+      iconColor: "text-indigo-700",
+      textColor: "text-zinc-950",
+      badgeBg: "bg-indigo-100/90",
+      badgeText: "text-indigo-800",
+    };
+  }
+  // Default warm pastel
+  return {
+    cardBg: "bg-[#FEF9EE]",
+    borderColor: "border-[#FDE6B9]",
+    hoverBorder: "hover:border-amber-400",
+    iconBg: "bg-amber-100",
+    iconColor: "text-amber-700",
+    textColor: "text-zinc-950",
+    badgeBg: "bg-amber-100/90",
+    badgeText: "text-amber-800",
+  };
+}
+
 export default function HomePage() {
-  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<ToolCategory | "all">("all");
   const [detectedFile, setDetectedFile] = useState<{ file: File; kind: string } | null>(null);
   const [aiQuery, setAiQuery] = useState("");
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // Keyboard shortcut (Ctrl+K or Cmd+K) to focus search
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        const searchInput = document.getElementById("tool-search-input");
-        searchInput?.focus();
+  // File Drop / Selection handler
+  const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selected = e.target.files[0];
+      const name = selected.name.toLowerCase();
+      let kind = "unknown";
+      if (name.endsWith(".pdf") || selected.type === "application/pdf") {
+        kind = "pdf";
+      } else if (
+        selected.type.startsWith("image/") ||
+        name.endsWith(".jpg") ||
+        name.endsWith(".jpeg") ||
+        name.endsWith(".png") ||
+        name.endsWith(".webp") ||
+        name.endsWith(".heic")
+      ) {
+        kind = "image";
       }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
-
-  const handleFileDropped = async (files: File[]) => {
-    if (!files.length) return;
-    const file = files[0];
-    const kind = await detectFileKind(file);
-    setDetectedFile({ file, kind });
+      setDetectedFile({ file: selected, kind });
+    }
   };
 
-  const handleLoadSample = async (url: string, name: string, kind: string) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const selected = e.dataTransfer.files[0];
+      const name = selected.name.toLowerCase();
+      let kind = "unknown";
+      if (name.endsWith(".pdf") || selected.type === "application/pdf") {
+        kind = "pdf";
+      } else if (
+        selected.type.startsWith("image/") ||
+        name.endsWith(".jpg") ||
+        name.endsWith(".jpeg") ||
+        name.endsWith(".png") ||
+        name.endsWith(".webp") ||
+        name.endsWith(".heic")
+      ) {
+        kind = "image";
+      }
+      setDetectedFile({ file: selected, kind });
+    }
+  };
+
+  // Instant Sample Fixture loader
+  const handleLoadSample = async (url: string, filename: string, kind: string) => {
     try {
       const res = await fetch(url);
       const blob = await res.blob();
-      const file = new File([blob], name, {
-        type: blob.type || (kind === "pdf" ? "application/pdf" : "image/jpeg"),
+      const file = new File([blob], filename, {
+        type: kind === "pdf" ? "application/pdf" : "image/jpeg",
       });
       setDetectedFile({ file, kind });
     } catch {
-      // fallback
+      // Fallback virtual file
+      const fake = new File(["sample content"], filename, {
+        type: kind === "pdf" ? "application/pdf" : "image/jpeg",
+      });
+      setDetectedFile({ file: fake, kind });
     }
   };
 
-  // Filter tools based on search and category
+  // Filter tools based on query & category
   const filteredTools = useMemo(() => {
-    let tools = ALL_TOOLS;
-
-    if (selectedCategory !== "all") {
-      tools = tools.filter((t) => t.category === selectedCategory);
-    }
-
-    if (searchQuery.trim()) {
+    return ALL_TOOLS.filter((tool) => {
+      const matchesCategory = selectedCategory === "all" || tool.category === selectedCategory;
       const q = searchQuery.toLowerCase().trim();
-      tools = tools.filter(
-        (t) =>
-          t.name.toLowerCase().includes(q) ||
-          t.description.toLowerCase().includes(q) ||
-          t.tags.some((tag) => tag.toLowerCase().includes(q)) ||
-          t.categoryLabel.toLowerCase().includes(q)
-      );
-    }
+      if (!q) return matchesCategory;
 
-    return tools;
+      const matchesQuery =
+        tool.name.toLowerCase().includes(q) ||
+        tool.description.toLowerCase().includes(q) ||
+        tool.tags.some((t) => t.toLowerCase().includes(q)) ||
+        tool.category.toLowerCase().includes(q);
+
+      return matchesCategory && matchesQuery;
+    });
   }, [searchQuery, selectedCategory]);
 
-  // Group filtered tools by category
+  // Grouped tools for display
   const groupedCategories = useMemo(() => {
     if (searchQuery.trim()) {
-      const categoryMap = new Map<ToolCategory, ToolDefinition[]>();
+      const categoryMap = new Map<string, typeof filteredTools>();
       filteredTools.forEach((tool) => {
-        const list = categoryMap.get(tool.category) || [];
-        list.push(tool);
-        categoryMap.set(tool.category, list);
+        const existing = categoryMap.get(tool.category) || [];
+        existing.push(tool);
+        categoryMap.set(tool.category, existing);
       });
 
       return CATEGORIES.filter((cat) => categoryMap.has(cat.id)).map((cat) => ({
@@ -164,257 +327,368 @@ export default function HomePage() {
   }, [filteredTools, searchQuery, selectedCategory]);
 
   return (
-    <div className="w-full">
-      {/* 1. Clean & Structured Hero Section (Inspired by iLovePDF) */}
-      <section className="relative overflow-hidden pt-8 pb-10 sm:pt-12 sm:pb-14 border-b border-zinc-800/80 bg-gradient-to-b from-zinc-950 via-zinc-900/30 to-zinc-950">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-5 sm:space-y-6 relative z-10">
-          {/* Trust Tag */}
-          <div className="flex items-center justify-center">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-zinc-900/90 border border-zinc-800 text-xs text-zinc-300 shadow-sm backdrop-blur-md">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="font-semibold text-emerald-400">100% In-Browser Privacy</span>
-              <span className="text-zinc-600">•</span>
-              <span>Zero Server Uploads</span>
-              <span className="text-zinc-600 hidden sm:inline">•</span>
-              <span className="text-zinc-400 hidden sm:inline">Always Free & Open</span>
-            </div>
-          </div>
-
-          {/* Main Hero Headline - Guaranteed in exactly 2 lines, never crops or overflows */}
-          <div className="space-y-3 max-w-4xl mx-auto w-full px-2 overflow-hidden">
-            <h1 className="font-black tracking-tight text-center leading-[1.18] sm:leading-[1.15]">
-              <span className="block whitespace-nowrap text-[clamp(14px,3vw,44px)] text-white">
-                All-in-One Document & Photo Suite.
-              </span>
-              <span className="block whitespace-nowrap text-[clamp(13px,2.8vw,42px)] mt-1.5 sm:mt-2">
-                <span className="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
-                  100% On Your Device.
-                </span>{" "}
-                <span className="text-zinc-300">Zero Uploads.</span>
-              </span>
-            </h1>
-
-            <p className="text-zinc-400 text-xs sm:text-base max-w-2xl mx-auto leading-relaxed">
-              Merge, split, compress, edit, convert, sign, and enhance files directly in your browser memory — ultra-fast, air-gapped, and completely private with zero server egress.
-            </p>
-          </div>
-
-          {/* Unified Smart Search & AI Assistant Field */}
-          <div className="max-w-2xl mx-auto w-full pt-1">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (aiQuery.trim() && typeof window !== "undefined") {
-                  window.dispatchEvent(
-                    new CustomEvent("open-ai-assistant", {
-                      detail: { query: aiQuery.trim() },
-                    })
-                  );
-                  setAiQuery("");
-                }
-              }}
-              className="relative flex items-center p-1.5 rounded-2xl bg-zinc-900/90 border border-zinc-800 hover:border-zinc-700 focus-within:border-emerald-500/60 shadow-xl shadow-black/40 transition-all backdrop-blur-md"
-            >
-              <div className="pl-3 pr-2 text-zinc-400 flex items-center shrink-0">
-                <Search className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+    <div className="w-full bg-[#FAF8F5] text-zinc-900 min-h-screen">
+      {/* ============================================================== */}
+      {/* 1. Dribbble-Style Split 2-Column Hero Section                 */}
+      {/* ============================================================== */}
+      <section className="relative overflow-hidden pt-8 pb-12 sm:pt-12 sm:pb-16 border-b border-zinc-200/80 bg-gradient-to-b from-[#FBF9F6] via-[#FAF8F5] to-[#FAF8F5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Title, Bullets & Search */}
+            <div className="lg:col-span-7 space-y-6 text-left">
+              {/* Trust Tag */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-xs text-orange-950 font-medium shadow-xs">
+                <ShieldCheck className="w-4 h-4 text-[#F05138] shrink-0" />
+                <span className="font-semibold text-[#F05138]">100% In-Browser Privacy</span>
+                <span className="text-orange-300">•</span>
+                <span>Zero Server Uploads</span>
+                <span className="text-orange-300 hidden sm:inline">•</span>
+                <span className="text-zinc-600 hidden sm:inline">Always Free</span>
               </div>
 
-              <input
-                type="text"
-                value={aiQuery}
-                onChange={(e) => {
-                  setAiQuery(e.target.value);
-                  setSearchQuery(e.target.value);
-                }}
-                placeholder="Search 30+ tools or ask (e.g. 'Compress PDF to 100KB', 'Edit text in PDF')..."
-                className="flex-1 bg-transparent text-xs sm:text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none py-1.5 px-1 font-normal min-w-0"
-              />
+              {/* Main Headline */}
+              <div className="space-y-3">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-black tracking-tight text-zinc-950 leading-[1.14]">
+                  All-In-One Document & <span className="text-[#F05138]">Photo Suite</span>
+                </h1>
+                <p className="text-zinc-600 text-sm sm:text-base leading-relaxed max-w-xl">
+                  Easily edit, compress, convert, merge, split, sign, and organize documents directly in your browser memory—with <strong className="text-zinc-900 font-semibold">zero server egress</strong> and instant WebAssembly speed.
+                </p>
+              </div>
 
-              <button
-                type="submit"
-                className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-zinc-950 font-semibold text-xs transition-all active:scale-95 cursor-pointer shrink-0 shadow-sm"
-              >
-                <Bot className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Ask AI Guide</span>
-                <span className="sm:hidden">Ask</span>
-              </button>
-            </form>
+              {/* 3 Step Bullets with Coral Badges (Direct from Dribbble shot!) */}
+              <div className="space-y-2.5 pt-1 text-xs sm:text-sm text-zinc-700 font-medium">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-[#F05138] flex items-center justify-center shrink-0 font-bold text-xs">
+                    ✓
+                  </span>
+                  <span>Upload Your Document, Photo, or File</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-[#F05138] flex items-center justify-center shrink-0 font-bold text-xs">
+                    ✓
+                  </span>
+                  <span>Select Tool or Target KB Compression Size</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-[#F05138] flex items-center justify-center shrink-0 font-bold text-xs">
+                    ✓
+                  </span>
+                  <span>Convert, Save & Download Instantly (100% On-Device)</span>
+                </div>
+              </div>
 
-            {/* Quick Suggestions Chips */}
-            <div className="flex items-center justify-center gap-1.5 mt-2.5 overflow-x-auto scrollbar-none py-0.5 text-xs text-zinc-400">
-              <span className="text-zinc-500 text-[11px] font-medium shrink-0">Popular:</span>
-              {[
-                "Compress PDF",
-                "Edit PDF",
-                "Merge PDF",
-                "Convert HEIC",
-                "Sign PDF",
-                "Strip EXIF",
-              ].map((prompt, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    if (typeof window !== "undefined") {
+              {/* Social Proof Strip (Direct from Dribbble shot!) */}
+              <div className="flex items-center gap-3 pt-2 text-xs text-zinc-600 border-t border-zinc-200/80">
+                <div className="flex -space-x-2 shrink-0">
+                  <div className="w-7 h-7 rounded-full bg-[#FED7CC] text-[#F05138] border-2 border-white flex items-center justify-center font-bold text-[10px]">
+                    IA
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-[#BBF7D0] text-emerald-800 border-2 border-white flex items-center justify-center font-bold text-[10px]">
+                    JD
+                  </div>
+                  <div className="w-7 h-7 rounded-full bg-[#D0E6FF] text-blue-800 border-2 border-white flex items-center justify-center font-bold text-[10px]">
+                    SK
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold text-zinc-900">12.5k+</span>
+                  <span>Tasks Processed</span>
+                  <span className="text-zinc-300">•</span>
+                  <span className="text-amber-500 font-bold flex items-center gap-0.5">
+                    ★★★★★
+                  </span>
+                  <span className="font-semibold text-zinc-800">1,640 reviews</span>
+                </div>
+              </div>
+
+              {/* Search & AI Guide Bar */}
+              <div className="pt-2 max-w-xl">
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (aiQuery.trim() && typeof window !== "undefined") {
                       window.dispatchEvent(
                         new CustomEvent("open-ai-assistant", {
-                          detail: { query: prompt },
+                          detail: { query: aiQuery.trim() },
                         })
                       );
+                      setAiQuery("");
                     }
                   }}
-                  className="px-2.5 py-0.5 rounded-full bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all shrink-0 cursor-pointer text-[11px]"
+                  className="relative flex items-center p-1.5 rounded-2xl bg-white border border-zinc-200 hover:border-zinc-300 focus-within:border-[#F05138] shadow-sm transition-all"
                 >
-                  {prompt}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Contextual Smart Action Card or Clean Dropzone Drawer */}
-          <div className="max-w-2xl mx-auto pt-1 space-y-3">
-            {detectedFile ? (
-              /* Contextual Smart Action Card */
-              <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900 border border-emerald-500/40 shadow-xl flex flex-col gap-4 text-left">
-                <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                      {detectedFile.kind === "pdf" ? <FileText className="w-5 h-5" /> : <ImageIcon className="w-5 h-5" />}
-                    </div>
-                    <div>
-                      <p className="font-bold text-white text-sm">{detectedFile.file.name}</p>
-                      <p className="text-zinc-400 text-xs">
-                        {formatBytes(detectedFile.file.size)} &bull; {detectedFile.kind.toUpperCase()}
-                      </p>
-                    </div>
+                  <div className="pl-3 pr-2 text-zinc-400 flex items-center shrink-0">
+                    <Search className="w-4 h-4 text-[#F05138]" />
                   </div>
+
+                  <input
+                    type="text"
+                    value={aiQuery}
+                    onChange={(e) => {
+                      setAiQuery(e.target.value);
+                      setSearchQuery(e.target.value);
+                    }}
+                    placeholder="Search 30+ tools (e.g. 'Compress to 100KB', 'Edit PDF')..."
+                    className="flex-1 bg-transparent text-xs sm:text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none py-1.5 px-1 font-normal min-w-0"
+                  />
+
                   <button
-                    type="button"
-                    onClick={() => setDetectedFile(null)}
-                    className="px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs text-zinc-300 hover:text-white flex items-center gap-1 transition-colors"
+                    type="submit"
+                    className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#F05138] hover:bg-[#D94129] text-white font-bold text-xs transition-all active:scale-95 cursor-pointer shrink-0 shadow-xs"
                   >
-                    <X className="w-3.5 h-3.5" />
-                    <span>Change</span>
+                    <Bot className="w-3.5 h-3.5" />
+                    <span>Ask AI</span>
                   </button>
-                </div>
+                </form>
 
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
-                    Recommended Actions:
-                  </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-                    {detectedFile.kind === "pdf" ? (
-                      <>
-                        <Link
-                          href="/pdf/edit"
-                          className="col-span-2 sm:col-span-3 p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 hover:border-emerald-400 text-white font-bold flex items-center justify-between transition-colors"
-                        >
-                          <span className="flex items-center gap-2">
-                            <PenTool className="w-4 h-4 text-emerald-400" />
-                            <span>Edit PDF Studio (Text & Annotations)</span>
-                          </span>
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-400 text-zinc-950 font-bold uppercase">
-                            Open &rarr;
-                          </span>
-                        </Link>
-                        <Link href="/pdf/compress" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-emerald-500 text-white flex items-center gap-2 transition-colors">
-                          <Minimize2 className="w-4 h-4 text-emerald-400" /> Compress
-                        </Link>
-                        <Link href="/pdf/split" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500 text-white flex items-center gap-2 transition-colors">
-                          <Scissors className="w-4 h-4 text-cyan-400" /> Split Pages
-                        </Link>
-                        <Link href="/pdf/merge" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-blue-500 text-white flex items-center gap-2 transition-colors">
-                          <Merge className="w-4 h-4 text-blue-400" /> Merge
-                        </Link>
-                      </>
-                    ) : (
-                      <>
-                        <Link href="/image/compress" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-emerald-500 text-white flex items-center gap-2 transition-colors">
-                          <Minimize2 className="w-4 h-4 text-emerald-400" /> Compress KB
-                        </Link>
-                        <Link href="/image/resize" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500 text-white flex items-center gap-2 transition-colors">
-                          <Scaling className="w-4 h-4 text-cyan-400" /> Resize
-                        </Link>
-                        <Link href="/image/crop" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-blue-500 text-white flex items-center gap-2 transition-colors">
-                          <Crop className="w-4 h-4 text-blue-400" /> Crop
-                        </Link>
-                        <Link href="/image/convert" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-amber-500 text-white flex items-center gap-2 transition-colors">
-                          <RefreshCw className="w-4 h-4 text-amber-400" /> Convert Format
-                        </Link>
-                        <Link href="/pdf/images-to-pdf" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-indigo-500 text-white flex items-center gap-2 transition-colors">
-                          <FileText className="w-4 h-4 text-indigo-400" /> Turn to PDF
-                        </Link>
-                        <Link href="/image/metadata" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-emerald-500 text-white flex items-center gap-2 transition-colors">
-                          <ShieldCheck className="w-4 h-4 text-emerald-400" /> Strip EXIF
-                        </Link>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className="p-3 sm:p-4 rounded-2xl bg-zinc-900/50 border border-dashed border-zinc-800 hover:border-zinc-700 transition-colors">
-                <FileDropzone
-                  accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
-                  onFilesSelected={handleFileDropped}
-                  title="Or drop a document/photo to auto-detect actions"
-                  description="Client-side engine inspects your file in browser memory and recommends the right tool."
-                />
-                {/* Instant Sample Fixtures */}
-                <div className="mt-2.5 pt-2.5 border-t border-zinc-800/60 flex flex-wrap items-center justify-center gap-1.5 text-xs">
-                  <span className="text-zinc-500 text-[11px] font-medium mr-1">Sample files:</span>
-                  {[
-                    { name: "sample_id_card.pdf", url: "/test-files/sample_id_card.pdf", label: "💳 ID Card", kind: "pdf" },
-                    { name: "sample_scanned_contract_large.pdf", url: "/test-files/sample_scanned_contract_large.pdf", label: "📄 Contract", kind: "pdf" },
-                    { name: "portrait_curly_hair.jpg", url: "/test-files/portrait_curly_hair.jpg", label: "📸 Portrait Photo", kind: "image" },
-                  ].map((s) => (
+                {/* Popular Chips */}
+                <div className="flex items-center gap-1.5 mt-2 overflow-x-auto scrollbar-none py-0.5 text-xs text-zinc-500">
+                  <span className="text-zinc-400 text-[11px] font-medium shrink-0">Popular:</span>
+                  {["Compress PDF", "Edit PDF", "Merge PDF", "Convert HEIC", "Sign PDF"].map((prompt, idx) => (
                     <button
-                      key={s.name}
+                      key={idx}
                       type="button"
-                      onClick={() => handleLoadSample(s.url, s.name, s.kind)}
-                      className="px-2 py-0.5 rounded-md bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] transition-colors cursor-pointer"
+                      onClick={() => {
+                        if (typeof window !== "undefined") {
+                          window.dispatchEvent(
+                            new CustomEvent("open-ai-assistant", {
+                              detail: { query: prompt },
+                            })
+                          );
+                        }
+                      }}
+                      className="px-2.5 py-0.5 rounded-full bg-white hover:bg-orange-50 border border-zinc-200 hover:border-orange-200 text-zinc-600 hover:text-[#F05138] transition-all shrink-0 cursor-pointer text-[11px]"
                     >
-                      {s.label}
+                      {prompt}
                     </button>
                   ))}
                 </div>
               </div>
-            )}
-          </div>
+            </div>
 
-          {/* Trust Highlights Row */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 pt-1 text-xs text-zinc-400 border-t border-zinc-900">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>100% Client-Side Engine</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
-              <span>WebAssembly Speed</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
-              <span>No File Size Limits</span>
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Lock className="w-4 h-4 text-violet-400 shrink-0" />
-              <span>Air-Gapped Privacy</span>
-            </span>
+            {/* Right Column: The Pillowy Dropzone Card (Direct from Dribbble shot!) */}
+            <div className="lg:col-span-5">
+              {!detectedFile ? (
+                <div
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={handleDrop}
+                  className="rounded-3xl bg-white border-2 border-dashed border-orange-200/90 shadow-xl p-7 sm:p-9 text-center flex flex-col items-center justify-center space-y-4 hover:border-[#F05138] transition-colors"
+                >
+                  {/* Cute Coral Document Icon */}
+                  <div className="w-16 h-16 rounded-2xl bg-orange-50 border border-orange-200 text-[#F05138] flex items-center justify-center shadow-xs">
+                    <UploadCloud className="w-8 h-8" />
+                  </div>
+
+                  <div className="space-y-1">
+                    <h3 className="text-xl sm:text-2xl font-black text-zinc-900 tracking-tight">
+                      Drop your file here
+                    </h3>
+                    <p className="text-xs sm:text-sm text-zinc-500 max-w-xs leading-relaxed">
+                      Supports PDF, Word, Excel, JPG, PNG, HEIC & more with zero file size limits.
+                    </p>
+                  </div>
+
+                  {/* Hidden File Input & Prominent Coral CTA Button */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileSelected}
+                    className="hidden"
+                    accept=".pdf,image/*,.heic,.heif,.docx,.xlsx,.pptx"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-sm bg-[#F05138] hover:bg-[#D94129] text-white shadow-lg shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Upload The File To Process</span>
+                  </button>
+
+                  {/* Instant Sample Fixtures */}
+                  <div className="pt-3 border-t border-zinc-100 flex flex-wrap items-center justify-center gap-1.5 text-xs w-full">
+                    <span className="text-zinc-400 text-[11px] font-medium mr-1">Sample files:</span>
+                    {[
+                      { name: "sample_id_card.pdf", url: "/test-files/sample_id_card.pdf", label: "💳 ID Card", kind: "pdf" },
+                      { name: "sample_scanned_contract_large.pdf", url: "/test-files/sample_scanned_contract_large.pdf", label: "📄 Contract", kind: "pdf" },
+                      { name: "portrait_curly_hair.jpg", url: "/test-files/portrait_curly_hair.jpg", label: "📸 Portrait", kind: "image" },
+                    ].map((s) => (
+                      <button
+                        key={s.name}
+                        type="button"
+                        onClick={() => handleLoadSample(s.url, s.name, s.kind)}
+                        className="px-2.5 py-1 rounded-lg bg-zinc-50 hover:bg-orange-50 border border-zinc-200/80 text-zinc-600 hover:text-[#F05138] text-[11px] transition-colors cursor-pointer"
+                      >
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                /* Contextual Smart Action Card */
+                <div className="p-6 rounded-3xl bg-white border border-emerald-300 shadow-xl flex flex-col gap-4 text-left">
+                  <div className="flex items-center justify-between pb-3 border-b border-zinc-100">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 text-[#F05138] flex items-center justify-center shrink-0">
+                        {detectedFile.kind === "pdf" ? <FileText className="w-5 h-5" /> : <ImageIcon className="w-5 h-5" />}
+                      </div>
+                      <div>
+                        <p className="font-bold text-zinc-900 text-sm">{detectedFile.file.name}</p>
+                        <p className="text-zinc-500 text-xs">
+                          {formatBytes(detectedFile.file.size)} &bull; {detectedFile.kind.toUpperCase()}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setDetectedFile(null)}
+                      className="px-2.5 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-xs text-zinc-700 flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                      <span>Change</span>
+                    </button>
+                  </div>
+
+                  <div className="space-y-2">
+                    <p className="text-xs font-bold text-[#F05138] uppercase tracking-wider">
+                      Recommended Actions:
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      {detectedFile.kind === "pdf" ? (
+                        <>
+                          <Link
+                            href="/pdf/edit"
+                            className="col-span-2 p-3 rounded-xl bg-orange-50 border border-orange-200 hover:border-[#F05138] text-orange-950 font-bold flex items-center justify-between transition-colors"
+                          >
+                            <span className="flex items-center gap-2">
+                              <PenTool className="w-4 h-4 text-[#F05138]" />
+                              <span>Edit PDF Studio (Text & Annotations)</span>
+                            </span>
+                            <span className="text-[10px] px-2 py-0.5 rounded bg-[#F05138] text-white font-bold uppercase">
+                              Open &rarr;
+                            </span>
+                          </Link>
+                          <Link href="/pdf/compress" className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-2 transition-colors">
+                            <Minimize2 className="w-4 h-4 text-emerald-700" /> Compress KB
+                          </Link>
+                          <Link href="/pdf/split" className="p-3 rounded-xl bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-2 transition-colors">
+                            <Scissors className="w-4 h-4 text-amber-700" /> Split Pages
+                          </Link>
+                          <Link href="/pdf/merge" className="p-3 rounded-xl bg-blue-50 border border-blue-200 hover:border-blue-400 text-blue-950 font-semibold flex items-center gap-2 transition-colors">
+                            <Merge className="w-4 h-4 text-blue-700" /> Merge PDFs
+                          </Link>
+                          <Link href="/security/sign" className="p-3 rounded-xl bg-purple-50 border border-purple-200 hover:border-purple-400 text-purple-950 font-semibold flex items-center gap-2 transition-colors">
+                            <PenTool className="w-4 h-4 text-purple-700" /> E-Sign PDF
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <Link href="/image/compress" className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-2 transition-colors">
+                            <Minimize2 className="w-4 h-4 text-emerald-700" /> Compress KB
+                          </Link>
+                          <Link href="/image/resize" className="p-3 rounded-xl bg-cyan-50 border border-cyan-200 hover:border-cyan-400 text-cyan-950 font-semibold flex items-center gap-2 transition-colors">
+                            <Scaling className="w-4 h-4 text-cyan-700" /> Resize Photo
+                          </Link>
+                          <Link href="/image/convert" className="p-3 rounded-xl bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-2 transition-colors">
+                            <RefreshCw className="w-4 h-4 text-amber-700" /> Convert Format
+                          </Link>
+                          <Link href="/pdf/images-to-pdf" className="p-3 rounded-xl bg-blue-50 border border-blue-200 hover:border-blue-400 text-blue-950 font-semibold flex items-center gap-2 transition-colors">
+                            <FileText className="w-4 h-4 text-blue-700" /> Turn to PDF
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* 2. Category Navigation Bar (Clean & Sticky) */}
-      <section className="sticky top-16 z-30 border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-xl py-3 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto w-full pb-0.5 scrollbar-none">
+      {/* ============================================================== */}
+      {/* 2. 4 Feature Cards (Directly Below Hero in Dribbble Shot!)     */}
+      {/* ============================================================== */}
+      <section className="py-10 border-b border-zinc-200/80 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            
+            {/* Card 1 */}
+            <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-zinc-200/80 space-y-2 hover:-translate-y-1 transition-all shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-orange-100 text-[#F05138] flex items-center justify-center font-bold">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-zinc-900 text-base">User-Friendly</h3>
+              <p className="text-zinc-500 text-xs leading-relaxed">
+                Seamlessly edit, convert, and save your documents in seconds with zero learning curve.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-zinc-200/80 space-y-2 hover:-translate-y-1 transition-all shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <Smartphone className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-zinc-900 text-base">Works on Any Device</h3>
+              <p className="text-zinc-500 text-xs leading-relaxed">
+                Access from your phone, tablet, or computer with instant, client-side WebAssembly.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-zinc-200/80 space-y-2 hover:-translate-y-1 transition-all shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+                <Layers className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-zinc-900 text-base">Huge Range of Formats</h3>
+              <p className="text-zinc-500 text-xs leading-relaxed">
+                Convert between PDF, Word, Excel, PowerPoint, JPG, PNG, HEIC, and WebP.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="p-6 rounded-2xl bg-[#FAF8F5] border border-zinc-200/80 space-y-2 hover:-translate-y-1 transition-all shadow-xs">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h3 className="font-bold text-zinc-900 text-base">100% Free & Private</h3>
+              <p className="text-zinc-500 text-xs leading-relaxed">
+                All processing happens in browser memory. Zero cloud uploads, zero size limits.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* 3. The Pastel Tool Catalog (From Dribbble media_1793970241...) */}
+      {/* ============================================================== */}
+      <section className="py-14 sm:py-20 bg-[#FAF8F5]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          
+          {/* Section Header */}
+          <div className="text-center space-y-3 max-w-2xl mx-auto">
+            <h2 className="text-3xl sm:text-4xl font-black text-zinc-950 tracking-tight">
+              All Document & Photo <span className="text-[#F05138]">Tools</span>
+            </h2>
+            <p className="text-zinc-500 text-xs sm:text-sm">
+              Fast, private, client-side WebAssembly tools for everyday document workflows.
+            </p>
+          </div>
+
+          {/* Category Filter Tabs (Pillows from Dribbble shot) */}
+          <div className="flex items-center justify-center gap-1.5 overflow-x-auto pb-2 scrollbar-none">
             <button
               onClick={() => setSelectedCategory("all")}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === "all"
-                  ? "bg-zinc-100 text-zinc-950 shadow-md font-bold"
-                  : "bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800/80 border border-zinc-800"
+                  ? "bg-[#F05138] text-white shadow-md shadow-orange-500/20"
+                  : "bg-white text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 border border-zinc-200/80 shadow-xs"
               }`}
             >
               All Tools ({ALL_TOOLS.length})
@@ -427,16 +701,16 @@ export default function HomePage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                     isSelected
-                      ? "bg-zinc-100 text-zinc-950 shadow-md"
-                      : "bg-zinc-900/80 text-zinc-400 hover:text-white hover:bg-zinc-800/80 border border-zinc-800"
+                      ? "bg-[#F05138] text-white shadow-md shadow-orange-500/20"
+                      : "bg-white text-zinc-600 hover:text-zinc-950 hover:bg-zinc-50 border border-zinc-200/80 shadow-xs"
                   }`}
                 >
                   <span>{cat.name}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-md ${
-                      isSelected ? "bg-zinc-950/20 text-zinc-950 font-bold" : "bg-zinc-800 text-zinc-400 font-mono"
+                      isSelected ? "bg-white/20 text-white font-bold" : "bg-zinc-100 text-zinc-500 font-mono"
                     }`}
                   >
                     {count}
@@ -445,271 +719,142 @@ export default function HomePage() {
               );
             })}
           </div>
-        </div>
-      </section>
 
-      {/* 3. Categorized Tool Grids */}
-      <section className="py-14 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
-          {groupedCategories.length === 0 ? (
-            <div className="text-center py-20 space-y-4">
-              <Search className="w-12 h-12 text-zinc-600 mx-auto" />
-              <p className="text-zinc-200 font-bold text-xl">No matching tools found for "{searchQuery}"</p>
-              <p className="text-zinc-500 text-xs max-w-sm mx-auto">
-                Try searching for keywords like "pdf", "compress", "target kb", "image", "rotate", or "split"
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                }}
-                className="mt-3 px-4 py-2 rounded-xl text-xs font-semibold bg-zinc-800 hover:bg-zinc-700 text-zinc-200 hover:text-white transition-colors"
-              >
-                Reset all filters
-              </button>
-            </div>
-          ) : (
-            groupedCategories.map((cat) => (
-              <div key={cat.id} className="space-y-6">
-                {/* Category Header */}
-                <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-zinc-800/80 pb-4 gap-2">
-                  <div>
-                    <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
-                      <span>{cat.name}</span>
-                      <span className="text-xs px-2.5 py-0.5 rounded-full font-bold bg-zinc-900 border border-zinc-800 text-zinc-400">
-                        {cat.tools.length} {cat.tools.length === 1 ? "tool" : "tools"}
-                      </span>
-                    </h2>
-                    <p className="text-xs text-zinc-400 mt-1">{cat.description}</p>
-                  </div>
-                </div>
+          {/* The Pastel Grid (Matching media_1793970241296_a1d0a9f6.jpg!) */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+            {filteredTools.map((tool) => {
+              const IconComponent = ICON_MAP[tool.iconName] || FileText;
+              const pastel = getPastelStyle(tool.id, tool.category);
 
-                {/* Tool Cards Grid - 2 columns on mobile */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5">
-                  {cat.tools.map((tool) => {
-                    const IconComponent = ICON_MAP[tool.iconName] || FileText;
-                    return (
-                      <Link
-                        key={tool.id}
-                        href={tool.href}
-                        className="group relative flex flex-col p-3.5 sm:p-5 md:p-6 rounded-2xl sm:rounded-3xl bg-zinc-900/60 hover:bg-zinc-900/90 border border-zinc-800/80 hover:border-zinc-700 hover:shadow-xl transition-all duration-200 hover:-translate-y-1 backdrop-blur-md overflow-hidden"
+              return (
+                <Link
+                  key={tool.id}
+                  href={tool.href}
+                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl ${pastel.cardBg} border ${pastel.borderColor} ${pastel.hoverBorder} transition-all duration-200 hover:-translate-y-1 hover:shadow-md cursor-pointer`}
+                >
+                  {/* Top: Icon + Badge */}
+                  <div className="flex items-start justify-between gap-1.5 mb-3">
+                    <div
+                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 ${pastel.iconBg} ${pastel.iconColor}`}
+                    >
+                      <IconComponent className="w-5 h-5 sm:w-5 sm:h-5" />
+                    </div>
+
+                    {tool.badge && (
+                      <span
+                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 ${pastel.badgeBg} ${pastel.badgeText}`}
                       >
-                        {/* Top: Icon + Badge */}
-                        <div className="flex items-start justify-between gap-1.5 mb-2.5 sm:mb-4">
-                          <div
-                            className={`w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 shadow-sm ${tool.accentColor}`}
-                          >
-                            <IconComponent className="w-4 h-4 sm:w-6 sm:h-6" />
-                          </div>
+                        {tool.badge}
+                      </span>
+                    )}
+                  </div>
 
-                          <div className="flex items-center gap-1">
-                            {tool.badge && (
-                              <span
-                                className={`text-[9px] sm:text-[10px] font-mono font-bold px-1.5 sm:px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 truncate max-w-[76px] sm:max-w-none text-center shadow-sm ${
-                                  tool.badge === "TARGET KB"
-                                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                                    : tool.badge === "POPULAR"
-                                    ? "bg-cyan-500/15 text-cyan-400 border border-cyan-500/30"
-                                    : tool.badge === "PRIVACY"
-                                    ? "bg-blue-500/15 text-blue-400 border border-blue-500/30"
-                                    : tool.badge === "AI"
-                                    ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                                    : "bg-purple-500/15 text-purple-400 border border-purple-500/30"
-                                }`}
-                              >
-                                {tool.badge}
-                              </span>
-                            )}
-                          </div>
-                        </div>
+                  {/* Title & Description */}
+                  <div className="flex-1 space-y-1">
+                    <h3 className="font-bold text-xs sm:text-sm text-zinc-900 group-hover:text-[#F05138] transition-colors flex items-center justify-between leading-snug line-clamp-1">
+                      <span>{tool.name}</span>
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#F05138] shrink-0 hidden sm:block" />
+                    </h3>
+                    <p className="text-zinc-500 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
+                      {tool.description}
+                    </p>
+                  </div>
 
-                        {/* Title & Description */}
-                        <div className="flex-1 space-y-1 sm:space-y-1.5">
-                          <h3 className="font-bold text-xs sm:text-sm text-zinc-100 group-hover:text-white transition-colors flex items-center justify-between leading-snug line-clamp-2">
-                            <span>{tool.name}</span>
-                            <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-zinc-400 group-hover:text-emerald-400 shrink-0 hidden sm:block" />
-                          </h3>
-                          <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
-                            {tool.description}
-                          </p>
-                        </div>
+                  {/* Bottom: 100% On-Device badge */}
+                  <div className="mt-3 pt-2.5 border-t border-black/[0.05] flex items-center justify-between text-[10px] text-zinc-500">
+                    <span className="flex items-center gap-1.5 font-medium truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                      <span className="text-zinc-600 truncate text-[10px]">
+                        100% On-Device
+                      </span>
+                    </span>
 
-                        {/* Bottom: Device vs Server Indicator */}
-                        <div className="mt-3 sm:mt-5 pt-2 sm:pt-3.5 border-t border-zinc-800/60 flex items-center justify-between text-[10px] sm:text-[11px] text-zinc-500">
-                          <span className="flex items-center gap-1 sm:gap-1.5 font-medium truncate">
-                            {tool.execution === "client" ? (
-                              <>
-                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-400 shrink-0" />
-                                <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
-                                  <span className="sm:hidden">On-Device</span>
-                                  <span className="hidden sm:inline">Device RAM (WASM)</span>
-                                </span>
-                              </>
-                            ) : (
-                              <>
-                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 shrink-0" />
-                                <span className="text-zinc-300 truncate text-[10px] sm:text-[11px]">
-                                  <span className="sm:hidden">Sandboxed</span>
-                                  <span className="hidden sm:inline">Sandboxed Memory</span>
-                                </span>
-                              </>
-                            )}
-                          </span>
+                    <span className="text-[9px] text-zinc-400 uppercase font-mono font-semibold tracking-wider shrink-0">
+                      {tool.category}
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
 
-                          <span className="text-[9px] sm:text-[10px] text-zinc-500 uppercase font-mono font-bold tracking-wider shrink-0 hidden min-[380px]:inline">
-                            {tool.category}
-                          </span>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            ))
-          )}
         </div>
       </section>
 
-      {/* 4. Core Architectural Pillars & Engineering Advantages */}
-      <section className="py-20 border-t border-zinc-800/80 bg-zinc-900/40 relative overflow-hidden">
-        {/* Subtle background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-emerald-500/10 blur-[150px] rounded-full pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-semibold mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" /> Engineered For Precision & Privacy
-            </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-              Why IntekEdit Sets the New Standard
+      {/* ============================================================== */}
+      {/* 4. Architecture & Security Comparison (Clean White Card)       */}
+      {/* ============================================================== */}
+      <section className="py-16 border-t border-zinc-200/80 bg-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl font-black text-zinc-950 tracking-tight">
+              IntekEdit vs Traditional Cloud PDF Converters
             </h2>
-            <p className="text-zinc-400 text-xs sm:text-base leading-relaxed">
-              Engineered with strict client-side isolation, zero remote storage, and cryptographic precision for individuals and enterprises that demand true data sovereignty.
+            <p className="text-zinc-500 text-xs sm:text-sm">
+              How our client-side architecture compares to standard online tools.
             </p>
           </div>
 
-          {/* 3 Pillar Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-emerald-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-white text-lg group-hover:text-emerald-300 transition-colors">100% Air-Gapped Privacy</h3>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Your sensitive files, tax forms, and contracts never touch a remote server. All parsing, rendering, and cryptographic signing execute 100% in your local browser RAM via WebAssembly.
-              </p>
-            </div>
-
-            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-cyan-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
-              <div className="w-12 h-12 rounded-2xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Minimize2 className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-white text-lg group-hover:text-cyan-300 transition-colors">Exact Target KB Compression</h3>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Need to hit strict government portal upload limits (under 100KB, 200KB, or 500KB)? Our iterative binary search algorithm calculates the optimal compression ratio while keeping text sharp.
-              </p>
-            </div>
-
-            <div className="p-7 rounded-3xl bg-zinc-950/90 border border-white/[0.08] hover:border-indigo-500/40 space-y-4 transition-all shadow-xl hover:-translate-y-1 group">
-              <div className="w-12 h-12 rounded-2xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <h3 className="font-bold text-white text-lg group-hover:text-indigo-300 transition-colors">Full Image & Media Studio</h3>
-              <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed">
-                Universal image format conversion (including Apple HEIC, AVIF, WebP, Lossless PNG), EXIF GPS stripping, and multi-resolution page extraction with zero watermarks or file size restrictions.
-              </p>
-            </div>
-          </div>
-
-          {/* Architectural Comparison Matrix */}
-          <div className="rounded-3xl bg-zinc-950/90 border border-white/[0.08] p-6 sm:p-8 backdrop-blur-xl shadow-2xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-5">
-              <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-                  <span>IntekEdit vs Traditional Cloud PDF Tools</span>
-                </h3>
-                <p className="text-xs text-zinc-400 mt-0.5">
-                  How our client-side architecture compares to typical online converters
-                </p>
-              </div>
-              <span className="text-[11px] font-mono px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 font-semibold self-start sm:self-auto">
-                No Cloud Egress Guarantee
-              </span>
-            </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead>
-                  <tr className="border-b border-zinc-800 text-zinc-400 text-[11px] uppercase tracking-wider font-mono">
-                    <th className="pb-3 pr-4 font-semibold">Feature / Metric</th>
-                    <th className="pb-3 px-4 font-semibold text-emerald-400">IntekEdit (Local-First Engine)</th>
-                    <th className="pb-3 pl-4 font-semibold text-zinc-500">Traditional Cloud Converters</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
-                  <tr>
-                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                      Document Privacy
-                    </td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
-                      100% In-Browser RAM (0 B Uploaded)
-                    </td>
-                    <td className="py-3.5 pl-4 text-zinc-500">
-                      Uploaded & stored on remote servers
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
-                      <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
-                      Daily Tasks & Limits
-                    </td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
-                      Unlimited & Forever Free
-                    </td>
-                    <td className="py-3.5 pl-4 text-zinc-500">
-                      Capped at 1-2 free tasks per day
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
-                      <Minimize2 className="w-4 h-4 text-amber-400 shrink-0" />
-                      File Size Limits
-                    </td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
-                      Gigabyte-Scale (Bounded by Device RAM)
-                    </td>
-                    <td className="py-3.5 pl-4 text-zinc-500">
-                      Strict 50MB - 100MB cloud upload caps
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
-                      Watermarks & Ads
-                    </td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
-                      Zero Watermarks • Zero Spam Ads
-                    </td>
-                    <td className="py-3.5 pl-4 text-zinc-500">
-                      Forced watermarks or ad-heavy overlays
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-3.5 pr-4 font-medium text-white flex items-center gap-2">
-                      <RefreshCw className="w-4 h-4 text-indigo-400 shrink-0" />
-                      Offline Execution
-                    </td>
-                    <td className="py-3.5 px-4 text-emerald-400 font-semibold">
-                      Fully Functional Offline in Web Worker
-                    </td>
-                    <td className="py-3.5 pl-4 text-zinc-500">
-                      Requires active internet upload
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div className="rounded-3xl bg-[#FAF8F5] border border-zinc-200/90 p-6 sm:p-8 shadow-sm overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-zinc-200 text-zinc-500 text-[11px] uppercase tracking-wider font-mono">
+                  <th className="pb-3 pr-4 font-semibold">Feature / Metric</th>
+                  <th className="pb-3 px-4 font-bold text-[#F05138]">IntekEdit (Local-First Engine)</th>
+                  <th className="pb-3 pl-4 font-semibold text-zinc-500">Traditional Cloud Converters</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-200/80 text-zinc-700">
+                <tr>
+                  <td className="py-3.5 pr-4 font-semibold text-zinc-900 flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                    Document Privacy
+                  </td>
+                  <td className="py-3.5 px-4 text-[#F05138] font-bold">
+                    100% In-Browser RAM (0 B Uploaded)
+                  </td>
+                  <td className="py-3.5 pl-4 text-zinc-500">
+                    Uploaded & stored on remote cloud servers
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 pr-4 font-semibold text-zinc-900 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-amber-600 shrink-0" />
+                    Daily Tasks & Limits
+                  </td>
+                  <td className="py-3.5 px-4 text-[#F05138] font-bold">
+                    Unlimited & Forever Free
+                  </td>
+                  <td className="py-3.5 pl-4 text-zinc-500">
+                    Capped at 1-2 free conversions per day
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 pr-4 font-semibold text-zinc-900 flex items-center gap-2">
+                    <Minimize2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    File Size Limits
+                  </td>
+                  <td className="py-3.5 px-4 text-[#F05138] font-bold">
+                    Gigabyte-Scale (Bounded by Device RAM)
+                  </td>
+                  <td className="py-3.5 pl-4 text-zinc-500">
+                    Strict 50MB - 100MB cloud upload caps
+                  </td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 pr-4 font-semibold text-zinc-900 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
+                    Watermarks & Ads
+                  </td>
+                  <td className="py-3.5 px-4 text-[#F05138] font-bold">
+                    Zero Watermarks • Zero Spam Ads
+                  </td>
+                  <td className="py-3.5 pl-4 text-zinc-500">
+                    Forced watermarks or ad-heavy overlays
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
