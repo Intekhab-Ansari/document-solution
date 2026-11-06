@@ -193,6 +193,18 @@ export function Navbar() {
                     <span>Convert to Grayscale (B&W)</span>
                   </Link>
                   <Link
+                    href="/security/sign"
+                    className="flex items-center justify-between gap-3 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
+                  >
+                    <span className="flex items-center gap-2 truncate">
+                      <PenTool className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <span className="truncate">Sign & Protect PDF</span>
+                    </span>
+                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
+                      Sign
+                    </span>
+                  </Link>
+                  <Link
                     href="/pdf/repair"
                     className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
                   >
@@ -277,62 +289,7 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* 3. Security & Sign Dropdown */}
-            <div className="relative group shrink-0">
-              <Link
-                href="/security"
-                className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
-              >
-                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span className="whitespace-nowrap">Sign & Extract</span>
-              </Link>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-1.5 w-80 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-150">
-                <div className="p-2.5 rounded-2xl bg-zinc-950/95 backdrop-blur-3xl border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.85),0_0_25px_rgba(16,185,129,0.06)] ring-1 ring-white/5 space-y-1">
-                  <Link
-                    href="/security"
-                    className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 text-xs font-semibold border border-emerald-500/20 transition-colors mb-1 shadow-sm"
-                  >
-                    <span>Security & Sign Suite</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
-                  </Link>
-                  <Link
-                    href="/security/sign"
-                    className="flex items-center justify-between gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    <span className="flex items-center gap-2 truncate">
-                      <PenTool className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                      <span className="truncate">E-Sign Document</span>
-                    </span>
-                    <span className="text-[10px] text-emerald-400 bg-emerald-950/60 px-1.5 py-0.5 rounded font-bold shrink-0 whitespace-nowrap ml-2">
-                      Popular
-                    </span>
-                  </Link>
-                  <Link
-                    href="/extract/text"
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    <FileCode className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                    Extract Text & Markdown
-                  </Link>
-                  <Link
-                    href="/extract/images"
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    <ImageIcon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    Extract Embedded Images (ZIP)
-                  </Link>
-                  <Link
-                    href="/image/metadata"
-                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-zinc-800/80 text-xs transition-colors"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    Strip GPS & EXIF Metadata
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* 4. Converters Dropdown */}
+            {/* 3. Converters Dropdown */}
             <div className="relative group shrink-0">
               <Link
                 href="/convert"
@@ -516,27 +473,18 @@ export function Navbar() {
               </div>
             </div>
 
-            {/* 5. Privacy Link */}
-            <Link
-              href="/privacy"
-              className="hidden xl:flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl hover:text-white hover:bg-white/[0.05] border border-transparent hover:border-white/[0.08] transition-all whitespace-nowrap shrink-0"
-            >
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span className="whitespace-nowrap">Privacy</span>
-            </Link>
           </nav>
         </div>
 
-        {/* Right Action Area: Search, Ask AI, IntekChat Button & Privacy Badge */}
+        {/* Right Action Area: Search, Ask AI, IntekChat Button */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Quick Search Button (Command Palette Ctrl+K) */}
           <button
             onClick={() => setCommandPaletteOpen(true)}
-            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
             title="Search all 30+ tools (Ctrl+K)"
           >
             <Search className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-            <span className="hidden xl:inline text-zinc-300 text-xs font-medium">Search</span>
             <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400">
               ⌘K
             </kbd>
@@ -550,31 +498,25 @@ export function Navbar() {
                 window.dispatchEvent(new CustomEvent("open-ai-assistant"));
               }
             }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
-              title="Ask IntekEdit AI Assistant (Ctrl+J)"
-            >
-              <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span className="whitespace-nowrap font-medium hidden sm:inline">Ask AI</span>
-              <kbd className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400 hidden xl:inline">
-                Ctrl+J
-              </kbd>
-            </button>
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            title="Ask IntekEdit AI Assistant (Ctrl+J)"
+          >
+            <Bot className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span className="whitespace-nowrap font-medium hidden sm:inline">Ask AI</span>
+          </button>
 
-            {/* IntekChat External App Button */}
-            <a
-              href="https://intekchat.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-cyan-500/40 text-cyan-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
-              title="Open IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
-            >
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span className="whitespace-nowrap font-medium">IntekChat</span>
-              <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 hidden md:inline-flex">
-                P2P
-              </span>
-              <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-all shrink-0" />
-            </a>
+          {/* IntekChat External App Button */}
+          <a
+            href="https://intekchat.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-cyan-500/40 text-cyan-300 hover:text-white transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm"
+            title="Open IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
+          >
+            <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+            <span className="whitespace-nowrap font-medium">IntekChat</span>
+            <ExternalLink className="w-3 h-3 text-zinc-500 group-hover:text-cyan-300 group-hover:translate-x-0.5 transition-all shrink-0" />
+          </a>
 
             {/* 100% In-Browser Privacy Badge (shown on wider displays) */}
             <Link
