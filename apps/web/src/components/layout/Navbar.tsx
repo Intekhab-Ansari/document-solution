@@ -485,9 +485,10 @@ export function Navbar() {
             title="Search all 30+ tools (Ctrl+K)"
           >
             <Search className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-            <span className="text-slate-600 font-normal hidden sm:inline">Search</span>
-            <kbd className="inline-flex items-center text-[10px] font-mono px-1.5 py-0.2 rounded bg-white border border-slate-200 text-slate-500 shadow-xs">
-              ⌘K
+            <span className="text-slate-700 font-medium hidden sm:inline">Search</span>
+            <kbd className="inline-flex items-center gap-1 text-[10px] font-sans font-medium px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-500 shadow-2xs">
+              <span>Ctrl</span>
+              <span>K</span>
             </kbd>
           </button>
 

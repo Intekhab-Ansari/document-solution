@@ -240,73 +240,51 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
-            {/* Left Column: 2-Line Headline, Real Value Bullets & Search */}
-            <div className="lg:col-span-7 space-y-6 text-left">
+            {/* Left Column: Concise 2-Line Headline, 3 Punchy Bullets & Search */}
+            <div className="lg:col-span-7 space-y-5 text-left">
               {/* Privacy Guarantee Pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-xs text-emerald-950 font-medium shadow-2xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span className="font-semibold text-emerald-700">100% In-Browser Privacy</span>
-                <span className="text-emerald-300">•</span>
-                <span>Zero Server Uploads</span>
-                <span className="text-emerald-300 hidden sm:inline">•</span>
-                <span className="text-slate-600 hidden sm:inline">Air-Gapped WASM</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-xs font-semibold text-emerald-700 shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                <span>100% In-Browser & Private</span>
               </div>
 
-              {/* Main Headline: Perfectly Balanced in 2 Lines */}
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[44px] xl:text-[48px] font-black tracking-tight text-slate-900 leading-[1.16]">
-                  <span className="block">All-in-One Document & Photo Suite.</span>
-                  <span className="block text-indigo-600 mt-1 sm:mt-1.5">
-                    100% On-Device. Zero Cloud Uploads.
+              {/* Main Headline: Exactly 2 Lines */}
+              <div className="space-y-2">
+                <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-slate-900 leading-[1.18]">
+                  <span>All-in-One Document & Photo Suite.</span>{" "}
+                  <span className="block text-indigo-600 mt-1">
+                    100% On-Device. Zero Uploads.
                   </span>
                 </h1>
-                <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-xl">
-                  High-speed vector PDF editing, exact target KB compression, universal format conversions, and privacy sanitization—executed entirely inside your browser memory with zero server egress.
+                <p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-lg">
+                  Edit, compress, convert, and sign files directly in your browser.
                 </p>
               </div>
 
-              {/* 3 Real Engineering Value Bullets with Indigo Checkmarks */}
-              <div className="space-y-2.5 pt-1 text-xs sm:text-sm text-slate-700 font-medium">
+              {/* 3 Concise Bullets */}
+              <div className="space-y-2 pt-1 text-xs sm:text-sm text-slate-700 font-medium">
                 <div className="flex items-center gap-2.5">
                   <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-xs">
                     ✓
                   </span>
-                  <span>Direct vector PDF editing, annotations, redactions & form fill</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-xs">
-                    ✓
-                  </span>
-                  <span>Exact target KB compression for PDFs & photos with real-time preview</span>
+                  <span>Vector PDF Editor & Form Filler</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-xs">
                     ✓
                   </span>
-                  <span>Instant client-side conversions: PDF, Word, Excel, HEIC, WebP & SVG</span>
+                  <span>Compress to Exact Target KB</span>
                 </div>
-              </div>
-
-              {/* Architecture & Security Certification Strip */}
-              <div className="flex flex-wrap items-center gap-3 pt-2 text-xs text-slate-600 border-t border-slate-200/80">
-                <div className="flex items-center gap-1.5 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                  <span className="text-slate-800 font-semibold">100% Client RAM</span>
-                </div>
-                <span className="text-slate-300">•</span>
-                <div className="flex items-center gap-1.5 font-medium">
-                  <Zap className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-                  <span>SIMD WebAssembly Speed</span>
-                </div>
-                <span className="text-slate-300">•</span>
-                <div className="flex items-center gap-1.5 font-medium">
-                  <Lock className="w-3.5 h-3.5 text-slate-600 shrink-0" />
-                  <span>Zero Server Egress</span>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-xs">
+                    ✓
+                  </span>
+                  <span>Convert PDF, Office & Photos</span>
                 </div>
               </div>
 
               {/* Unified Search & AI Prompt Bar */}
-              <div className="pt-2 max-w-xl">
+              <div className="pt-1 max-w-xl">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -332,7 +310,7 @@ export default function HomePage() {
                       setAiQuery(e.target.value);
                       setSearchQuery(e.target.value);
                     }}
-                    placeholder="Search 30+ tools or ask AI (e.g. 'Compress to 100KB', 'Edit text')..."
+                    placeholder="Search 30+ tools or ask AI..."
                     className="flex-1 bg-transparent text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none py-1.5 px-1 font-normal min-w-0"
                   />
 
@@ -353,7 +331,6 @@ export default function HomePage() {
                     { label: "Edit PDF", query: "Edit PDF" },
                     { label: "Merge PDF", query: "Merge PDF" },
                     { label: "Convert HEIC", query: "Convert HEIC" },
-                    { label: "Sign PDF", query: "Sign PDF" },
                   ].map((p, idx) => (
                     <button
                       key={idx}
@@ -386,10 +363,10 @@ export default function HomePage() {
 
                   <div className="space-y-1">
                     <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                      Drop any document or image
+                      Drop file here
                     </h3>
                     <p className="text-xs sm:text-sm text-slate-500 max-w-xs leading-relaxed">
-                      PDF, Word, Excel, JPG, PNG, HEIC & WebP. Air-gapped execution with zero file limits.
+                      PDF, Office, JPG, PNG & HEIC. 100% private.
                     </p>
                   </div>
 
@@ -408,7 +385,7 @@ export default function HomePage() {
                     className="w-full sm:w-auto px-7 py-3.5 rounded-2xl font-bold text-sm bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                   >
                     <FileText className="w-4 h-4" />
-                    <span>Upload File To Process</span>
+                    <span>Upload File</span>
                   </button>
 
                   {/* Instant Sample Test Fixtures */}
