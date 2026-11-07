@@ -161,32 +161,6 @@ export function AiAssistantModal() {
 
   return (
     <>
-      {/* Floating Bottom-Left Trigger Pill (Clean & Refined SaaS Style) */}
-      {!isOpen && (
-        <button
-          type="button"
-          onClick={() => {
-            setIsOpen(true);
-            setIsMinimized(false);
-          }}
-          className="fixed bottom-4 sm:bottom-6 left-4 sm:left-6 z-40 group flex items-center gap-2 px-3 sm:px-3.5 py-2 rounded-full bg-white/95 hover:bg-white border border-zinc-200/90 text-zinc-800 hover:text-zinc-950 shadow-xl shadow-zinc-950/10 transition-all cursor-pointer backdrop-blur-md active:scale-95"
-          title="Open IntekEdit AI Assistant (Ctrl + J)"
-          aria-label="Open AI Assistant"
-        >
-          <div className="w-5 h-5 rounded-full bg-orange-50 border border-orange-200 flex items-center justify-center text-[#F05138] shrink-0">
-            <Bot className="w-3.5 h-3.5" />
-          </div>
-
-          <span className="text-xs font-semibold whitespace-nowrap text-zinc-800">
-            Ask AI
-          </span>
-
-          <kbd className="hidden sm:inline-flex items-center text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-500">
-            Ctrl+J
-          </kbd>
-        </button>
-      )}
-
       {/* Main AI Assistant Floating Window */}
       {isOpen && (
         <div

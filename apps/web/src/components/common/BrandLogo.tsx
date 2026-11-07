@@ -127,9 +127,9 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-lg text-zinc-900 tracking-tight flex items-center">
+          <span className="font-extrabold text-lg text-slate-900 tracking-tight flex items-center">
             <span>Intek</span>
-            <span className="text-[#F05138]">
+            <span className="text-indigo-600">
               Edit
             </span>
           </span>
@@ -140,7 +140,7 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
             </span>
           )}
         </div>
-        <span className="text-[10px] text-zinc-500 font-medium tracking-tight -mt-0.5 hidden 2xl:block">
+        <span className="text-[10px] text-slate-500 font-medium tracking-tight -mt-0.5 hidden 2xl:block">
           Local-First Vector & Image Engine
         </span>
       </div>
