@@ -6,6 +6,7 @@ import {
   ShieldCheck,
   Zap,
   Lock,
+  Unlock,
   Sparkles,
   Minimize2,
   PenTool,
@@ -61,89 +62,465 @@ const ICON_MAP: Record<string, React.ElementType> = {
   FileCheck,
   Sliders,
   Lock,
+  Unlock,
   Archive,
 };
 
-// Premium styling helper: Clean white card surface with subtle, refined category accents
+// ==============================================================
+// Intuitive Background & Surface Styling System for Tool Cards
+// ==============================================================
 interface ToolCardStyle {
+  cardBg: string;
+  borderClass: string;
+  shadowHover: string;
   iconBg: string;
   iconColor: string;
   badgeBg: string;
   badgeText: string;
-  hoverBorder: string;
 }
 
 function getToolCardStyle(toolId: string, category: string): ToolCardStyle {
   if (toolId.includes("edit")) {
     return {
-      iconBg: "bg-indigo-50 border border-indigo-100",
+      cardBg: "bg-gradient-to-br from-indigo-50/70 via-white to-white",
+      borderClass: "border-indigo-100/90 hover:border-indigo-400",
+      shadowHover: "hover:shadow-indigo-500/10",
+      iconBg: "bg-indigo-100/70 border border-indigo-200",
       iconColor: "text-indigo-600",
-      badgeBg: "bg-indigo-50",
+      badgeBg: "bg-indigo-100/80",
       badgeText: "text-indigo-700",
-      hoverBorder: "hover:border-indigo-400",
     };
   }
   if (toolId.includes("compress")) {
     return {
-      iconBg: "bg-emerald-50 border border-emerald-100",
+      cardBg: "bg-gradient-to-br from-emerald-50/70 via-white to-white",
+      borderClass: "border-emerald-100/90 hover:border-emerald-400",
+      shadowHover: "hover:shadow-emerald-500/10",
+      iconBg: "bg-emerald-100/70 border border-emerald-200",
       iconColor: "text-emerald-600",
-      badgeBg: "bg-emerald-50",
+      badgeBg: "bg-emerald-100/80",
       badgeText: "text-emerald-700",
-      hoverBorder: "hover:border-emerald-400",
     };
   }
   if (toolId.includes("merge")) {
     return {
-      iconBg: "bg-sky-50 border border-sky-100",
+      cardBg: "bg-gradient-to-br from-sky-50/70 via-white to-white",
+      borderClass: "border-sky-100/90 hover:border-sky-400",
+      shadowHover: "hover:shadow-sky-500/10",
+      iconBg: "bg-sky-100/70 border border-sky-200",
       iconColor: "text-sky-600",
-      badgeBg: "bg-sky-50",
+      badgeBg: "bg-sky-100/80",
       badgeText: "text-sky-700",
-      hoverBorder: "hover:border-sky-400",
     };
   }
   if (toolId.includes("split")) {
     return {
-      iconBg: "bg-amber-50 border border-amber-100",
+      cardBg: "bg-gradient-to-br from-amber-50/70 via-white to-white",
+      borderClass: "border-amber-100/90 hover:border-amber-400",
+      shadowHover: "hover:shadow-amber-500/10",
+      iconBg: "bg-amber-100/70 border border-amber-200",
       iconColor: "text-amber-600",
-      badgeBg: "bg-amber-50",
+      badgeBg: "bg-amber-100/80",
       badgeText: "text-amber-700",
-      hoverBorder: "hover:border-amber-400",
     };
   }
-  if (toolId.includes("sign") || toolId.includes("lock") || toolId.includes("protect")) {
+  if (toolId.includes("sign")) {
     return {
-      iconBg: "bg-violet-50 border border-violet-100",
+      cardBg: "bg-gradient-to-br from-violet-50/70 via-white to-white",
+      borderClass: "border-violet-100/90 hover:border-violet-400",
+      shadowHover: "hover:shadow-violet-500/10",
+      iconBg: "bg-violet-100/70 border border-violet-200",
       iconColor: "text-violet-600",
-      badgeBg: "bg-violet-50",
+      badgeBg: "bg-violet-100/80",
       badgeText: "text-violet-700",
-      hoverBorder: "hover:border-violet-400",
+    };
+  }
+  if (toolId.includes("protect") || toolId.includes("lock")) {
+    return {
+      cardBg: "bg-gradient-to-br from-emerald-50/70 via-white to-white",
+      borderClass: "border-emerald-100/90 hover:border-emerald-400",
+      shadowHover: "hover:shadow-emerald-500/10",
+      iconBg: "bg-emerald-100/70 border border-emerald-200",
+      iconColor: "text-emerald-600",
+      badgeBg: "bg-emerald-100/80",
+      badgeText: "text-emerald-700",
+    };
+  }
+  if (toolId.includes("rotate")) {
+    return {
+      cardBg: "bg-gradient-to-br from-cyan-50/70 via-white to-white",
+      borderClass: "border-cyan-100/90 hover:border-cyan-400",
+      shadowHover: "hover:shadow-cyan-500/10",
+      iconBg: "bg-cyan-100/70 border border-cyan-200",
+      iconColor: "text-cyan-600",
+      badgeBg: "bg-cyan-100/80",
+      badgeText: "text-cyan-700",
+    };
+  }
+  if (toolId.includes("page-number")) {
+    return {
+      cardBg: "bg-gradient-to-br from-blue-50/70 via-white to-white",
+      borderClass: "border-blue-100/90 hover:border-blue-400",
+      shadowHover: "hover:shadow-blue-500/10",
+      iconBg: "bg-blue-100/70 border border-blue-200",
+      iconColor: "text-blue-600",
+      badgeBg: "bg-blue-100/80",
+      badgeText: "text-blue-700",
+    };
+  }
+  if (toolId.includes("watermark")) {
+    return {
+      cardBg: "bg-gradient-to-br from-rose-50/70 via-white to-white",
+      borderClass: "border-rose-100/90 hover:border-rose-400",
+      shadowHover: "hover:shadow-rose-500/10",
+      iconBg: "bg-rose-100/70 border border-rose-200",
+      iconColor: "text-rose-600",
+      badgeBg: "bg-rose-100/80",
+      badgeText: "text-rose-700",
+    };
+  }
+  if (toolId.includes("crop")) {
+    return {
+      cardBg: "bg-gradient-to-br from-teal-50/70 via-white to-white",
+      borderClass: "border-teal-100/90 hover:border-teal-400",
+      shadowHover: "hover:shadow-teal-500/10",
+      iconBg: "bg-teal-100/70 border border-teal-200",
+      iconColor: "text-teal-600",
+      badgeBg: "bg-teal-100/80",
+      badgeText: "text-teal-700",
+    };
+  }
+  if (toolId.includes("reorder")) {
+    return {
+      cardBg: "bg-gradient-to-br from-purple-50/70 via-white to-white",
+      borderClass: "border-purple-100/90 hover:border-purple-400",
+      shadowHover: "hover:shadow-purple-500/10",
+      iconBg: "bg-purple-100/70 border border-purple-200",
+      iconColor: "text-purple-600",
+      badgeBg: "bg-purple-100/80",
+      badgeText: "text-purple-700",
+    };
+  }
+  if (toolId.includes("grayscale")) {
+    return {
+      cardBg: "bg-gradient-to-br from-slate-100/70 via-white to-white",
+      borderClass: "border-slate-200 hover:border-slate-400",
+      shadowHover: "hover:shadow-slate-400/10",
+      iconBg: "bg-slate-100 border border-slate-200",
+      iconColor: "text-slate-700",
+      badgeBg: "bg-slate-100",
+      badgeText: "text-slate-700",
     };
   }
   if (category === "image") {
     return {
-      iconBg: "bg-rose-50 border border-rose-100",
+      cardBg: "bg-gradient-to-br from-rose-50/60 via-white to-white",
+      borderClass: "border-rose-100/90 hover:border-rose-400",
+      shadowHover: "hover:shadow-rose-500/10",
+      iconBg: "bg-rose-100/70 border border-rose-200",
       iconColor: "text-rose-600",
-      badgeBg: "bg-rose-50",
+      badgeBg: "bg-rose-100/80",
       badgeText: "text-rose-700",
-      hoverBorder: "hover:border-rose-400",
     };
   }
   if (category === "convert") {
     return {
-      iconBg: "bg-teal-50 border border-teal-100",
+      cardBg: "bg-gradient-to-br from-teal-50/60 via-white to-white",
+      borderClass: "border-teal-100/90 hover:border-teal-400",
+      shadowHover: "hover:shadow-teal-500/10",
+      iconBg: "bg-teal-100/70 border border-teal-200",
       iconColor: "text-teal-600",
-      badgeBg: "bg-teal-50",
+      badgeBg: "bg-teal-100/80",
       badgeText: "text-teal-700",
-      hoverBorder: "hover:border-teal-400",
     };
   }
   return {
-    iconBg: "bg-slate-50 border border-slate-200",
+    cardBg: "bg-gradient-to-br from-slate-50/70 via-white to-white",
+    borderClass: "border-slate-200 hover:border-indigo-400",
+    shadowHover: "hover:shadow-indigo-500/10",
+    iconBg: "bg-slate-100 border border-slate-200",
     iconColor: "text-slate-700",
     badgeBg: "bg-slate-100",
     badgeText: "text-slate-700",
-    hoverBorder: "hover:border-slate-400",
   };
+}
+
+// ==============================================================
+// Visual Background Illustrations: Helps Users Understand Tools
+// ==============================================================
+function ToolCardIllustration({ toolId, category }: { toolId: string; category: string }) {
+  if (toolId.includes("edit")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-indigo-500 fill-none" strokeWidth="1.5">
+        <path d="M46 22 H88 L104 38 V100 C104 104 101 107 97 107 H46 C42 107 39 104 39 100 V29 C39 25 42 22 46 22 Z" className="fill-indigo-50/70 stroke-indigo-200" strokeWidth="1.3" />
+        <path d="M88 22 V38 H104" className="fill-indigo-100/80 stroke-indigo-300" strokeWidth="1.3" />
+        <line x1="48" y1="46" x2="80" y2="46" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-300/80" />
+        <line x1="48" y1="56" x2="72" y2="56" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-200" />
+        <line x1="48" y1="66" x2="88" y2="66" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-200" />
+        <path d="M38 92 C 54 80, 62 98, 82 84" strokeWidth="2.5" strokeLinecap="round" className="stroke-indigo-600" />
+        <circle cx="54" cy="83" r="2.5" className="fill-indigo-600 stroke-none" />
+        <circle cx="82" cy="84" r="2.5" className="fill-indigo-600 stroke-none" />
+        <g transform="translate(82, 70) rotate(45)">
+          <path d="M0 0 L5 12 L0 18 L-5 12 Z" className="fill-indigo-600 stroke-indigo-700" strokeWidth="1" />
+          <line x1="0" y1="0" x2="0" y2="12" stroke="white" strokeWidth="1" />
+        </g>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("compress")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-emerald-500 fill-none" strokeWidth="1.5">
+        <rect x="36" y="24" width="70" height="74" rx="8" className="stroke-emerald-200 fill-emerald-50/40" strokeDasharray="3 3" />
+        <rect x="52" y="38" width="38" height="46" rx="6" className="stroke-emerald-500 fill-emerald-100/60" strokeWidth="1.8" />
+        <path d="M40 61 H50 M50 61 L46 57 M50 61 L46 65" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-emerald-600" />
+        <path d="M102 61 H92 M92 61 L96 57 M92 61 L96 65" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-emerald-600" />
+        <path d="M71 28 V36 M71 36 L67 32 M71 36 L75 32" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-emerald-600" />
+        <path d="M71 94 V86 M71 86 L67 90 M71 86 L75 90" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-emerald-600" />
+        <rect x="59" y="54" width="24" height="14" rx="4" className="fill-emerald-600 stroke-none" />
+        <text x="71" y="64" textAnchor="middle" className="text-[9px] font-bold fill-white stroke-none font-sans">KB</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("merge")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-sky-500 fill-none" strokeWidth="1.5">
+        <rect x="34" y="22" width="46" height="58" rx="6" className="fill-sky-50/70 stroke-sky-300" strokeWidth="1.3" />
+        <line x1="42" y1="34" x2="68" y2="34" strokeWidth="1.8" strokeLinecap="round" className="stroke-sky-200" />
+        <line x1="42" y1="44" x2="62" y2="44" strokeWidth="1.8" strokeLinecap="round" className="stroke-sky-200" />
+        <g transform="translate(68, 52)">
+          <circle cx="0" cy="0" r="8.5" className="fill-sky-500 stroke-white" strokeWidth="1.5" />
+          <line x1="-4" y1="0" x2="4" y2="0" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+          <line x1="0" y1="-4" x2="0" y2="4" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+        </g>
+        <rect x="58" y="44" width="48" height="60" rx="6" className="fill-white stroke-sky-500" strokeWidth="2" />
+        <line x1="68" y1="58" x2="94" y2="58" strokeWidth="2" strokeLinecap="round" className="stroke-sky-400" />
+        <line x1="68" y1="68" x2="90" y2="68" strokeWidth="2" strokeLinecap="round" className="stroke-sky-300" />
+        <line x1="68" y1="78" x2="84" y2="78" strokeWidth="2" strokeLinecap="round" className="stroke-sky-300" />
+        <path d="M58 54 H62 V84 H58 Z" className="fill-sky-500 stroke-none" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("split")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-amber-500 fill-none" strokeWidth="1.5">
+        <path d="M34 26 C34 23 37 20 40 20 H62 V100 H40 C37 100 34 97 34 94 Z" className="fill-amber-50/60 stroke-amber-300" strokeWidth="1.4" />
+        <line x1="42" y1="36" x2="56" y2="36" strokeWidth="1.8" strokeLinecap="round" className="stroke-amber-200" />
+        <line x1="42" y1="48" x2="54" y2="48" strokeWidth="1.8" strokeLinecap="round" className="stroke-amber-200" />
+        <path d="M74 20 H98 C101 20 104 23 104 26 V94 C104 97 101 100 98 100 H74 Z" className="fill-white stroke-amber-500" strokeWidth="1.8" />
+        <line x1="82" y1="36" x2="96" y2="36" strokeWidth="1.8" strokeLinecap="round" className="stroke-amber-300" />
+        <line x1="82" y1="48" x2="94" y2="48" strokeWidth="1.8" strokeLinecap="round" className="stroke-amber-300" />
+        <line x1="68" y1="16" x2="68" y2="104" strokeWidth="2" strokeDasharray="3 3" className="stroke-amber-400" />
+        <g transform="translate(68, 58) scale(0.9)">
+          <circle cx="-6" cy="-6" r="3.5" className="stroke-amber-600 fill-none" strokeWidth="1.5" />
+          <circle cx="-6" cy="6" r="3.5" className="stroke-amber-600 fill-none" strokeWidth="1.5" />
+          <path d="M-3 -4 L8 6 M-3 4 L8 -6" strokeWidth="1.8" strokeLinecap="round" className="stroke-amber-600" />
+        </g>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("reorder")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-violet-500 fill-none" strokeWidth="1.5">
+        <rect x="42" y="18" width="46" height="56" rx="5" className="fill-violet-50/50 stroke-violet-200" strokeWidth="1.2" />
+        <rect x="52" y="32" width="46" height="56" rx="5" className="fill-violet-100/50 stroke-violet-300" strokeWidth="1.4" />
+        <rect x="62" y="46" width="46" height="56" rx="6" className="fill-white stroke-violet-500" strokeWidth="1.8" />
+        <text x="85" y="79" textAnchor="middle" className="text-sm font-black fill-violet-600 stroke-none font-mono">1</text>
+        <path d="M36 50 C28 64, 28 76, 40 88" strokeWidth="2.2" strokeLinecap="round" className="stroke-violet-600" />
+        <path d="M40 88 L32 86 M40 88 L38 80" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-violet-600" />
+        <path d="M48 60 C54 48, 54 40, 44 30" strokeWidth="2.2" strokeLinecap="round" className="stroke-violet-400" />
+        <path d="M44 30 L52 32 M44 30 L46 38" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-violet-400" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("rotate")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-cyan-500 fill-none" strokeWidth="1.5">
+        <rect x="54" y="34" width="42" height="52" rx="5" transform="rotate(22 75 60)" className="fill-cyan-50/50 stroke-cyan-200" strokeWidth="1.2" strokeDasharray="3 3" />
+        <rect x="54" y="34" width="42" height="52" rx="5" className="fill-white stroke-cyan-500" strokeWidth="1.8" />
+        <line x1="62" y1="46" x2="86" y2="46" strokeWidth="1.8" strokeLinecap="round" className="stroke-cyan-300" />
+        <line x1="62" y1="54" x2="80" y2="54" strokeWidth="1.8" strokeLinecap="round" className="stroke-cyan-200" />
+        <path d="M75 16 A 46 46 0 0 1 112 60" strokeWidth="2.4" strokeLinecap="round" className="stroke-cyan-500" />
+        <path d="M112 60 L106 52 M112 60 L118 54" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="stroke-cyan-600" />
+        <circle cx="75" cy="60" r="3" className="fill-cyan-500 stroke-none" />
+        <text x="96" y="28" className="text-[10px] font-bold fill-cyan-600 stroke-none font-mono">90°</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("page-number")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-blue-500 fill-none" strokeWidth="1.5">
+        <rect x="42" y="20" width="62" height="82" rx="6" className="fill-white stroke-blue-500" strokeWidth="1.8" />
+        <line x1="50" y1="32" x2="96" y2="32" strokeWidth="1.2" strokeDasharray="2 2" className="stroke-blue-200" />
+        <line x1="50" y1="44" x2="96" y2="44" strokeWidth="1.8" strokeLinecap="round" className="stroke-blue-200" />
+        <line x1="50" y1="54" x2="88" y2="54" strokeWidth="1.8" strokeLinecap="round" className="stroke-blue-200" />
+        <line x1="50" y1="64" x2="92" y2="64" strokeWidth="1.8" strokeLinecap="round" className="stroke-blue-200" />
+        <rect x="60" y="82" width="26" height="12" rx="3" className="fill-blue-500 stroke-none" />
+        <text x="73" y="91" textAnchor="middle" className="text-[8.5px] font-bold fill-white stroke-none font-mono">1 / 12</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("watermark")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-rose-500 fill-none" strokeWidth="1.5">
+        <rect x="42" y="20" width="60" height="80" rx="6" className="fill-white stroke-rose-200" strokeWidth="1.4" />
+        <line x1="50" y1="36" x2="92" y2="36" strokeWidth="1.8" strokeLinecap="round" className="stroke-rose-100" />
+        <line x1="50" y1="48" x2="84" y2="48" strokeWidth="1.8" strokeLinecap="round" className="stroke-rose-100" />
+        <line x1="50" y1="60" x2="90" y2="60" strokeWidth="1.8" strokeLinecap="round" className="stroke-rose-100" />
+        <line x1="50" y1="72" x2="80" y2="72" strokeWidth="1.8" strokeLinecap="round" className="stroke-rose-100" />
+        <g transform="translate(72, 60) rotate(-32)">
+          <rect x="-44" y="-12" width="88" height="24" rx="4" className="fill-rose-50 stroke-rose-500" strokeWidth="1.8" strokeDasharray="4 2" />
+          <text x="0" y="4" textAnchor="middle" className="text-[9px] font-black fill-rose-600 stroke-none font-sans uppercase tracking-widest">SAMPLE</text>
+        </g>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("crop")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-teal-500 fill-none" strokeWidth="1.5">
+        <rect x="36" y="26" width="68" height="68" rx="6" className="fill-teal-50/40 stroke-teal-200" strokeDasharray="3 3" />
+        <line x1="58" y1="26" x2="58" y2="94" strokeWidth="1" strokeDasharray="2 2" className="stroke-teal-200" />
+        <line x1="82" y1="26" x2="82" y2="94" strokeWidth="1" strokeDasharray="2 2" className="stroke-teal-200" />
+        <line x1="36" y1="48" x2="104" y2="48" strokeWidth="1" strokeDasharray="2 2" className="stroke-teal-200" />
+        <line x1="36" y1="72" x2="104" y2="72" strokeWidth="1" strokeDasharray="2 2" className="stroke-teal-200" />
+        <path d="M44 38 H34 V48" strokeWidth="2.5" strokeLinecap="round" className="stroke-teal-600" />
+        <path d="M96 38 H106 V48" strokeWidth="2.5" strokeLinecap="round" className="stroke-teal-600" />
+        <path d="M44 82 H34 V72" strokeWidth="2.5" strokeLinecap="round" className="stroke-teal-600" />
+        <path d="M96 82 H106 V72" strokeWidth="2.5" strokeLinecap="round" className="stroke-teal-600" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("resize")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-indigo-500 fill-none" strokeWidth="1.5">
+        <rect x="38" y="28" width="66" height="62" rx="6" className="fill-indigo-50/40 stroke-indigo-400" strokeWidth="1.8" />
+        <rect x="34" y="24" width="7" height="7" rx="1.5" className="fill-indigo-600 stroke-white" strokeWidth="1" />
+        <rect x="100" y="24" width="7" height="7" rx="1.5" className="fill-indigo-600 stroke-white" strokeWidth="1" />
+        <rect x="34" y="86" width="7" height="7" rx="1.5" className="fill-indigo-600 stroke-white" strokeWidth="1" />
+        <rect x="100" y="86" width="7" height="7" rx="1.5" className="fill-indigo-600 stroke-white" strokeWidth="1" />
+        <path d="M50 59 H92 M50 59 L56 55 M50 59 L56 63 M92 59 L86 55 M92 59 L86 63" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="stroke-indigo-600" />
+        <text x="71" y="52" textAnchor="middle" className="text-[9px] font-bold fill-indigo-600 stroke-none font-mono">1920 × 1080</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("sign")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-violet-500 fill-none" strokeWidth="1.5">
+        <rect x="42" y="20" width="62" height="82" rx="6" className="fill-white stroke-violet-300" strokeWidth="1.5" />
+        <line x1="50" y1="34" x2="86" y2="34" strokeWidth="1.8" strokeLinecap="round" className="stroke-violet-200" />
+        <line x1="50" y1="46" x2="94" y2="46" strokeWidth="1.8" strokeLinecap="round" className="stroke-violet-200" />
+        <line x1="50" y1="84" x2="96" y2="84" strokeWidth="1.5" strokeDasharray="3 2" className="stroke-violet-400" />
+        <text x="52" y="82" className="text-[10px] font-bold fill-violet-400 stroke-none font-serif italic">X</text>
+        <path d="M58 80 Q64 62, 70 76 T82 66 T94 78" strokeWidth="2.2" strokeLinecap="round" className="stroke-violet-600" />
+        <g transform="translate(92, 62) rotate(35)">
+          <path d="M0 0 L4 12 L0 18 L-4 12 Z" className="fill-violet-600 stroke-none" />
+        </g>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("protect") || toolId.includes("lock")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-emerald-500 fill-none" strokeWidth="1.5">
+        <rect x="36" y="24" width="56" height="74" rx="5" className="fill-emerald-50/40 stroke-emerald-200" strokeWidth="1.4" />
+        <rect x="58" y="52" width="46" height="38" rx="8" className="fill-white stroke-emerald-600" strokeWidth="2" />
+        <path d="M68 52 V40 C68 33 74 28 81 28 C88 28 94 33 94 40 V52" strokeWidth="2.5" strokeLinecap="round" className="stroke-emerald-600 fill-none" />
+        <circle cx="81" cy="68" r="3.5" className="fill-emerald-600 stroke-none" />
+        <path d="M79.5 69 L82.5 69 L83.5 78 L78.5 78 Z" className="fill-emerald-600 stroke-none" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("flatten")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-indigo-500 fill-none" strokeWidth="1.5">
+        <path d="M40 36 L76 22 L104 36 L68 50 Z" className="fill-indigo-100/60 stroke-indigo-300" strokeWidth="1.2" />
+        <path d="M40 52 L76 38 L104 52 L68 66 Z" className="fill-indigo-200/50 stroke-indigo-400" strokeWidth="1.4" />
+        <path d="M72 44 V68 M72 68 L68 62 M72 68 L76 62" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-indigo-600" />
+        <path d="M40 76 L76 62 L104 76 L68 90 Z" className="fill-white stroke-indigo-600" strokeWidth="2.2" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("grayscale")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-slate-500 fill-none" strokeWidth="1.5">
+        <rect x="40" y="22" width="60" height="78" rx="6" className="fill-white stroke-slate-300" strokeWidth="1.5" />
+        <circle cx="70" cy="60" r="22" className="stroke-slate-500" strokeWidth="2" />
+        <path d="M70 38 A 22 22 0 0 1 70 82 Z" className="fill-slate-600 stroke-none" />
+        <line x1="70" y1="38" x2="70" y2="82" strokeWidth="2" className="stroke-slate-600" />
+      </svg>
+    );
+  }
+
+  if (toolId.includes("extract")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-teal-500 fill-none" strokeWidth="1.5">
+        <rect x="36" y="22" width="56" height="76" rx="6" className="fill-teal-50/40 stroke-teal-300" strokeWidth="1.4" />
+        <line x1="44" y1="36" x2="80" y2="36" strokeWidth="2" strokeLinecap="round" className="stroke-teal-200" />
+        <line x1="44" y1="46" x2="72" y2="46" strokeWidth="2" strokeLinecap="round" className="stroke-teal-200" />
+        <circle cx="76" cy="64" r="16" className="fill-white stroke-teal-600" strokeWidth="2" />
+        <line x1="88" y1="76" x2="102" y2="90" strokeWidth="3" strokeLinecap="round" className="stroke-teal-700" />
+        <text x="76" y="69" textAnchor="middle" className="text-xs font-black fill-teal-600 stroke-none font-mono">TXT</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("metadata")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-emerald-500 fill-none" strokeWidth="1.5">
+        <rect x="36" y="24" width="54" height="72" rx="5" className="fill-emerald-50/40 stroke-emerald-200" strokeWidth="1.3" />
+        <path d="M66 42 L84 34 L102 42 C102 62 84 76 84 76 C84 76 66 62 66 42 Z" className="fill-white stroke-emerald-600" strokeWidth="2" />
+        <path d="M76 54 L82 60 L92 48" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="stroke-emerald-600" />
+        <text x="44" y="80" className="text-[9px] font-mono font-bold fill-emerald-600 stroke-none">EXIF</text>
+      </svg>
+    );
+  }
+
+  if (toolId.includes("to-images") || toolId.includes("images-to-pdf")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-teal-500 fill-none" strokeWidth="1.5">
+        <rect x="32" y="24" width="42" height="54" rx="5" className="fill-teal-50/60 stroke-teal-300" strokeWidth="1.4" />
+        <text x="53" y="52" textAnchor="middle" className="text-[9px] font-bold fill-teal-600 stroke-none font-mono">PDF</text>
+        <rect x="58" y="44" width="48" height="52" rx="6" className="fill-white stroke-teal-500" strokeWidth="1.8" />
+        <circle cx="70" cy="58" r="4" className="fill-amber-400 stroke-none" />
+        <path d="M60 86 L74 68 L86 82 L92 76 L104 88 H60 Z" className="fill-teal-100 stroke-teal-400" strokeWidth="1" />
+      </svg>
+    );
+  }
+
+  if (category === "convert" || toolId.includes("convert")) {
+    return (
+      <svg viewBox="0 0 120 120" className="w-full h-full text-teal-500 fill-none" strokeWidth="1.5">
+        <rect x="30" y="28" width="38" height="48" rx="5" className="fill-teal-50 stroke-teal-400" strokeWidth="1.5" />
+        <text x="49" y="56" textAnchor="middle" className="text-[10px] font-bold fill-teal-700 stroke-none font-mono">DOC</text>
+        <rect x="68" y="46" width="38" height="48" rx="5" className="fill-white stroke-teal-600" strokeWidth="2" />
+        <text x="87" y="74" textAnchor="middle" className="text-[10px] font-black fill-teal-600 stroke-none font-mono">PDF</text>
+        <path d="M64 36 C74 36, 80 40, 80 44" strokeWidth="2" strokeLinecap="round" className="stroke-teal-600" />
+        <path d="M80 44 L76 40 M80 44 L84 40" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="stroke-teal-600" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 120 120" className="w-full h-full text-indigo-500 fill-none" strokeWidth="1.5">
+      <rect x="42" y="22" width="58" height="76" rx="6" className="fill-indigo-50/50 stroke-indigo-300" strokeWidth="1.5" />
+      <line x1="50" y1="36" x2="88" y2="36" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-200" />
+      <line x1="50" y1="48" x2="78" y2="48" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-200" />
+      <line x1="50" y1="60" x2="84" y2="60" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-200" />
+      <circle cx="82" cy="74" r="10" className="fill-white stroke-indigo-500" strokeWidth="1.8" />
+      <path d="M78 74 L86 74 M82 70 L82 78" strokeWidth="2" strokeLinecap="round" className="stroke-indigo-600" />
+    </svg>
+  );
 }
 
 export default function HomePage() {
@@ -583,19 +960,24 @@ export default function HomePage() {
                 <Link
                   key={tool.id}
                   href={tool.href}
-                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 ${style.hoverBorder} transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-slate-200/60 cursor-pointer`}
+                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl ${style.cardBg} border ${style.borderClass} ${style.shadowHover} transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer overflow-hidden`}
                 >
+                  {/* Intuitive Thematic Background Illustration: makes tool action immediately understandable at a glance */}
+                  <div className="absolute -top-1 -right-1 w-28 h-28 sm:w-32 sm:h-32 pointer-events-none select-none overflow-hidden opacity-35 group-hover:opacity-85 group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300">
+                    <ToolCardIllustration toolId={tool.id} category={tool.category} />
+                  </div>
+
                   {/* Top: Icon + Badge */}
-                  <div className="flex items-start justify-between gap-1.5 mb-3">
+                  <div className="relative z-10 flex items-start justify-between gap-1.5 mb-3">
                     <div
-                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 ${style.iconBg} ${style.iconColor}`}
+                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 shadow-2xs ${style.iconBg} ${style.iconColor}`}
                     >
                       <IconComponent className="w-5 h-5" />
                     </div>
 
                     {tool.badge && (
                       <span
-                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 ${style.badgeBg} ${style.badgeText}`}
+                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-2xs ${style.badgeBg} ${style.badgeText}`}
                       >
                         {tool.badge}
                       </span>
@@ -603,7 +985,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Title & Description */}
-                  <div className="flex-1 space-y-1">
+                  <div className="relative z-10 flex-1 space-y-1">
                     <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-indigo-600 transition-colors flex items-center justify-between leading-snug line-clamp-1">
                       <span>{tool.name}</span>
                       <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 shrink-0 hidden sm:block" />
@@ -614,7 +996,7 @@ export default function HomePage() {
                   </div>
 
                   {/* Bottom: 100% On-Device Badge */}
-                  <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500">
+                  <div className="relative z-10 mt-3 pt-2.5 border-t border-slate-200/50 flex items-center justify-between text-[10px] text-slate-500">
                     <span className="flex items-center gap-1.5 font-medium truncate">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       <span className="text-slate-600 truncate text-[10px]">
