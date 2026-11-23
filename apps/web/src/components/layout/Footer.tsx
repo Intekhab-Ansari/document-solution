@@ -11,15 +11,16 @@ import {
   Search,
   FileText,
   Image as ImageIcon,
-  RefreshCw,
   Layers,
   Check,
   Trash2,
   ExternalLink,
   ChevronRight,
-  HardDrive,
   EyeOff,
   Zap,
+  Globe,
+  Heart,
+  FileCheck,
 } from "lucide-react";
 import { BrandLogo } from "@/components/common/BrandLogo";
 
@@ -63,10 +64,8 @@ export function Footer() {
 
   const handleFlushRam = () => {
     setRamFlushed(true);
-    // Suggest garbage collection by clearing any unreferenced session storage / caches
     try {
       if (typeof window !== "undefined") {
-        // Trigger small GC opportunity
         URL.revokeObjectURL("");
       }
     } catch {
@@ -74,37 +73,40 @@ export function Footer() {
     }
     setTimeout(() => {
       setRamFlushed(false);
-    }, 2800);
+    }, 2500);
   };
 
   return (
-    <footer className="relative w-full border-t border-slate-200/90 bg-[#F8FAFC] text-slate-600 text-xs overflow-hidden selection:bg-indigo-500/20">
-      {/* Top subtle indigo accent edge */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+    <footer className="relative w-full border-t border-slate-200/90 bg-gradient-to-b from-slate-50/90 via-[#F8FAFC] to-slate-100/70 text-slate-600 text-xs overflow-hidden selection:bg-indigo-500/20">
+      {/* Top Multi-Color Accent Edge */}
+      <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-indigo-500/50 via-sky-500/50 via-emerald-500/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12">
         {/* ============================================================== */}
-        {/* 1. TOP SECTION: Trust & Architecture Guarantee Cards */}
+        {/* 1. TOP SECTION: Elevated Architecture & Security Guarantee Cards */}
         {/* ============================================================== */}
         <div className="mb-14">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
-              <span className="text-[11px] font-mono tracking-widest text-indigo-600 uppercase font-semibold flex items-center gap-2">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-indigo-600" />
+              <span className="text-[11px] font-mono tracking-widest text-indigo-600 uppercase font-bold flex items-center gap-2">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 Air-Gapped Engineering Architecture
               </span>
-              <h3 className="text-lg sm:text-xl font-bold text-slate-950 mt-1">
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1">
                 Zero Cloud Uploads. Zero Data Footprint.
               </h3>
+              <p className="text-slate-500 text-xs mt-0.5">
+                All document operations compile and execute in your browser memory via WebAssembly.
+              </p>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 shrink-0">
               <button
                 onClick={openSearch}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-medium transition-all shadow-2xs hover:border-slate-300 cursor-pointer"
-                title="Search all 30+ tools"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-indigo-50/60 border border-slate-200 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 text-xs font-semibold transition-all shadow-sm hover:shadow cursor-pointer active:scale-95"
+                title="Search all 30+ tools (Ctrl+K)"
               >
                 <Search className="w-3.5 h-3.5 text-indigo-600" />
-                <span>Search 30+ Tools</span>
+                <span>Quick Search</span>
                 <kbd className="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 font-mono text-[10px] text-slate-500">
                   Ctrl K
                 </kbd>
@@ -112,115 +114,144 @@ export function Footer() {
             </div>
           </div>
 
+          {/* 4 Feature Guarantee Cards with Soft Gradients & Watermark Motifs */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* Card 1 */}
-            <div className="group relative p-4 rounded-2xl bg-white hover:bg-white border border-slate-200/80 hover:border-emerald-400 transition-all duration-300 shadow-2xs hover:shadow-md">
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <ShieldCheck className="w-4 h-4" />
+            {/* Card 1: Client-Side Engine */}
+            <div className="group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-emerald-50/70 via-white to-white border border-emerald-100 hover:border-emerald-400 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-emerald-500/10 hover:-translate-y-0.5 overflow-hidden">
+              {/* Decorative Subtle SVG Watermark */}
+              <div className="absolute -top-1 -right-1 w-24 h-24 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+                <ShieldCheck className="w-full h-full text-emerald-600" strokeWidth={1} />
               </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="font-semibold text-slate-900 text-sm">Client-Side Default</h4>
-                <span className="text-[10px] font-mono font-medium text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
-                  100% Local
-                </span>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-2xs">
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-bold text-slate-900 text-sm">Client-Side Default</h4>
+                  <span className="text-[9.5px] font-mono font-bold text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-full border border-emerald-200">
+                    100% LOCAL
+                  </span>
+                </div>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Documents are parsed and rendered directly inside browser RAM. Zero external cloud servers.
+                </p>
               </div>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Documents are parsed and rendered directly inside your browser memory. No external server uploads.
-              </p>
             </div>
 
-            {/* Card 2 */}
-            <div className="group relative p-4 rounded-2xl bg-white hover:bg-white border border-slate-200/80 hover:border-cyan-400 transition-all duration-300 shadow-2xs hover:shadow-md">
-              <div className="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-200/80 text-cyan-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <Cpu className="w-4 h-4" />
+            {/* Card 2: WASM Native Speed */}
+            <div className="group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-sky-50/70 via-white to-white border border-sky-100 hover:border-sky-400 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-sky-500/10 hover:-translate-y-0.5 overflow-hidden">
+              <div className="absolute -top-1 -right-1 w-24 h-24 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+                <Cpu className="w-full h-full text-sky-600" strokeWidth={1} />
               </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="font-semibold text-slate-900 text-sm">WASM & Web Workers</h4>
-                <span className="text-[10px] font-mono font-medium text-cyan-700 bg-cyan-50 px-1.5 py-0.5 rounded border border-cyan-200">
-                  Native Speed
-                </span>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-xl bg-sky-100/80 border border-sky-200 text-sky-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-2xs">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-bold text-slate-900 text-sm">WASM & Workers</h4>
+                  <span className="text-[9.5px] font-mono font-bold text-sky-700 bg-sky-100/70 px-2 py-0.5 rounded-full border border-sky-200">
+                    NATIVE SPEED
+                  </span>
+                </div>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Compiled C++ & Rust engines execute multi-threaded transformations on your CPU without freezing.
+                </p>
               </div>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Compiled C++ / Rust engines execute multi-threaded transformations on your CPU without browser freezing.
-              </p>
             </div>
 
-            {/* Card 3 */}
-            <div className="group relative p-4 rounded-2xl bg-white hover:bg-white border border-slate-200/80 hover:border-amber-400 transition-all duration-300 shadow-2xs hover:shadow-md">
-              <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <Lock className="w-4 h-4" />
+            {/* Card 3: Zero Data Retention */}
+            <div className="group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-amber-50/70 via-white to-white border border-amber-100 hover:border-amber-400 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-amber-500/10 hover:-translate-y-0.5 overflow-hidden">
+              <div className="absolute -top-1 -right-1 w-24 h-24 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+                <Lock className="w-full h-full text-amber-600" strokeWidth={1} />
               </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="font-semibold text-slate-900 text-sm">Zero Data Retention</h4>
-                <span className="text-[10px] font-mono font-medium text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
-                  Ephemeral
-                </span>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-xl bg-amber-100/80 border border-amber-200 text-amber-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-2xs">
+                  <Lock className="w-5 h-5" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-bold text-slate-900 text-sm">Zero Data Retention</h4>
+                  <span className="text-[9.5px] font-mono font-bold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full border border-amber-200">
+                    EPHEMERAL
+                  </span>
+                </div>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Zero database writes, zero tracking pixels, zero analytics on document contents. Destroyed on close.
+                </p>
               </div>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Zero database writes, zero tracking pixels, zero analytics on document contents. Destroyed upon tab close.
-              </p>
             </div>
 
-            {/* Card 4 */}
-            <div className="group relative p-4 rounded-2xl bg-white hover:bg-white border border-slate-200/80 hover:border-indigo-400 transition-all duration-300 shadow-2xs hover:shadow-md">
-              <div className="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
-                <Sparkles className="w-4 h-4" />
+            {/* Card 4: Free & No Watermarks */}
+            <div className="group relative p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-indigo-50/70 via-white to-white border border-indigo-100 hover:border-indigo-400 transition-all duration-300 shadow-sm hover:shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-0.5 overflow-hidden">
+              <div className="absolute -top-1 -right-1 w-24 h-24 pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+                <Sparkles className="w-full h-full text-indigo-600" strokeWidth={1} />
               </div>
-              <div className="flex items-center justify-between mb-1">
-                <h4 className="font-semibold text-slate-900 text-sm">Free & Unrestricted</h4>
-                <span className="text-[10px] font-mono font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">
-                  No Watermarks
-                </span>
+              <div className="relative z-10">
+                <div className="w-10 h-10 rounded-xl bg-indigo-100/80 border border-indigo-200 text-indigo-600 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-2xs">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="font-bold text-slate-900 text-sm">Free & Unlimited</h4>
+                  <span className="text-[9.5px] font-mono font-bold text-indigo-700 bg-indigo-100/70 px-2 py-0.5 rounded-full border border-indigo-200">
+                    NO WATERMARKS
+                  </span>
+                </div>
+                <p className="text-slate-600 text-xs leading-relaxed">
+                  Zero forced signups, zero subscription traps, and no artificial daily document throttling.
+                </p>
               </div>
-              <p className="text-slate-600 text-xs leading-relaxed">
-                Zero forced account signups, zero subscription traps, and no artificial daily document throttling.
-              </p>
             </div>
           </div>
         </div>
 
+        {/* Section Divider with Accent Gradient */}
+        <div className="h-px w-full bg-gradient-to-r from-slate-200/50 via-slate-300 to-slate-200/50 mb-12" />
+
         {/* ============================================================== */}
-        {/* 2. MIDDLE SECTION: Brand & Comprehensive 4-Column Navigation */}
+        {/* 2. MIDDLE SECTION: Brand Terminal & 4 Structured Nav Columns  */}
         {/* ============================================================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 sm:gap-10 pb-12 border-b border-slate-200/80">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 sm:gap-10 pb-12 border-b border-slate-200/90">
           {/* Column 1 & 2: Brand Identity, Mission & Interactive RAM Purge */}
           <div className="lg:col-span-2 space-y-5">
             <Link href="/" className="inline-block group">
-              <BrandLogo size={36} showBadge={true} />
+              <BrandLogo size={38} showBadge={true} />
             </Link>
 
             <p className="text-slate-600 leading-relaxed text-xs pr-2">
               IntekEdit is a modern, high-precision document and image engineering suite. Designed for security-conscious professionals, developers, and organizations requiring complete client-side data sovereignty.
             </p>
 
-            {/* Live Engine Status Badge */}
-            <div className="p-3.5 rounded-2xl bg-white border border-slate-200/80 shadow-2xs space-y-2.5">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="text-slate-800 font-medium flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-                  Sandbox Status: Active
+            {/* Elevated Live Engine Control Terminal */}
+            <div className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-sm space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-900 font-bold flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  </span>
+                  Sandbox Engine: Active
                 </span>
-                <span className="font-mono text-indigo-700 text-[10px] bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-full font-bold">
+                <span className="font-mono text-emerald-800 text-[10px] bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">
                   Air-Gapped
                 </span>
               </div>
-              <div className="text-[11px] text-slate-500 font-mono flex items-center justify-between border-t border-slate-100 pt-2">
-                <span>In-Memory RAM: Isolated</span>
+
+              <div className="text-[11px] text-slate-500 font-mono flex items-center justify-between border-t border-slate-100 pt-2.5">
+                <span>Memory: Ephemeral</span>
                 <button
                   type="button"
                   onClick={handleFlushRam}
                   disabled={ramFlushed}
-                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-sans transition-all cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10.5px] font-sans font-semibold transition-all cursor-pointer shadow-2xs active:scale-95 ${
                     ramFlushed
-                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
-                      : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+                      ? "bg-emerald-600 text-white border border-emerald-600 shadow-emerald-500/20"
+                      : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 hover:border-slate-300"
                   }`}
-                  title="Purge cached document blobs from browser RAM"
+                  title="Purge cached document blobs and binary buffers from browser RAM"
                 >
                   {ramFlushed ? (
                     <>
-                      <Check className="w-3 h-3 text-emerald-600" />
-                      <span>RAM Purged</span>
+                      <Check className="w-3 h-3 text-white" />
+                      <span>RAM Cleared</span>
                     </>
                   ) : (
                     <>
@@ -230,37 +261,59 @@ export function Footer() {
                   )}
                 </button>
               </div>
+
+              {/* Security Feature Checkmarks */}
+              <div className="pt-2 border-t border-slate-100 space-y-1 text-[11px] text-slate-500">
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                  <span>100% Client-Side Engine (Zero Cloud Egress)</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                  <span>Zero File Telemetry & Analytics</span>
+                </div>
+                <div className="flex items-center gap-1.5 text-slate-600">
+                  <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                  <span>MIT Commercial-Safe & Free Forever</span>
+                </div>
+              </div>
             </div>
 
-            {/* Trust Badges - Responsive wrap on mobile */}
-            <div className="flex flex-wrap items-center gap-1.5 pt-1 max-w-full">
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-emerald-700 text-[10.5px] font-medium whitespace-nowrap shrink-0 shadow-2xs">
-                <ShieldCheck className="w-3 h-3 shrink-0" /> Client-Side Default
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-cyan-700 text-[10.5px] font-medium whitespace-nowrap shrink-0 shadow-2xs">
-                <Cpu className="w-3 h-3 shrink-0" /> WebAssembly 2.0
-              </span>
-              <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-amber-700 text-[10.5px] font-medium whitespace-nowrap shrink-0 shadow-2xs">
-                <EyeOff className="w-3 h-3 shrink-0" /> Zero File Telemetry
+            {/* Quick Ecosystem Pills */}
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <a
+                href="https://intekchat.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white hover:bg-indigo-50/80 border border-slate-200 hover:border-indigo-300 text-indigo-700 text-[11px] font-semibold transition-all shadow-2xs group"
+              >
+                <span>IntekChat (P2P Files)</span>
+                <ExternalLink className="w-3 h-3 text-indigo-500 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-600 text-[11px] font-medium shadow-2xs">
+                <Cpu className="w-3 h-3 text-sky-600" />
+                <span>WebAssembly 2.0</span>
               </span>
             </div>
           </div>
 
           {/* 4 Tool Link Columns in 2x2 Grid on Mobile, 4 columns on Desktop */}
-          <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-8">
+          <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {/* Column 1: PDF Studio & Core Tools */}
-            <div className="space-y-3">
-              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
-                <FileText className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
+            <div className="space-y-3.5">
+              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11.5px] flex items-center gap-2 pb-1 border-b border-slate-200/60">
+                <div className="w-5 h-5 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                  <FileText className="w-3.5 h-3.5" />
+                </div>
                 <span className="truncate">PDF Studio</span>
               </h4>
               <ul className="space-y-2 text-slate-600">
                 <li>
                   <Link
                     href="/pdf/edit"
-                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group"
+                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group py-0.5"
                   >
-                    <span className="group-hover:translate-x-0.5 transition-transform truncate">Edit PDF (Studio)</span>
+                    <span className="group-hover:translate-x-1 transition-transform truncate font-medium text-slate-700 hover:text-indigo-600">Edit PDF Studio</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-200 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                       Studio
                     </span>
@@ -269,216 +322,235 @@ export function Footer() {
                 <li>
                   <Link
                     href="/pdf/compress"
-                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group"
+                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group py-0.5"
                   >
-                    <span className="group-hover:translate-x-0.5 transition-transform truncate">Target-Size Compress</span>
+                    <span className="group-hover:translate-x-1 transition-transform truncate font-medium text-slate-700 hover:text-indigo-600">Compress PDF</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                       Target KB
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/merge" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/pdf/merge" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Merge PDF
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/split" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/pdf/split" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Split & Extract Pages
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/reorder" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/pdf/reorder" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Reorder & Delete Pages
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/rotate" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Rotate Pages
+                  <Link href="/pdf/rotate" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Rotate PDF Pages
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/crop" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Crop Margins & Trimming
+                  <Link href="/pdf/crop" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Crop Margins
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/pdf"
-                    className="text-indigo-600 hover:text-indigo-700 font-medium inline-flex items-center gap-1 pt-1"
+                    className="text-indigo-600 hover:text-indigo-800 font-bold inline-flex items-center gap-1 pt-1.5 group"
                   >
-                    <span>Explore all 15+ PDF Tools</span>
-                    <ChevronRight className="w-3 h-3" />
+                    <span>All 18+ PDF Tools</span>
+                    <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 2: PDF Transform & Protect */}
-            <div className="space-y-3">
-              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
-                <Layers className="w-3.5 h-3.5 text-blue-600" />
-                <span>Transform & Secure</span>
+            {/* Column 2: Transform & Security */}
+            <div className="space-y-3.5">
+              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11.5px] flex items-center gap-2 pb-1 border-b border-slate-200/60">
+                <div className="w-5 h-5 rounded-md bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                </div>
+                <span>Security & Sign</span>
               </h4>
               <ul className="space-y-2 text-slate-600">
                 <li>
-                  <Link href="/pdf/page-numbers" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link
+                    href="/security/sign"
+                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group py-0.5"
+                  >
+                    <span className="group-hover:translate-x-1 transition-transform truncate font-medium text-slate-700 hover:text-indigo-600">E-Sign PDF</span>
+                    <span className="text-[9px] font-bold uppercase tracking-wider text-violet-700 bg-violet-50 border border-violet-200 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
+                      Sign
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security/protect" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Password Protect PDF
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security/unlock" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Unlock Password PDF
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/page-numbers" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Add Page Numbers
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/watermark" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/pdf/watermark" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Watermark & Stamp PDF
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/flatten" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Flatten Form Fields & Layers
+                  <Link href="/pdf/flatten" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Flatten PDF Layers
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/grayscale" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Grayscale / B&W Conversion
+                  <Link href="/pdf/grayscale" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Convert to Grayscale (B&W)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pdf/repair" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/pdf/repair" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Repair Damaged PDF
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pdf/metadata" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Inspect & Edit Metadata
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pdf/pdf-to-images" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    PDF to Images (PNG/JPG)
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pdf/images-to-pdf" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Images to PDF Book
                   </Link>
                 </li>
               </ul>
             </div>
 
             {/* Column 3: Image Engineering Tools */}
-            <div className="space-y-3">
-              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
-                <ImageIcon className="w-3.5 h-3.5 text-rose-600" />
-                <span>Image Engineering</span>
+            <div className="space-y-3.5">
+              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11.5px] flex items-center gap-2 pb-1 border-b border-slate-200/60">
+                <div className="w-5 h-5 rounded-md bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                  <ImageIcon className="w-3.5 h-3.5" />
+                </div>
+                <span>Image Suite</span>
               </h4>
               <ul className="space-y-2 text-slate-600">
                 <li>
                   <Link
                     href="/image/compress"
-                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group"
+                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group py-0.5"
                   >
-                    <span className="group-hover:translate-x-0.5 transition-transform truncate">Target KB Compress</span>
+                    <span className="group-hover:translate-x-1 transition-transform truncate font-medium text-slate-700 hover:text-indigo-600">Compress Image</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider text-rose-700 bg-rose-50 border border-rose-200 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                       KB Limit
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/image/resize" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Resize (Px, %, Presets)
+                  <Link href="/image/resize" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Resize (Pixels & Presets)
                   </Link>
                 </li>
                 <li>
-                  <Link href="/image/crop" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/image/crop" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Crop & Aspect Framing
                   </Link>
                 </li>
                 <li>
-                  <Link href="/image/rotate" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/image/rotate" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Rotate & Mirror Flip
                   </Link>
                 </li>
                 <li>
-                  <Link href="/image/convert" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Universal Converter (HEIC, WebP)
+                  <Link href="/image/convert" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Convert Format (HEIC, WebP)
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/image/metadata"
-                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group"
+                    className="hover:text-indigo-600 transition-colors flex items-center justify-between gap-1 group py-0.5"
                   >
-                    <span className="group-hover:translate-x-0.5 transition-transform truncate">EXIF & GPS Stripper</span>
+                    <span className="group-hover:translate-x-1 transition-transform truncate font-medium text-slate-700 hover:text-indigo-600">Strip EXIF & GPS</span>
                     <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0 hidden sm:inline-flex items-center">
                       Privacy
                     </span>
                   </Link>
                 </li>
                 <li>
-                  <Link href="/extract/images" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
-                    Extract Embedded Images
+                  <Link href="/pdf/pdf-to-images" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    PDF to PNG / JPG
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/images-to-pdf" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    Photos to PDF Book
                   </Link>
                 </li>
               </ul>
             </div>
 
-            {/* Column 4: Security, Converters & Trust */}
-            <div className="space-y-3">
-              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11px] flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span>Trust & Safety</span>
+            {/* Column 4: Safety, Converters & Trust */}
+            <div className="space-y-3.5">
+              <h4 className="text-slate-900 font-bold tracking-wider uppercase text-[11.5px] flex items-center gap-2 pb-1 border-b border-slate-200/60">
+                <div className="w-5 h-5 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                  <Zap className="w-3.5 h-3.5" />
+                </div>
+                <span>Trust & Legal</span>
               </h4>
               <ul className="space-y-2 text-slate-600">
                 <li>
                   <Link
                     href="/privacy"
-                    className="hover:text-indigo-600 transition-colors font-medium text-indigo-600 flex items-center gap-1"
+                    className="hover:text-indigo-600 transition-colors font-bold text-indigo-600 flex items-center gap-1.5 py-0.5"
                   >
                     <span>Privacy Guarantee</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   </Link>
                 </li>
                 <li>
-                  <Link href="/security" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/security" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Security Threat Model
                   </Link>
                 </li>
                 <li>
-                  <Link href="/convert" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/convert" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Universal Converters Hub
                   </Link>
                 </li>
                 <li>
-                  <Link href="/extract/text" className="hover:text-indigo-600 transition-colors inline-block hover:translate-x-0.5 duration-150">
+                  <Link href="/extract/text" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
                     Extract Plain Text & OCR
                   </Link>
                 </li>
                 <li>
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-slate-400" />
-                    Zero Analytics on Content
-                  </span>
-                </li>
-                <li>
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-slate-400" />
-                    No Ads &bull; No Watermarks
-                  </span>
+                  <Link href="/sitemap.xml" className="hover:text-indigo-600 transition-colors block py-0.5 hover:translate-x-1 duration-150">
+                    XML Sitemap
+                  </Link>
                 </li>
                 <li>
                   <a
-                    href="https://intekchat.vercel.app/"
+                    href="https://github.com/Intekhab-Ansari/document-solution"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-indigo-700 transition-colors inline-flex items-center gap-1.5 text-indigo-600 font-medium group"
+                    className="hover:text-slate-900 transition-colors inline-flex items-center gap-1.5 py-0.5 font-medium group text-slate-700"
                   >
-                    <span>IntekChat (P2P Files & Chat)</span>
-                    <ExternalLink className="w-3 h-3 text-indigo-500 group-hover:translate-x-0.5 transition-transform" />
+                    <svg className="w-3.5 h-3.5 text-slate-700 fill-current shrink-0" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    <span>GitHub Repository</span>
+                    <ExternalLink className="w-3 h-3 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
                   </a>
                 </li>
                 <li>
-                  <span className="text-slate-500 flex items-center gap-1.5">
-                    <span className="w-1 h-1 rounded-full bg-slate-400" />
+                  <span className="text-slate-500 flex items-center gap-1.5 py-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                     MIT Commercial-Safe
+                  </span>
+                </li>
+                <li>
+                  <span className="text-slate-500 flex items-center gap-1.5 py-0.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400" />
+                    No Ads &bull; No Tracking
                   </span>
                 </li>
               </ul>
@@ -487,18 +559,36 @@ export function Footer() {
         </div>
 
         {/* ============================================================== */}
-        {/* 3. BOTTOM BAR: Colophon */}
+        {/* 3. BOTTOM BAR: Modern Colophon & Verification Beacon          */}
         {/* ============================================================== */}
-        <div className="pt-8 flex items-center justify-center text-center text-slate-500 text-[11px]">
-          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center">
-            <span className="text-slate-600">
-              &copy; {new Date().getFullYear()} <strong className="text-slate-900 font-semibold">IntekEdit</strong>. Built with cryptographic privacy and local-first execution.
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+          {/* Copyright & Architecture Statement */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 text-center md:text-left">
+            <span className="text-slate-700 font-medium">
+              &copy; {new Date().getFullYear()} <strong className="text-slate-900 font-bold">IntekEdit</strong>
             </span>
             <span className="text-slate-300 hidden sm:inline">&bull;</span>
             <span className="text-slate-500">
-              Crafted by <span className="text-slate-800 font-medium">Intekhab Ansari</span>
+              Air-Gapped Client-Side Document & Photo Engineering
             </span>
-          </p>
+          </div>
+
+          {/* Center/Right Status Beacon & Creator Attribution */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-slate-700 text-[10.5px] font-medium shadow-2xs">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>100% On-Device &bull; Local RAM</span>
+            </span>
+
+            <span className="text-slate-300 hidden sm:inline">&bull;</span>
+
+            <span className="flex items-center gap-1 text-slate-600 font-medium">
+              <span>Crafted with</span>
+              <Heart className="w-3 h-3 text-rose-500 fill-rose-500 inline" />
+              <span>by</span>
+              <span className="text-slate-900 font-bold">Intekhab Ansari</span>
+            </span>
+          </div>
         </div>
       </div>
 

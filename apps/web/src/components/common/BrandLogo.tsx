@@ -116,9 +116,10 @@ interface BrandLogoProps {
   size?: number;
   showBadge?: boolean;
   className?: string;
+  inverted?: boolean;
 }
 
-export function BrandLogo({ size = 36, showBadge = true, className = "" }: BrandLogoProps) {
+export function BrandLogo({ size = 36, showBadge = true, className = "", inverted = false }: BrandLogoProps) {
   return (
     <div className={`flex items-center gap-2.5 group ${className}`}>
       <BrandLogoMark
@@ -127,20 +128,24 @@ export function BrandLogo({ size = 36, showBadge = true, className = "" }: Brand
       />
       <div className="flex flex-col">
         <div className="flex items-center gap-2">
-          <span className="font-extrabold text-lg text-slate-900 tracking-tight flex items-center">
+          <span className={`font-extrabold text-lg tracking-tight flex items-center ${inverted ? "text-white" : "text-slate-900"}`}>
             <span>Intek</span>
             <span className="text-indigo-600">
               Edit
             </span>
           </span>
           {showBadge && (
-            <span className="hidden 2xl:inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <span className={`hidden 2xl:inline-flex items-center gap-1.5 text-[10px] px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider ${
+              inverted
+                ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+            }`}>
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
               <span>100% Private</span>
             </span>
           )}
         </div>
-        <span className="text-[10px] text-slate-500 font-medium tracking-tight -mt-0.5 hidden 2xl:block">
+        <span className={`text-[10px] font-medium tracking-tight -mt-0.5 hidden 2xl:block ${inverted ? "text-slate-400" : "text-slate-500"}`}>
           Local-First Vector & Image Engine
         </span>
       </div>
