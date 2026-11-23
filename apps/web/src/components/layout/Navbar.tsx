@@ -78,35 +78,37 @@ export function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-slate-200/80 bg-white/85 backdrop-blur-xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)]">
-        {/* Luminous top micro-accent line */}
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-indigo-500/70 via-sky-400/70 via-emerald-400/70 to-transparent" />
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-[0_4px_20px_-2px_rgba(15,23,42,0.06)]">
+        {/* Luminous micro-gradient edge */}
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-indigo-500/80 via-sky-400/80 via-emerald-400/80 to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3 lg:gap-4">
-          {/* Left: Brand + Desktop Mega-Menu Nav */}
-          <div className="flex items-center gap-5 xl:gap-7 min-w-0">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+          {/* Left: Brand + Segmented Island Nav */}
+          <div className="flex items-center gap-4 xl:gap-6 shrink-0">
             <Link
               href="/"
               className="shrink-0 flex items-center group transition-transform active:scale-95"
               aria-label="IntekEdit Home"
             >
-              <BrandLogo size={34} />
+              <BrandLogo size={32} />
             </Link>
 
-            {/* Desktop Mega-Menu Nav */}
-            <nav className="hidden lg:flex items-center gap-1 xl:gap-1.5 text-xs xl:text-sm font-semibold text-slate-700 whitespace-nowrap shrink-0">
-              {/* 1. PDF Tools Mega Dropdown */}
-              <div className="relative group shrink-0">
+            {/* Segmented Island Nav Capsule */}
+            <nav className="hidden lg:flex items-center p-1 rounded-full bg-slate-100/90 border border-slate-200/90 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] text-xs font-semibold text-slate-700 whitespace-nowrap">
+              {/* 1. PDF Tools */}
+              <div className="relative group">
                 <Link
                   href="/pdf"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-indigo-600 hover:bg-indigo-50/80 transition-all whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-indigo-600 hover:bg-white hover:shadow-2xs transition-all cursor-pointer"
                 >
-                  <FileText className="w-4 h-4 text-indigo-600 shrink-0" />
+                  <FileText className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
                   <span>PDF Tools</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-indigo-600 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3 h-3 text-slate-400 group-hover:text-indigo-600 group-hover:rotate-180 transition-transform duration-200 shrink-0" />
                 </Link>
+
+                {/* PDF Dropdown */}
                 <div className="absolute left-0 top-full pt-2 w-[340px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-out -translate-y-1 group-hover:translate-y-0">
-                  <div className="p-3 rounded-2xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.12),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
+                  <div className="p-3 rounded-2xl bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
                     <Link
                       href="/pdf"
                       className="flex items-center justify-between px-3 py-2 rounded-xl text-indigo-700 bg-gradient-to-r from-indigo-50 via-sky-50/80 to-indigo-50 border border-indigo-200/60 hover:border-indigo-300 text-xs font-bold transition-all mb-1 shadow-2xs group/banner"
@@ -226,18 +228,20 @@ export function Navbar() {
                 </div>
               </div>
 
-              {/* 2. Image Tools Dropdown */}
-              <div className="relative group shrink-0">
+              {/* 2. Image Tools */}
+              <div className="relative group">
                 <Link
                   href="/image"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-cyan-600 hover:bg-cyan-50/80 transition-all whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-cyan-600 hover:bg-white hover:shadow-2xs transition-all cursor-pointer"
                 >
-                  <ImageIcon className="w-4 h-4 text-cyan-600 shrink-0" />
+                  <ImageIcon className="w-3.5 h-3.5 text-cyan-600 shrink-0" />
                   <span>Image Tools</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-cyan-600 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3 h-3 text-slate-400 group-hover:text-cyan-600 group-hover:rotate-180 transition-transform duration-200 shrink-0" />
                 </Link>
+
+                {/* Image Dropdown */}
                 <div className="absolute left-0 top-full pt-2 w-[340px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-out -translate-y-1 group-hover:translate-y-0">
-                  <div className="p-3 rounded-2xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.12),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
+                  <div className="p-3 rounded-2xl bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
                     <Link
                       href="/image"
                       className="flex items-center justify-between px-3 py-2 rounded-xl text-cyan-800 bg-gradient-to-r from-cyan-50 via-sky-50 to-cyan-50/80 border border-cyan-200/60 hover:border-cyan-300 text-xs font-bold transition-all mb-1 shadow-2xs group/banner"
@@ -320,18 +324,21 @@ export function Navbar() {
                 </div>
               </div>
 
-              {/* 3. Security & Sign Dropdown */}
-              <div className="relative group shrink-0">
+              {/* 3. Security & Sign */}
+              <div className="relative group">
                 <Link
                   href="/security"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-emerald-700 hover:bg-emerald-50/80 transition-all whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-emerald-700 hover:bg-white hover:shadow-2xs transition-all cursor-pointer"
                 >
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Security & Sign</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-600 group-hover:rotate-180 transition-transform duration-200" />
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span className="hidden xl:inline">Security & Sign</span>
+                  <span className="xl:hidden">Security</span>
+                  <ChevronDown className="w-3 h-3 text-slate-400 group-hover:text-emerald-700 group-hover:rotate-180 transition-transform duration-200 shrink-0" />
                 </Link>
+
+                {/* Security Dropdown */}
                 <div className="absolute left-0 top-full pt-2 w-[340px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-out -translate-y-1 group-hover:translate-y-0">
-                  <div className="p-3 rounded-2xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.12),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
+                  <div className="p-3 rounded-2xl bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-1">
                     <Link
                       href="/security"
                       className="flex items-center justify-between px-3 py-2 rounded-xl text-emerald-800 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50/80 border border-emerald-200/60 hover:border-emerald-300 text-xs font-bold transition-all mb-1 shadow-2xs group/banner"
@@ -404,18 +411,20 @@ export function Navbar() {
                 </div>
               </div>
 
-              {/* 4. Converters Dropdown */}
-              <div className="relative group shrink-0">
+              {/* 4. Converters */}
+              <div className="relative group">
                 <Link
                   href="/convert"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-violet-600 hover:bg-violet-50/80 transition-all whitespace-nowrap shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:text-violet-600 hover:bg-white hover:shadow-2xs transition-all cursor-pointer"
                 >
-                  <RefreshCw className="w-4 h-4 text-violet-600 shrink-0" />
+                  <RefreshCw className="w-3.5 h-3.5 text-violet-600 shrink-0" />
                   <span>Converters</span>
-                  <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-violet-600 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown className="w-3 h-3 text-slate-400 group-hover:text-violet-600 group-hover:rotate-180 transition-transform duration-200 shrink-0" />
                 </Link>
-                <div className="absolute right-0 top-full pt-2 w-[480px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-out -translate-y-1 group-hover:translate-y-0">
-                  <div className="p-3.5 rounded-2xl bg-white/95 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.12),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-2.5">
+
+                {/* Converters Dropdown */}
+                <div className="absolute right-0 lg:-right-24 xl:right-0 top-full pt-2 w-[460px] opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 ease-out -translate-y-1 group-hover:translate-y-0">
+                  <div className="p-3.5 rounded-2xl bg-white/98 backdrop-blur-2xl border border-slate-200/90 shadow-[0_20px_50px_rgba(15,23,42,0.14),0_4px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/5 space-y-2.5">
                     {/* Hero Link: Universal Converter Studio */}
                     <Link
                       href="/convert"
@@ -592,56 +601,57 @@ export function Navbar() {
           </div>
 
           {/* Right Action Area */}
-          <div className="flex items-center gap-2 xl:gap-3 shrink-0">
+          <div className="flex items-center gap-2 xl:gap-2.5 shrink-0">
             {/* Quick Search Button (Command Palette Ctrl+K) */}
             <button
               type="button"
               onClick={() => setCommandPaletteOpen(true)}
-              className="flex items-center gap-2.5 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100/80 hover:bg-slate-100 hover:border-slate-300 border border-slate-200/80 text-slate-600 hover:text-slate-900 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-2xs hover:shadow-xs group"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/90 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs group"
               title="Search all 30+ tools (Ctrl+K)"
             >
               <Search className="w-3.5 h-3.5 text-indigo-600 group-hover:scale-110 transition-transform shrink-0" />
-              <span className="hidden sm:inline font-medium text-slate-600 group-hover:text-slate-900">Search tools...</span>
-              <kbd className="inline-flex items-center gap-0.5 text-[10px] font-sans font-semibold px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-500 shadow-2xs">
+              <span className="hidden xl:inline font-medium text-slate-600 group-hover:text-slate-900">Search tools...</span>
+              <span className="hidden sm:inline xl:hidden font-medium text-slate-600 group-hover:text-slate-900">Search</span>
+              <kbd className="inline-flex items-center gap-0.5 text-[10px] font-sans font-bold px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-500 shadow-2xs">
                 <span>Ctrl</span>
                 <span>K</span>
               </kbd>
             </button>
 
-            {/* AI Copilot Button */}
+            {/* Glowing High-Impact "Ask AI" Copilot Button */}
             <button
               type="button"
               onClick={handleOpenAiAssistant}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-gradient-to-r from-indigo-50 via-purple-50 to-indigo-50 hover:from-indigo-100 hover:to-purple-100 border border-indigo-200/80 text-indigo-700 shadow-2xs hover:shadow-xs transition-all cursor-pointer group"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-[0_2px_10px_rgba(79,70,229,0.28)] hover:shadow-[0_4px_14px_rgba(79,70,229,0.38)] transition-all active:scale-95 cursor-pointer group"
               title="Ask IntekEdit AI Copilot"
             >
-              <Sparkles className="w-3.5 h-3.5 text-indigo-600 group-hover:rotate-12 transition-transform shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-indigo-200 group-hover:rotate-12 transition-transform shrink-0" />
               <span>Ask AI</span>
             </button>
 
-            {/* 100% In-Browser Privacy Live Beacon */}
+            {/* 100% In-Browser Privacy Live Beacon - shown on xl+ screens */}
             <Link
               href="/privacy"
-              className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-emerald-50/80 hover:bg-emerald-100/80 border border-emerald-200/70 text-emerald-800 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-2xs"
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50/90 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-800 transition-all cursor-pointer shadow-2xs"
               title="Air-Gapped Client-Side Processing Guarantee"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="font-semibold tracking-tight text-[11px]">100% On-Device</span>
+              <span className="text-[11px] tracking-tight">100% On-Device</span>
             </Link>
 
-            {/* IntekChat Companion External Link */}
+            {/* IntekChat Companion Link - shown on xl+ screens */}
             <a
               href="https://intekchat.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="group hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-2xs"
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 transition-all cursor-pointer shadow-2xs group"
               title="IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-              <span className="whitespace-nowrap">IntekChat</span>
+              <span>IntekChat</span>
               <ExternalLink className="w-3 h-3 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all shrink-0" />
             </a>
 
