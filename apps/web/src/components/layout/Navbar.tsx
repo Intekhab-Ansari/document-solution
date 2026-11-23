@@ -601,18 +601,18 @@ export function Navbar() {
           </div>
 
           {/* Right Action Area */}
-          <div className="flex items-center gap-2 xl:gap-2.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0">
             {/* Quick Search Button (Command Palette Ctrl+K) */}
             <button
               type="button"
               onClick={() => setCommandPaletteOpen(true)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/90 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs group"
-              title="Search all 30+ tools (Ctrl+K)"
+              className="flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-full text-xs font-medium bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/90 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs group"
+              title="Search all 30+ tools"
             >
-              <Search className="w-3.5 h-3.5 text-indigo-600 group-hover:scale-110 transition-transform shrink-0" />
+              <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-indigo-600 group-hover:scale-110 transition-transform shrink-0" />
               <span className="hidden xl:inline font-medium text-slate-600 group-hover:text-slate-900">Search tools...</span>
               <span className="hidden sm:inline xl:hidden font-medium text-slate-600 group-hover:text-slate-900">Search</span>
-              <kbd className="inline-flex items-center gap-0.5 text-[10px] font-sans font-bold px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-500 shadow-2xs">
+              <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] font-sans font-bold px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-500 shadow-2xs">
                 <span>Ctrl</span>
                 <span>K</span>
               </kbd>
@@ -622,7 +622,7 @@ export function Navbar() {
             <button
               type="button"
               onClick={handleOpenAiAssistant}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-[0_2px_10px_rgba(79,70,229,0.28)] hover:shadow-[0_4px_14px_rgba(79,70,229,0.38)] transition-all active:scale-95 cursor-pointer group"
+              className="flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 rounded-full text-xs font-bold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-[0_2px_10px_rgba(79,70,229,0.28)] hover:shadow-[0_4px_14px_rgba(79,70,229,0.38)] transition-all active:scale-95 cursor-pointer group"
               title="Ask IntekEdit AI Copilot"
             >
               <Sparkles className="w-3.5 h-3.5 text-indigo-200 group-hover:rotate-12 transition-transform shrink-0" />
@@ -660,7 +660,7 @@ export function Navbar() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(true)}
-                className="p-2 rounded-xl text-slate-600 hover:text-slate-950 hover:bg-slate-100 border border-slate-200/80 transition-all cursor-pointer"
+                className="p-2 rounded-xl text-slate-700 hover:text-slate-950 bg-slate-100 hover:bg-slate-200/80 border border-slate-200/90 transition-all cursor-pointer active:scale-95 flex items-center justify-center"
                 aria-label="Toggle navigation menu"
               >
                 <Menu className="w-5 h-5" />

@@ -635,7 +635,7 @@ export default function HomePage() {
 
               {/* Main Headline: Strictly 1 Line */}
               <div className="space-y-1">
-                <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-black tracking-tight leading-tight">
+                <h1 className="text-[19px] xs:text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-black tracking-tight leading-tight">
                   <span className="bg-gradient-to-r from-slate-950 via-slate-800 to-indigo-950 bg-clip-text text-transparent">
                     All-in-One Document & Photo Suite
                   </span>
@@ -646,20 +646,20 @@ export default function HomePage() {
               </div>
 
               {/* 3 Bullets strictly in 1 Single Line with refined pill badges */}
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold pt-0.5">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50/80 border border-indigo-200/70 text-indigo-700 shadow-2xs">
+              <div className="flex items-center gap-2 overflow-x-auto scrollbar-none py-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap text-[11px] sm:text-xs font-semibold">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50/80 border border-indigo-200/70 text-indigo-700 shadow-2xs shrink-0">
                   <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
                   <span>PDF Editor & Form Fill</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-emerald-700 shadow-2xs">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-emerald-700 shadow-2xs shrink-0">
                   <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
                   <span>Target KB Compress</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50/80 border border-sky-200/70 text-sky-700 shadow-2xs">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50/80 border border-sky-200/70 text-sky-700 shadow-2xs shrink-0">
                   <span className="w-3.5 h-3.5 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
@@ -877,24 +877,24 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 2. Slim 1-Line Trust Strip                                    */}
       {/* ============================================================== */}
-      <div className="border-b border-slate-200/80 bg-white/70 backdrop-blur-md py-2.5 px-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-around gap-2 text-[11px] text-slate-700 font-semibold">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50/80 border border-indigo-200/60 text-indigo-800">
+      <div className="border-b border-slate-200/80 bg-white/70 backdrop-blur-md py-2 px-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <div className="max-w-7xl mx-auto flex items-center sm:justify-around gap-2 overflow-x-auto sm:overflow-visible scrollbar-none py-0.5 text-[11px] text-slate-700 font-semibold whitespace-nowrap">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50/80 border border-indigo-200/60 text-indigo-800 shrink-0">
             <Zap className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
             <span>WebAssembly Native Speed</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 text-emerald-800">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 text-emerald-800 shrink-0">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <span>100% Private (Zero Cloud Uploads)</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50/80 border border-sky-200/60 text-sky-800">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50/80 border border-sky-200/60 text-sky-800 shrink-0">
             <Layers className="w-3.5 h-3.5 text-sky-600 shrink-0" />
             <span>PDF, Word, Excel, HEIC & Images</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-violet-50/80 border border-violet-200/60 text-violet-800">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-violet-50/80 border border-violet-200/60 text-violet-800 shrink-0">
             <Sparkles className="w-3.5 h-3.5 text-violet-600 shrink-0" />
             <span>100% Free &bull; No File Limits</span>
           </span>
@@ -904,11 +904,11 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 3. The Tool Catalog (Directly Visible Above The Fold!)        */}
       {/* ============================================================== */}
-      <section className="py-8 sm:py-10 bg-[#F8FAFC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <section className="py-7 sm:py-10 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
           
           {/* Section Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3 sm:pb-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                 <span>All Document & Image</span>
@@ -920,7 +920,7 @@ export default function HomePage() {
             </div>
 
             {/* Category Filter Tabs (Segmented Capsule) */}
-            <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-200/60 backdrop-blur-md border border-slate-200/90 overflow-x-auto scrollbar-none shadow-inner">
+            <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-200/60 backdrop-blur-md border border-slate-200/90 overflow-x-auto scrollbar-none shadow-inner max-w-full">
               <button
                 onClick={() => setSelectedCategory("all")}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
@@ -960,7 +960,7 @@ export default function HomePage() {
           </div>
 
           {/* The Tool Grid (Refined Cards with Enhanced Illustrations) */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 md:gap-5">
             {filteredTools.map((tool) => {
               const IconComponent = ICON_MAP[tool.iconName] || FileText;
               const style = getToolCardStyle(tool.id, tool.category);
@@ -969,24 +969,24 @@ export default function HomePage() {
                 <Link
                   key={tool.id}
                   href={tool.href}
-                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl ${style.cardBg} border ${style.borderClass} ${style.shadowHover} transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer overflow-hidden backdrop-blur-xs`}
+                  className={`group relative flex flex-col p-3.5 sm:p-5 rounded-2xl ${style.cardBg} border ${style.borderClass} ${style.shadowHover} transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer overflow-hidden backdrop-blur-xs`}
                 >
                   {/* Intuitive Thematic Background Illustration */}
-                  <div className="absolute -top-1 -right-1 w-28 h-28 sm:w-32 sm:h-32 pointer-events-none select-none overflow-hidden opacity-40 group-hover:opacity-95 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+                  <div className="absolute -top-1 -right-1 w-24 h-24 sm:w-32 sm:h-32 pointer-events-none select-none overflow-hidden opacity-40 group-hover:opacity-95 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
                     <ToolCardIllustration toolId={tool.id} category={tool.category} />
                   </div>
 
                   {/* Top: Icon + Badge */}
-                  <div className="relative z-10 flex items-start justify-between gap-1.5 mb-3">
+                  <div className="relative z-10 flex items-start justify-between gap-1.5 mb-2.5 sm:mb-3">
                     <div
-                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 shadow-2xs ${style.iconBg} ${style.iconColor}`}
+                      className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 shadow-2xs ${style.iconBg} ${style.iconColor}`}
                     >
-                      <IconComponent className="w-5 h-5" />
+                      <IconComponent className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
 
                     {tool.badge && (
                       <span
-                        className={`text-[9px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-2xs ${style.badgeBg} ${style.badgeText}`}
+                        className={`text-[8.5px] sm:text-[9px] font-mono font-bold px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-2xs ${style.badgeBg} ${style.badgeText}`}
                       >
                         {tool.badge}
                       </span>
@@ -994,26 +994,26 @@ export default function HomePage() {
                   </div>
 
                   {/* Title & Description */}
-                  <div className="relative z-10 flex-1 space-y-1">
+                  <div className="relative z-10 flex-1 space-y-0.5 sm:space-y-1">
                     <h3 className="font-bold text-xs sm:text-sm text-slate-900 group-hover:text-indigo-600 transition-colors flex items-center justify-between leading-snug line-clamp-1">
                       <span>{tool.name}</span>
                       <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-indigo-600 shrink-0 hidden sm:block" />
                     </h3>
-                    <p className="text-slate-500 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
+                    <p className="text-slate-500 text-[10.5px] sm:text-xs leading-snug sm:leading-relaxed line-clamp-2">
                       {tool.description}
                     </p>
                   </div>
 
                   {/* Bottom: 100% On-Device Badge */}
-                  <div className="relative z-10 mt-3 pt-2.5 border-t border-slate-200/50 flex items-center justify-between text-[10px] text-slate-500">
+                  <div className="relative z-10 mt-2.5 sm:mt-3 pt-2 sm:pt-2.5 border-t border-slate-200/50 flex items-center justify-between text-[10px] text-slate-500">
                     <span className="flex items-center gap-1.5 font-medium truncate">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                      <span className="text-slate-600 truncate text-[10px] font-medium">
+                      <span className="text-slate-600 truncate text-[9.5px] sm:text-[10px] font-medium">
                         100% On-Device
                       </span>
                     </span>
 
-                    <span className="text-[9px] text-slate-400 uppercase font-mono font-semibold tracking-wider shrink-0">
+                    <span className="hidden xs:inline-block text-[9px] text-slate-400 uppercase font-mono font-semibold tracking-wider shrink-0">
                       {tool.category}
                     </span>
                   </div>
@@ -1028,8 +1028,8 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 4. Architecture & Security Comparison (Executive Matrix)       */}
       {/* ============================================================== */}
-      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/50 to-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="py-14 sm:py-20 border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/50 to-white">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-10">
           <div className="text-center space-y-2.5 max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
@@ -1044,81 +1044,88 @@ export default function HomePage() {
           </div>
 
           <div className="rounded-3xl bg-white border border-slate-200/90 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.05)] overflow-hidden">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-mono">
-                  <th className="py-3.5 px-6 font-semibold">Feature / Metric</th>
-                  <th className="py-3.5 px-6 font-bold text-indigo-700 bg-indigo-50/60 border-x border-indigo-100">
-                    IntekEdit (Local-First Engine)
-                  </th>
-                  <th className="py-3.5 px-6 font-semibold text-slate-400">Traditional Cloud Converters</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200 text-slate-700">
-                <tr className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
-                      <ShieldCheck className="w-4 h-4" />
-                    </div>
-                    <span>Document Privacy</span>
-                  </td>
-                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
-                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-bold">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-                      100% In-Browser RAM (0 B Uploaded)
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-slate-500">
-                    Uploaded & stored on remote cloud servers
-                  </td>
-                </tr>
-                <tr className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
-                      <Zap className="w-4 h-4" />
-                    </div>
-                    <span>Daily Tasks & Limits</span>
-                  </td>
-                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
-                    <span className="inline-flex items-center gap-1.5 text-indigo-700 font-bold">
-                      <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                      Unlimited & Forever Free
-                    </span>
-                  </td>
-                  <td className="py-4 px-6 text-slate-500">
-                    Capped at 1-2 free conversions per day
-                  </td>
-                </tr>
-                <tr className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0">
-                      <Minimize2 className="w-4 h-4" />
-                    </div>
-                    <span>File Size Limits</span>
-                  </td>
-                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
-                    Gigabyte-Scale (Bounded by Device RAM)
-                  </td>
-                  <td className="py-4 px-6 text-slate-500">
-                    Strict 50MB - 100MB cloud upload caps
-                  </td>
-                </tr>
-                <tr className="hover:bg-slate-50/50 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
-                    <div className="w-7 h-7 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 shrink-0">
-                      <Sparkles className="w-4 h-4" />
-                    </div>
-                    <span>Watermarks & Ads</span>
-                  </td>
-                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
-                    <span className="text-emerald-700 font-bold">Zero Watermarks • Zero Spam Ads</span>
-                  </td>
-                  <td className="py-4 px-6 text-slate-500">
-                    Forced watermarks or ad-heavy overlays
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            {/* Mobile swipe hint */}
+            <div className="sm:hidden py-2 px-4 bg-slate-50/90 border-b border-slate-200/80 text-[10.5px] text-slate-400 font-medium flex items-center justify-center gap-1.5">
+              <span>← Swipe table horizontally →</span>
+            </div>
+
+            <div className="overflow-x-auto scrollbar-none">
+              <table className="w-full text-left text-xs min-w-[540px]">
+                <thead>
+                  <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-mono">
+                    <th className="py-3.5 px-5 sm:px-6 font-semibold">Feature / Metric</th>
+                    <th className="py-3.5 px-5 sm:px-6 font-bold text-indigo-700 bg-indigo-50/60 border-x border-indigo-100">
+                      IntekEdit (Local-First Engine)
+                    </th>
+                    <th className="py-3.5 px-5 sm:px-6 font-semibold text-slate-400">Traditional Cloud Converters</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200 text-slate-700">
+                  <tr className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 px-5 sm:px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <span>Document Privacy</span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                      <span className="inline-flex items-center gap-1.5 text-emerald-700 font-bold">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        100% In-Browser RAM (0 B Uploaded)
+                      </span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-slate-500">
+                      Uploaded & stored on remote cloud servers
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 px-5 sm:px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
+                        <Zap className="w-4 h-4" />
+                      </div>
+                      <span>Daily Tasks & Limits</span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                      <span className="inline-flex items-center gap-1.5 text-indigo-700 font-bold">
+                        <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                        Unlimited & Forever Free
+                      </span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-slate-500">
+                      Capped at 1-2 free conversions per day
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 px-5 sm:px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0">
+                        <Minimize2 className="w-4 h-4" />
+                      </div>
+                      <span>File Size Limits</span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                      Gigabyte-Scale (Bounded by Device RAM)
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-slate-500">
+                      Strict 50MB - 100MB cloud upload caps
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-slate-50/50 transition-colors">
+                    <td className="py-4 px-5 sm:px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 shrink-0">
+                        <Sparkles className="w-4 h-4" />
+                      </div>
+                      <span>Watermarks & Ads</span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                      <span className="text-emerald-700 font-bold">Zero Watermarks • Zero Spam Ads</span>
+                    </td>
+                    <td className="py-4 px-5 sm:px-6 text-slate-500">
+                      Forced watermarks or ad-heavy overlays
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </section>
