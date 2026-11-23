@@ -609,50 +609,58 @@ export default function HomePage() {
   }, [searchQuery, selectedCategory]);
 
   return (
-    <div className="w-full bg-[#F8FAFC] text-slate-900 min-h-screen">
+    <div className="relative w-full bg-[#F8FAFC] text-slate-900 min-h-screen overflow-hidden">
+      {/* Ambient Radial Mesh Lights */}
+      <div className="absolute top-0 inset-x-0 h-[480px] bg-gradient-to-b from-indigo-50/70 via-purple-50/30 to-transparent pointer-events-none -z-10" />
+      <div className="absolute top-8 left-1/4 w-[500px] h-[250px] bg-indigo-200/25 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-16 right-1/4 w-[400px] h-[250px] bg-violet-200/20 blur-[120px] pointer-events-none -z-10" />
+
       {/* ============================================================== */}
       {/* 1. Compact 2-Column Hero Section                              */}
       {/* ============================================================== */}
-      <section className="relative overflow-hidden pt-4 pb-4 sm:pt-6 sm:pb-6 border-b border-slate-200/80 bg-gradient-to-b from-white via-[#F8FAFC] to-[#F8FAFC]">
+      <section className="relative overflow-hidden pt-5 pb-5 sm:pt-7 sm:pb-7 border-b border-slate-200/80 bg-gradient-to-b from-white/90 via-white/40 to-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             
             {/* Left Column: 1-Line Headline, 1-Line Subtitle, 1-Line Tags & Search */}
-            <div className="lg:col-span-7 space-y-3 text-left">
+            <div className="lg:col-span-7 space-y-3.5 text-left">
               {/* Privacy Guarantee Pill */}
-              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-[11px] font-semibold text-emerald-700 shadow-2xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-semibold text-emerald-800 shadow-2xs">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
                 <span>100% In-Browser &bull; Zero Server Uploads</span>
               </div>
 
               {/* Main Headline: Strictly 1 Line */}
               <div className="space-y-1">
-                <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-black tracking-tight text-slate-900 leading-tight">
-                  All-in-One Document & Photo Suite
+                <h1 className="text-xl sm:text-2xl lg:text-[28px] xl:text-[32px] font-black tracking-tight leading-tight">
+                  <span className="bg-gradient-to-r from-slate-950 via-slate-800 to-indigo-950 bg-clip-text text-transparent">
+                    All-in-One Document & Photo Suite
+                  </span>
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed">
                   100% On-Device &bull; Edit, compress, convert & sign files directly in your browser.
                 </p>
               </div>
 
-              {/* 3 Bullets strictly in 1 Single Line */}
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-700 font-medium pt-0.5">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-[10px]">
+              {/* 3 Bullets strictly in 1 Single Line with refined pill badges */}
+              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold pt-0.5">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50/80 border border-indigo-200/70 text-indigo-700 shadow-2xs">
+                  <span className="w-3.5 h-3.5 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
                   <span>PDF Editor & Form Fill</span>
                 </div>
-                <span className="text-slate-300 hidden sm:inline">&bull;</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-[10px]">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50/80 border border-emerald-200/70 text-emerald-700 shadow-2xs">
+                  <span className="w-3.5 h-3.5 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
                   <span>Target KB Compress</span>
                 </div>
-                <span className="text-slate-300 hidden sm:inline">&bull;</span>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-indigo-50 text-indigo-600 border border-indigo-200 flex items-center justify-center shrink-0 font-bold text-[10px]">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50/80 border border-sky-200/70 text-sky-700 shadow-2xs">
+                  <span className="w-3.5 h-3.5 rounded-full bg-sky-600 text-white flex items-center justify-center font-bold text-[9px]">
                     ✓
                   </span>
                   <span>PDF, Office & Image Converter</span>
@@ -660,7 +668,7 @@ export default function HomePage() {
               </div>
 
               {/* Unified Search & AI Prompt Bar (Compact) */}
-              <div className="pt-0.5 max-w-xl">
+              <div className="pt-1 max-w-xl">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -673,10 +681,10 @@ export default function HomePage() {
                       setAiQuery("");
                     }
                   }}
-                  className="relative flex items-center p-1 rounded-2xl bg-white border border-slate-200 hover:border-slate-300 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-100 shadow-xs transition-all"
+                  className="relative flex items-center p-1.5 rounded-2xl bg-white border border-slate-200/90 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.06)] hover:border-indigo-400 focus-within:border-indigo-500 focus-within:ring-4 focus-within:ring-indigo-100/70 transition-all"
                 >
-                  <div className="pl-2.5 pr-1.5 text-slate-400 flex items-center shrink-0">
-                    <Search className="w-3.5 h-3.5 text-indigo-600" />
+                  <div className="w-7 h-7 rounded-xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center text-indigo-600 shrink-0 mr-1.5 ml-1">
+                    <Search className="w-3.5 h-3.5" />
                   </div>
 
                   <input
@@ -692,7 +700,7 @@ export default function HomePage() {
 
                   <button
                     type="submit"
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition-all active:scale-95 cursor-pointer shrink-0 shadow-xs shadow-indigo-500/20"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-xs transition-all active:scale-95 cursor-pointer shrink-0 shadow-sm shadow-indigo-500/25"
                   >
                     <Bot className="w-3.5 h-3.5" />
                     <span>Ask AI</span>
@@ -701,7 +709,7 @@ export default function HomePage() {
 
                 {/* Popular Tool Quick-Pills (Single line) */}
                 <div className="flex items-center gap-1.5 mt-2 overflow-x-auto scrollbar-none py-0.5 text-xs text-slate-500">
-                  <span className="text-slate-400 text-[11px] font-medium shrink-0">Quick jump:</span>
+                  <span className="text-slate-400 text-[11px] font-semibold shrink-0">Quick jump:</span>
                   {[
                     { label: "Compress PDF", query: "Compress PDF" },
                     { label: "Edit PDF", query: "Edit PDF" },
@@ -715,7 +723,7 @@ export default function HomePage() {
                         setSearchQuery(p.query);
                         setAiQuery(p.query);
                       }}
-                      className="px-2.5 py-0.5 rounded-lg bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 text-slate-600 hover:text-indigo-600 transition-all shrink-0 cursor-pointer text-[11px] font-medium shadow-2xs"
+                      className="px-2.5 py-1 rounded-lg bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-200 text-slate-600 hover:text-indigo-600 transition-all shrink-0 cursor-pointer text-[11px] font-medium shadow-2xs"
                     >
                       {p.label}
                     </button>
@@ -730,11 +738,11 @@ export default function HomePage() {
                 <div
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleDrop}
-                  className="rounded-2xl bg-white border-2 border-dashed border-slate-200 hover:border-indigo-500 shadow-md p-4 sm:p-5 text-center flex flex-col items-center justify-center space-y-2.5 transition-all duration-200 group"
+                  className="rounded-3xl bg-gradient-to-b from-white via-white to-slate-50/80 border-2 border-dashed border-indigo-200/90 hover:border-indigo-500 hover:bg-indigo-50/20 shadow-[0_12px_32px_-4px_rgba(99,102,241,0.08)] p-5 text-center flex flex-col items-center justify-center space-y-3 transition-all duration-300 group cursor-pointer"
                 >
-                  {/* Refined Indigo Document Icon */}
-                  <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform duration-200">
-                    <UploadCloud className="w-5 h-5" />
+                  {/* Floating 3D Upload Icon */}
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-600 text-white flex items-center justify-center shadow-lg shadow-indigo-500/30 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
+                    <UploadCloud className="w-6 h-6" />
                   </div>
 
                   <div className="space-y-0.5">
@@ -746,7 +754,7 @@ export default function HomePage() {
                     </p>
                   </div>
 
-                  {/* Hidden File Input & Primary Indigo CTA Button */}
+                  {/* Hidden File Input & Primary CTA Button */}
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -758,7 +766,7 @@ export default function HomePage() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full sm:w-auto px-5 py-2 rounded-xl font-bold text-xs bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-500/20 transition-all flex items-center justify-center gap-1.5 cursor-pointer active:scale-95"
+                    className="w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white shadow-md shadow-indigo-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95"
                   >
                     <FileText className="w-3.5 h-3.5" />
                     <span>Upload File</span>
@@ -766,7 +774,7 @@ export default function HomePage() {
 
                   {/* Instant Sample Test Fixtures */}
                   <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center justify-center gap-1.5 text-xs w-full">
-                    <span className="text-slate-400 text-[10.5px] font-medium mr-1">Samples:</span>
+                    <span className="text-slate-400 text-[10.5px] font-semibold mr-1">Samples:</span>
                     {[
                       { name: "sample_id_card.pdf", url: "/test-files/sample_id_card.pdf", label: "💳 ID Card", kind: "pdf" },
                       { name: "sample_scanned_contract_large.pdf", url: "/test-files/sample_scanned_contract_large.pdf", label: "📄 Contract", kind: "pdf" },
@@ -776,7 +784,7 @@ export default function HomePage() {
                         key={s.name}
                         type="button"
                         onClick={() => handleLoadSample(s.url, s.name, s.kind)}
-                        className="px-2 py-0.5 rounded-md bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10.5px] transition-colors cursor-pointer font-medium"
+                        className="px-2.5 py-1 rounded-md bg-slate-50 hover:bg-indigo-50 border border-slate-200 text-slate-600 hover:text-indigo-600 text-[10.5px] transition-colors cursor-pointer font-medium shadow-2xs"
                       >
                         {s.label}
                       </button>
@@ -785,11 +793,11 @@ export default function HomePage() {
                 </div>
               ) : (
                 /* Contextual Smart Action Card */
-                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-indigo-200 shadow-md flex flex-col gap-3 text-left">
+                <div className="p-5 rounded-3xl bg-white border border-indigo-200 shadow-lg shadow-indigo-500/5 flex flex-col gap-3 text-left">
                   <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
-                        {detectedFile.kind === "pdf" ? <FileText className="w-4 h-4" /> : <ImageIcon className="w-4 h-4" />}
+                      <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                        {detectedFile.kind === "pdf" ? <FileText className="w-5 h-5" /> : <ImageIcon className="w-5 h-5" />}
                       </div>
                       <div>
                         <p className="font-bold text-slate-900 text-xs truncate max-w-[180px]">{detectedFile.file.name}</p>
@@ -801,7 +809,7 @@ export default function HomePage() {
                     <button
                       type="button"
                       onClick={() => setDetectedFile(null)}
-                      className="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700 flex items-center gap-1 transition-colors cursor-pointer"
+                      className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] text-slate-700 flex items-center gap-1 transition-colors cursor-pointer font-medium"
                     >
                       <X className="w-3 h-3" />
                       <span>Change</span>
@@ -812,7 +820,7 @@ export default function HomePage() {
                     <p className="text-[10.5px] font-bold text-indigo-600 uppercase tracking-wider">
                       Recommended Actions:
                     </p>
-                    <div className="grid grid-cols-2 gap-1.5 text-xs">
+                    <div className="grid grid-cols-2 gap-2 text-xs">
                       {detectedFile.kind === "pdf" ? (
                         <>
                           <Link
@@ -827,31 +835,31 @@ export default function HomePage() {
                               Open &rarr;
                             </span>
                           </Link>
-                          <Link href="/pdf/compress" className="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/pdf/compress" className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <Minimize2 className="w-3.5 h-3.5 text-emerald-700" /> Compress KB
                           </Link>
-                          <Link href="/pdf/split" className="p-2 rounded-lg bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/pdf/split" className="p-2 rounded-xl bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <Scissors className="w-3.5 h-3.5 text-amber-700" /> Split Pages
                           </Link>
-                          <Link href="/pdf/merge" className="p-2 rounded-lg bg-sky-50 border border-sky-200 hover:border-sky-400 text-sky-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/pdf/merge" className="p-2 rounded-xl bg-sky-50 border border-sky-200 hover:border-sky-400 text-sky-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <Merge className="w-3.5 h-3.5 text-sky-700" /> Merge PDFs
                           </Link>
-                          <Link href="/security/sign" className="p-2 rounded-lg bg-violet-50 border border-violet-200 hover:border-violet-400 text-violet-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/security/sign" className="p-2 rounded-xl bg-violet-50 border border-violet-200 hover:border-violet-400 text-violet-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <PenTool className="w-3.5 h-3.5 text-violet-700" /> E-Sign PDF
                           </Link>
                         </>
                       ) : (
                         <>
-                          <Link href="/image/compress" className="p-2 rounded-lg bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/image/compress" className="p-2 rounded-xl bg-emerald-50 border border-emerald-200 hover:border-emerald-400 text-emerald-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <Minimize2 className="w-3.5 h-3.5 text-emerald-700" /> Compress KB
                           </Link>
-                          <Link href="/image/resize" className="p-2 rounded-lg bg-sky-50 border border-sky-200 hover:border-sky-400 text-sky-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/image/resize" className="p-2 rounded-xl bg-sky-50 border border-sky-200 hover:border-sky-400 text-sky-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <Scaling className="w-3.5 h-3.5 text-sky-700" /> Resize Photo
                           </Link>
-                          <Link href="/image/convert" className="p-2 rounded-lg bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/image/convert" className="p-2 rounded-xl bg-amber-50 border border-amber-200 hover:border-amber-400 text-amber-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <RefreshCw className="w-3.5 h-3.5 text-amber-700" /> Convert Format
                           </Link>
-                          <Link href="/pdf/images-to-pdf" className="p-2 rounded-lg bg-indigo-50 border border-indigo-200 hover:border-indigo-400 text-indigo-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
+                          <Link href="/pdf/images-to-pdf" className="p-2 rounded-xl bg-indigo-50 border border-indigo-200 hover:border-indigo-400 text-indigo-950 font-semibold flex items-center gap-1.5 transition-colors text-xs">
                             <FileText className="w-3.5 h-3.5 text-indigo-700" /> Turn to PDF
                           </Link>
                         </>
@@ -867,26 +875,26 @@ export default function HomePage() {
       </section>
 
       {/* ============================================================== */}
-      {/* 2. Slim 1-Line Trust Strip (Takes only 32px height)           */}
+      {/* 2. Slim 1-Line Trust Strip                                    */}
       {/* ============================================================== */}
-      <div className="border-b border-slate-200/80 bg-white py-2 px-4 shadow-2xs">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-around gap-2 text-[11px] text-slate-600 font-medium">
-          <span className="flex items-center gap-1.5">
+      <div className="border-b border-slate-200/80 bg-white/70 backdrop-blur-md py-2.5 px-4 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-around gap-2 text-[11px] text-slate-700 font-semibold">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-indigo-50/80 border border-indigo-200/60 text-indigo-800">
             <Zap className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
             <span>WebAssembly Native Speed</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 text-emerald-800">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
             <span>100% Private (Zero Cloud Uploads)</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-sky-50/80 border border-sky-200/60 text-sky-800">
             <Layers className="w-3.5 h-3.5 text-sky-600 shrink-0" />
             <span>PDF, Word, Excel, HEIC & Images</span>
           </span>
           <span className="text-slate-300 hidden sm:inline">&bull;</span>
-          <span className="flex items-center gap-1.5">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-violet-50/80 border border-violet-200/60 text-violet-800">
             <Sparkles className="w-3.5 h-3.5 text-violet-600 shrink-0" />
             <span>100% Free &bull; No File Limits</span>
           </span>
@@ -896,28 +904,29 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 3. The Tool Catalog (Directly Visible Above The Fold!)        */}
       {/* ============================================================== */}
-      <section className="py-6 sm:py-8 bg-[#F8FAFC]">
+      <section className="py-8 sm:py-10 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           
-          {/* Section Header (Compact) */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-3">
+          {/* Section Header */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200/80 pb-4">
             <div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-                All Document & Image <span className="text-indigo-600">Tools</span>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                <span>All Document & Image</span>
+                <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Tools</span>
               </h2>
               <p className="text-slate-500 text-xs">
-                Select a tool below or drop a file to process immediately.
+                Select a tool below or drop a file to process immediately with zero server latency.
               </p>
             </div>
 
-            {/* Category Filter Tabs */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            {/* Category Filter Tabs (Segmented Capsule) */}
+            <div className="flex items-center gap-1 p-1 rounded-2xl bg-slate-200/60 backdrop-blur-md border border-slate-200/90 overflow-x-auto scrollbar-none shadow-inner">
               <button
                 onClick={() => setSelectedCategory("all")}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
                   selectedCategory === "all"
-                    ? "bg-slate-900 text-white shadow-sm"
-                    : "bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200/80 shadow-2xs"
+                    ? "bg-white text-slate-950 shadow-xs border border-slate-200/60"
+                    : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
                 }`}
               >
                 All ({ALL_TOOLS.length})
@@ -930,16 +939,16 @@ export default function HomePage() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                       isSelected
-                        ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-                        : "bg-white text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-slate-200/80 shadow-2xs"
+                        ? "bg-white text-indigo-700 shadow-xs border border-slate-200/60 font-bold"
+                        : "text-slate-600 hover:text-slate-950 hover:bg-white/60"
                     }`}
                   >
                     <span>{cat.name}</span>
                     <span
-                      className={`text-[10px] px-1 rounded ${
-                        isSelected ? "bg-white/20 text-white font-bold" : "bg-slate-100 text-slate-500 font-mono"
+                      className={`text-[10px] px-1.5 py-0.2 rounded-md ${
+                        isSelected ? "bg-indigo-50 text-indigo-700 font-bold border border-indigo-200/60" : "bg-slate-200/80 text-slate-500 font-mono"
                       }`}
                     >
                       {count}
@@ -950,7 +959,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* The Tool Grid (Crisp White Cards with Refined Hover) */}
+          {/* The Tool Grid (Refined Cards with Enhanced Illustrations) */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5">
             {filteredTools.map((tool) => {
               const IconComponent = ICON_MAP[tool.iconName] || FileText;
@@ -960,17 +969,17 @@ export default function HomePage() {
                 <Link
                   key={tool.id}
                   href={tool.href}
-                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl ${style.cardBg} border ${style.borderClass} ${style.shadowHover} transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer overflow-hidden`}
+                  className={`group relative flex flex-col p-4 sm:p-5 rounded-2xl ${style.cardBg} border ${style.borderClass} ${style.shadowHover} transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl cursor-pointer overflow-hidden backdrop-blur-xs`}
                 >
-                  {/* Intuitive Thematic Background Illustration: makes tool action immediately understandable at a glance */}
-                  <div className="absolute -top-1 -right-1 w-28 h-28 sm:w-32 sm:h-32 pointer-events-none select-none overflow-hidden opacity-35 group-hover:opacity-85 group-hover:scale-105 group-hover:-translate-y-0.5 transition-all duration-300">
+                  {/* Intuitive Thematic Background Illustration */}
+                  <div className="absolute -top-1 -right-1 w-28 h-28 sm:w-32 sm:h-32 pointer-events-none select-none overflow-hidden opacity-40 group-hover:opacity-95 group-hover:scale-110 group-hover:-translate-y-1 transition-all duration-300">
                     <ToolCardIllustration toolId={tool.id} category={tool.category} />
                   </div>
 
                   {/* Top: Icon + Badge */}
                   <div className="relative z-10 flex items-start justify-between gap-1.5 mb-3">
                     <div
-                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-105 shadow-2xs ${style.iconBg} ${style.iconColor}`}
+                      className={`w-10 h-10 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110 shadow-2xs ${style.iconBg} ${style.iconColor}`}
                     >
                       <IconComponent className="w-5 h-5" />
                     </div>
@@ -999,7 +1008,7 @@ export default function HomePage() {
                   <div className="relative z-10 mt-3 pt-2.5 border-t border-slate-200/50 flex items-center justify-between text-[10px] text-slate-500">
                     <span className="flex items-center gap-1.5 font-medium truncate">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                      <span className="text-slate-600 truncate text-[10px]">
+                      <span className="text-slate-600 truncate text-[10px] font-medium">
                         100% On-Device
                       </span>
                     </span>
@@ -1019,72 +1028,92 @@ export default function HomePage() {
       {/* ============================================================== */}
       {/* 4. Architecture & Security Comparison (Executive Matrix)       */}
       {/* ============================================================== */}
-      <section className="py-16 border-t border-slate-200/80 bg-white">
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-gradient-to-b from-white via-slate-50/50 to-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
+          <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 shadow-2xs">
+              <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Architectural Advantage</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
               IntekEdit vs Traditional Cloud PDF Converters
             </h2>
             <p className="text-slate-500 text-xs sm:text-sm">
-              How our client-side architecture compares to typical server-based conversion sites.
+              How our zero-upload client-side architecture compares to typical server-based conversion sites.
             </p>
           </div>
 
-          <div className="rounded-3xl bg-slate-50/70 border border-slate-200/90 p-6 sm:p-8 shadow-xs overflow-x-auto">
+          <div className="rounded-3xl bg-white border border-slate-200/90 shadow-[0_10px_35px_-5px_rgba(0,0,0,0.05)] overflow-hidden">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-slate-200 text-slate-500 text-[11px] uppercase tracking-wider font-mono">
-                  <th className="pb-3 pr-4 font-semibold">Feature / Metric</th>
-                  <th className="pb-3 px-4 font-bold text-indigo-600">IntekEdit (Local-First Engine)</th>
-                  <th className="pb-3 pl-4 font-semibold text-slate-400">Traditional Cloud Converters</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-mono">
+                  <th className="py-3.5 px-6 font-semibold">Feature / Metric</th>
+                  <th className="py-3.5 px-6 font-bold text-indigo-700 bg-indigo-50/60 border-x border-indigo-100">
+                    IntekEdit (Local-First Engine)
+                  </th>
+                  <th className="py-3.5 px-6 font-semibold text-slate-400">Traditional Cloud Converters</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200 text-slate-700">
-                <tr>
-                  <td className="py-3.5 pr-4 font-semibold text-slate-900 flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    Document Privacy
+                <tr className="hover:bg-slate-50/50 transition-colors">
+                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <span>Document Privacy</span>
                   </td>
-                  <td className="py-3.5 px-4 text-indigo-700 font-bold">
-                    100% In-Browser RAM (0 B Uploaded)
+                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-bold">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      100% In-Browser RAM (0 B Uploaded)
+                    </span>
                   </td>
-                  <td className="py-3.5 pl-4 text-slate-500">
+                  <td className="py-4 px-6 text-slate-500">
                     Uploaded & stored on remote cloud servers
                   </td>
                 </tr>
-                <tr>
-                  <td className="py-3.5 pr-4 font-semibold text-slate-900 flex items-center gap-2">
-                    <Zap className="w-4 h-4 text-amber-600 shrink-0" />
-                    Daily Tasks & Limits
+                <tr className="hover:bg-slate-50/50 transition-colors">
+                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600 shrink-0">
+                      <Zap className="w-4 h-4" />
+                    </div>
+                    <span>Daily Tasks & Limits</span>
                   </td>
-                  <td className="py-3.5 px-4 text-indigo-700 font-bold">
-                    Unlimited & Forever Free
+                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                    <span className="inline-flex items-center gap-1.5 text-indigo-700 font-bold">
+                      <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                      Unlimited & Forever Free
+                    </span>
                   </td>
-                  <td className="py-3.5 pl-4 text-slate-500">
+                  <td className="py-4 px-6 text-slate-500">
                     Capped at 1-2 free conversions per day
                   </td>
                 </tr>
-                <tr>
-                  <td className="py-3.5 pr-4 font-semibold text-slate-900 flex items-center gap-2">
-                    <Minimize2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                    File Size Limits
+                <tr className="hover:bg-slate-50/50 transition-colors">
+                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600 shrink-0">
+                      <Minimize2 className="w-4 h-4" />
+                    </div>
+                    <span>File Size Limits</span>
                   </td>
-                  <td className="py-3.5 px-4 text-indigo-700 font-bold">
+                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
                     Gigabyte-Scale (Bounded by Device RAM)
                   </td>
-                  <td className="py-3.5 pl-4 text-slate-500">
+                  <td className="py-4 px-6 text-slate-500">
                     Strict 50MB - 100MB cloud upload caps
                   </td>
                 </tr>
-                <tr>
-                  <td className="py-3.5 pr-4 font-semibold text-slate-900 flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
-                    Watermarks & Ads
+                <tr className="hover:bg-slate-50/50 transition-colors">
+                  <td className="py-4 px-6 font-semibold text-slate-900 flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 shrink-0">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <span>Watermarks & Ads</span>
                   </td>
-                  <td className="py-3.5 px-4 text-indigo-700 font-bold">
-                    Zero Watermarks • Zero Spam Ads
+                  <td className="py-4 px-6 text-indigo-900 font-bold bg-indigo-50/40 border-x border-indigo-100">
+                    <span className="text-emerald-700 font-bold">Zero Watermarks • Zero Spam Ads</span>
                   </td>
-                  <td className="py-3.5 pl-4 text-slate-500">
+                  <td className="py-4 px-6 text-slate-500">
                     Forced watermarks or ad-heavy overlays
                   </td>
                 </tr>
