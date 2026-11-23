@@ -66,6 +66,9 @@ export const metadata: Metadata = {
     description: "Free, local-in-browser document and photo editor with zero server uploads.",
     images: ["/logo.png"],
   },
+  verification: {
+    google: "V8f0J8ZCCksA3QqysLVFYCU6PckCFFdtCt34JiR86vs",
+  },
 };
 
 // Schema.org Structured Data for Google Search & Google Search Console
@@ -105,6 +108,8 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
     >
       <head>
+        {/* Google Search Console Verification */}
+        <meta name="google-site-verification" content="V8f0J8ZCCksA3QqysLVFYCU6PckCFFdtCt34JiR86vs" />
         {/* Google Search Console & Google Search Favicon declarations */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
