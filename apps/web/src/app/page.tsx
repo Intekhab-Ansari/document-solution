@@ -34,6 +34,8 @@ import {
   Contrast,
   Sliders,
   Archive,
+  ChevronDown,
+  HelpCircle,
 } from "lucide-react";
 import { ALL_TOOLS, CATEGORIES, ToolCategory } from "@/lib/registry/tools-registry";
 import { formatBytes } from "@/lib/utils";
@@ -1126,6 +1128,293 @@ export default function HomePage() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* 5. Comprehensive SEO Keyword Hub & Format Directory           */}
+      {/* ============================================================== */}
+      <section className="py-14 sm:py-16 border-t border-slate-200/80 bg-[#F8FAFC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="text-left space-y-1.5">
+            <span className="text-[11px] font-mono tracking-widest text-indigo-600 uppercase font-bold">
+              Complete Document & Photo Index
+            </span>
+            <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+              Popular Online Tools & In-Browser Capabilities
+            </h2>
+            <p className="text-slate-500 text-xs sm:text-sm">
+              Instant access to all high-performance document editing, compression, and conversion utilities.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
+            {/* Column 1: PDF Compression & Optimization */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 border-b border-slate-200 pb-2">
+                <Minimize2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>PDF Compression</span>
+              </h3>
+              <ul className="space-y-2 text-xs text-slate-600">
+                <li>
+                  <Link href="/pdf/compress?targetKb=100" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Compress PDF to 100KB</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/compress?targetKb=200" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Compress PDF to 200KB</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/compress?targetKb=500" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Compress PDF to 500KB</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/compress" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Target KB PDF Compressor</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/grayscale" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Convert PDF to Grayscale (B&W)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/repair" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Repair Corrupted PDF</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 2: PDF Editing & Assembly */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 border-b border-slate-200 pb-2">
+                <PenTool className="w-3.5 h-3.5 text-indigo-600" />
+                <span>PDF Editing & Organize</span>
+              </h3>
+              <ul className="space-y-2 text-xs text-slate-600">
+                <li>
+                  <Link href="/pdf/edit" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Free Online PDF Editor</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/merge" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Merge PDF Files Free</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/split" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Split & Extract PDF Pages</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/rotate" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Rotate PDF Pages Permanently</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/reorder" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Reorder & Delete PDF Pages</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/page-numbers" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Add Page Numbers to PDF</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/watermark" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Watermark PDF Online</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 3: Image Tools & Privacy */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 border-b border-slate-200 pb-2">
+                <ImageIcon className="w-3.5 h-3.5 text-cyan-600" />
+                <span>Image Tools & Privacy</span>
+              </h3>
+              <ul className="space-y-2 text-xs text-slate-600">
+                <li>
+                  <Link href="/image/compress" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Compress Image (Target KB)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image/convert" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Convert HEIC to JPG Online</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image/resize" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Resize Image Pixels & Aspect</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image/crop" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Crop Image & Framing</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/image/metadata" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Strip EXIF & Location GPS</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/pdf-to-images" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Convert PDF to Images (PNG/JPG)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/pdf/images-to-pdf" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Convert Images to PDF Book</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Column 4: Document Converters & Security */}
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center gap-1.5 border-b border-slate-200 pb-2">
+                <RefreshCw className="w-3.5 h-3.5 text-violet-600" />
+                <span>Conversion & Security</span>
+              </h3>
+              <ul className="space-y-2 text-xs text-slate-600">
+                <li>
+                  <Link href="/convert" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Word to PDF (.docx)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/convert" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Excel to PDF (.xlsx)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/convert" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>PDF to Word & Excel Converter</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security/sign" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Sign PDF Documents Online</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security/protect" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Protect PDF (AES-256 Encrypt)</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/security/unlock" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Unlock Password-Protected PDF</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/extract/text" className="hover:text-indigo-600 transition-colors flex items-center justify-between group">
+                    <span>Extract Text & OCR Online</span>
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity text-indigo-600" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* 6. Frequently Asked Questions (FAQ) Section                   */}
+      {/* ============================================================== */}
+      <section className="py-16 sm:py-20 border-t border-slate-200/80 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-xs font-bold text-indigo-700 shadow-2xs">
+              <HelpCircle className="w-3.5 h-3.5 text-indigo-600" />
+              <span>Questions & Answers</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-slate-500 text-xs sm:text-sm">
+              Everything you need to know about IntekEdit, client-side document processing, and privacy.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            {[
+              {
+                q: "Is IntekEdit completely free to use without limits?",
+                a: "Yes. IntekEdit is 100% free with zero artificial paywalls, no required account registrations, and no daily task limits. You can compress, edit, convert, and sign as many files as you need.",
+              },
+              {
+                q: "Are my uploaded PDF files or photos ever saved on your server?",
+                a: "Never. IntekEdit utilizes an air-gapped client-side architecture. When you select or drop a file, it is loaded purely into your browser's local memory (RAM) and processed using compiled WebAssembly and Web Workers. Your files are never uploaded across the network to any server.",
+              },
+              {
+                q: "How do I compress a PDF to an exact target size like 100KB, 200KB, or 500KB?",
+                a: "Simply upload your PDF in our Compress PDF tool, select 'Target Size' mode, enter your desired file size in KB, and click Compress. Our iterative binary search engine recalculates image downsampling and font streams until it meets your portal's exact file limit.",
+              },
+              {
+                q: "Can I convert Apple iPhone HEIC photos to JPG or PNG?",
+                a: "Yes. Our Universal Image Converter contains a built-in HEIC decoder that directly translates iOS HEIC/HEIF photos into high-resolution JPG or PNG in milliseconds without sending your personal photos to the cloud.",
+              },
+              {
+                q: "How can I edit text, erase content, or annotate a PDF?",
+                a: "Open our Edit PDF Studio tool. You can select existing text blocks to modify wording, change font colors, apply opaque whiteout blocks to redact text, draw with custom ink pens, or add annotations directly onto your document.",
+              },
+              {
+                q: "Does IntekEdit add watermarks to my converted documents?",
+                a: "No. IntekEdit never adds watermarks, stamps, or brand marks to your files. Your exported documents remain clean, professional, and identical to your edits.",
+              },
+            ].map((faq, idx) => (
+              <details
+                key={idx}
+                className="group rounded-2xl bg-slate-50 hover:bg-slate-50/80 border border-slate-200/90 p-4 sm:p-5 transition-all duration-200 [&_summary::-webkit-details-marker]:hidden cursor-pointer"
+              >
+                <summary className="flex items-center justify-between font-bold text-slate-900 text-xs sm:text-sm list-none select-none">
+                  <span>{faq.q}</span>
+                  <span className="w-6 h-6 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 group-open:rotate-180 transition-transform duration-200 shrink-0 ml-3">
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </span>
+                </summary>
+                <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 pt-3">
+                  {faq.a}
+                </p>
+              </details>
+            ))}
           </div>
         </div>
       </section>

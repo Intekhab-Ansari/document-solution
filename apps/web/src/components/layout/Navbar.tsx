@@ -84,7 +84,7 @@ export function Navbar() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
           {/* Left: Brand + Segmented Island Nav */}
-          <div className="flex items-center gap-4 xl:gap-6 shrink-0">
+          <div className="flex items-center gap-3 xl:gap-5 min-w-0">
             <Link
               href="/"
               className="shrink-0 flex items-center group transition-transform active:scale-95"
@@ -94,7 +94,7 @@ export function Navbar() {
             </Link>
 
             {/* Segmented Island Nav Capsule */}
-            <nav className="hidden lg:flex items-center p-1 rounded-full bg-slate-100/90 border border-slate-200/90 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] text-xs font-semibold text-slate-700 whitespace-nowrap">
+            <nav className="hidden lg:flex items-center p-0.5 sm:p-1 rounded-full bg-slate-100/90 border border-slate-200/90 shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] text-xs font-semibold text-slate-700 whitespace-nowrap">
               {/* 1. PDF Tools */}
               <div className="relative group">
                 <Link
@@ -601,17 +601,17 @@ export function Navbar() {
           </div>
 
           {/* Right Action Area */}
-          <div className="flex items-center gap-1.5 sm:gap-2 xl:gap-2.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Search Button (Command Palette Ctrl+K) */}
             <button
               type="button"
               onClick={() => setCommandPaletteOpen(true)}
-              className="flex items-center gap-2 p-2 sm:px-3 sm:py-1.5 rounded-full text-xs font-medium bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/90 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs group"
+              className="flex items-center gap-2 p-2 sm:px-2.5 xl:px-3 sm:py-1.5 rounded-full text-xs font-medium bg-slate-100/90 hover:bg-slate-200/80 border border-slate-200/90 text-slate-600 hover:text-slate-900 transition-all cursor-pointer shadow-2xs group"
               title="Search all 30+ tools"
             >
               <Search className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-indigo-600 group-hover:scale-110 transition-transform shrink-0" />
-              <span className="hidden xl:inline font-medium text-slate-600 group-hover:text-slate-900">Search tools...</span>
-              <span className="hidden sm:inline xl:hidden font-medium text-slate-600 group-hover:text-slate-900">Search</span>
+              <span className="hidden 2xl:inline font-medium text-slate-600 group-hover:text-slate-900">Search tools...</span>
+              <span className="hidden sm:inline 2xl:hidden font-medium text-slate-600 group-hover:text-slate-900">Search</span>
               <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] font-sans font-bold px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-slate-500 shadow-2xs">
                 <span>Ctrl</span>
                 <span>K</span>
@@ -629,10 +629,10 @@ export function Navbar() {
               <span>Ask AI</span>
             </button>
 
-            {/* 100% In-Browser Privacy Live Beacon - shown on xl+ screens */}
+            {/* 100% In-Browser Privacy Live Beacon - shown on 2xl+ screens */}
             <Link
               href="/privacy"
-              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50/90 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-800 transition-all cursor-pointer shadow-2xs"
+              className="hidden 2xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50/90 hover:bg-emerald-100/80 border border-emerald-200/80 text-emerald-800 transition-all cursor-pointer shadow-2xs"
               title="Air-Gapped Client-Side Processing Guarantee"
             >
               <span className="relative flex h-2 w-2">
@@ -642,12 +642,12 @@ export function Navbar() {
               <span className="text-[11px] tracking-tight">100% On-Device</span>
             </Link>
 
-            {/* IntekChat Companion Link - shown on xl+ screens */}
+            {/* IntekChat Companion Link - shown on 2xl+ screens */}
             <a
               href="https://intekchat.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 transition-all cursor-pointer shadow-2xs group"
+              className="hidden 2xl:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white hover:bg-slate-50 border border-slate-200 hover:border-indigo-300 text-slate-700 hover:text-indigo-600 transition-all cursor-pointer shadow-2xs group"
               title="IntekChat — Free P2P File Sharing & Chat (intekchat.vercel.app)"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
